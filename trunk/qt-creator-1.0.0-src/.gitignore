@@ -1,0 +1,77 @@
+# This file is used to ignore files which are generated
+# ----------------------------------------------------------------------------
+
+*~
+*.a
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.rej
+*.so
+*_pch.h.cpp
+*_resource.rc
+.#*
+*.*#
+core
+.qmake.cache
+tags
+.DS_Store
+*.debug
+Makefile*
+*.prl
+*.app
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+
+# xemacs temporary files
+*.flc
+
+# Vim temporary files
+.*.swp
+
+# Visual Studio generated files
+*.ib_pdb_index
+*.idb
+*.ilk
+*.pdb
+*.sln
+*.suo
+*.vcproj
+*vcproj.*.*.user
+*.ncb
+
+# MinGW generated files
+*.Debug
+*.Release
+
+# Directories to ignore
+# ---------------------
+
+debug
+examples/tools/plugandpaint/plugins
+include/*
+include/*/*
+lib/*
+plugins/*/*
+release
+tmp
+doc-build
+doc/html/*
+doc/qch
+doc-build
+.rcc
+.pch
+src/corelib/lib
+src/network/lib
+src/xml/lib/
+
+# Binaries
+# --------
+bin/*.dll
+bin/qtcreator
+bin/qtcreator.exe
+doc/qtcreator.qch
+tests/manual/cplusplus/cplusplus0

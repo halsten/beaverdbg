@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/trolltech.subversion" >
+        <file>Subversion.mimetypes.xml</file>
+    </qresource>
+</RCC>

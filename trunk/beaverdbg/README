@@ -1,0 +1,57 @@
+Beaver Debugger 1.0.0a1
+===============
+Beaver Debugger is a crossplatform debugger based on Qt Creator
+
+Supported Platforms
+===================
+Building the sources requires Qt 4.5.0 or later.
+
+Building
+===================
+	cd beaverdbg
+	qmake
+	make
+Now you can run buillt application
+bin/beaverdbg
+
+Third-party components
+======================
+Beaver Debugger is based on Qt Creator sources.
+Next files was modified:
+qt-creator-1.0.0-src/src/app/app.pro
+qt-creator-1.0.0-src/src/app/main.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.h
+qt-creator-1.0.0-src/src/plugins/coreplugin/coreconstants.h
+qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.pro
+qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editormanager.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editorsplitter.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/fancytabwidget.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.h
+qt-creator-1.0.0-src/src/plugins/coreplugin/modemanager.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/outputpane.cpp
+qt-creator-1.0.0-src/src/plugins/cppeditor/cppeditor.pro
+qt-creator-1.0.0-src/src/plugins/cppeditor/cppplugin.cpp
+qt-creator-1.0.0-src/src/plugins/cpptools/cpptoolsplugin.cpp
+qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.cpp
+qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.h
+qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.cpp
+qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.h
+qt-creator-1.0.0-src/src/plugins/find/findplugin.cpp
+qt-creator-1.0.0-src/src/plugins/find/findtoolbar.cpp
+qt-creator-1.0.0-src/src/plugins/find/textfindconstants.h
+qt-creator-1.0.0-src/src/plugins/plugins.pri
+qt-creator-1.0.0-src/src/plugins/plugins.pro
+qt-creator-1.0.0-src/src/plugins/projectexplorer/projectexplorer.cpp
+qt-creator-1.0.0-src/src/plugins/projectexplorer/session.cpp
+qt-creator-1.0.0-src/src/plugins/quickopen/quickopenplugin.cpp
+qt-creator-1.0.0-src/src/plugins/texteditor/basetexteditor.cpp
+qt-creator-1.0.0-src/src/plugins/texteditor/texteditoractionhandler.cpp
+qt-creator-1.0.0-src/src/plugins/texteditor/texteditorplugin.cpp
+qt-creator-1.0.0-src/src/qworkbenchlibrary.pri
+qt-creator-1.0.0-src/src/qworkbenchplugin.pri
+qt-creator-1.0.0-src/src/qworkbench.pri
+qt-creator-1.0.0-src/src/shared/cpaster/cgi.cpp
+qt-creator-1.0.0-src/src/src.pro

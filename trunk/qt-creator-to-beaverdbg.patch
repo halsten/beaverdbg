@@ -1,0 +1,2332 @@
+diff -Nur qt-creator-1.0.0-src/README beaverdbg/README
+--- qt-creator-1.0.0-src/README	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/README	2009-07-23 12:26:38.000000000 +0300
+@@ -1,23 +1,57 @@
+-QtCreator 1.0.0
++Beaver Debugger 1.0.0a1
+ ===============
+-QtCreator is a crossplatform C++ IDE for development with the Qt framework.
++Beaver Debugger is a crossplatform debugger based on Qt Creator
+ 
+ Supported Platforms
+ ===================
+-The binary packages support the following platforms:
+-
+-Windows XP SP2, Windows Vista
+-(K)Ubuntu Linux 5.04, (K)Ubuntu Linux 7.04 32bit and 64bit
+-Mac OS 10.4 and later
+-
+ Building the sources requires Qt 4.5.0 or later.
+ 
++Building
++===================
++	cd beaverdbg
++	qmake
++	make
++Now you can run buillt application
++bin/beaverdbg
++
+ Third-party components
+ ======================
+-QtCreator includes the following third-party components,
+-we thank the authors who made this possible:
+-
+-* Open Source front-end for C++ (license MIT), enhanced for use in Qt Creator
+-  Roberto Raggi <roberto.raggi@gmail.com>
+-  QtCreator/src/shared/cplusplus
+-
++Beaver Debugger is based on Qt Creator sources.
++Next files was modified:
++qt-creator-1.0.0-src/src/app/app.pro
++qt-creator-1.0.0-src/src/app/main.cpp
++qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.cpp
++qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.h
++qt-creator-1.0.0-src/src/plugins/coreplugin/coreconstants.h
++qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.cpp
++qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.pro
++qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editormanager.cpp
++qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editorsplitter.cpp
++qt-creator-1.0.0-src/src/plugins/coreplugin/fancytabwidget.cpp
++qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.cpp
++qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.h
++qt-creator-1.0.0-src/src/plugins/coreplugin/modemanager.cpp
++qt-creator-1.0.0-src/src/plugins/coreplugin/outputpane.cpp
++qt-creator-1.0.0-src/src/plugins/cppeditor/cppeditor.pro
++qt-creator-1.0.0-src/src/plugins/cppeditor/cppplugin.cpp
++qt-creator-1.0.0-src/src/plugins/cpptools/cpptoolsplugin.cpp
++qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.cpp
++qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.h
++qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.cpp
++qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.h
++qt-creator-1.0.0-src/src/plugins/find/findplugin.cpp
++qt-creator-1.0.0-src/src/plugins/find/findtoolbar.cpp
++qt-creator-1.0.0-src/src/plugins/find/textfindconstants.h
++qt-creator-1.0.0-src/src/plugins/plugins.pri
++qt-creator-1.0.0-src/src/plugins/plugins.pro
++qt-creator-1.0.0-src/src/plugins/projectexplorer/projectexplorer.cpp
++qt-creator-1.0.0-src/src/plugins/projectexplorer/session.cpp
++qt-creator-1.0.0-src/src/plugins/quickopen/quickopenplugin.cpp
++qt-creator-1.0.0-src/src/plugins/texteditor/basetexteditor.cpp
++qt-creator-1.0.0-src/src/plugins/texteditor/texteditoractionhandler.cpp
++qt-creator-1.0.0-src/src/plugins/texteditor/texteditorplugin.cpp
++qt-creator-1.0.0-src/src/qworkbenchlibrary.pri
++qt-creator-1.0.0-src/src/qworkbenchplugin.pri
++qt-creator-1.0.0-src/src/qworkbench.pri
++qt-creator-1.0.0-src/src/shared/cpaster/cgi.cpp
++qt-creator-1.0.0-src/src/src.pro
+diff -Nur qt-creator-1.0.0-src/README.qtcreator beaverdbg/README.qtcreator
+--- qt-creator-1.0.0-src/README.qtcreator	1970-01-01 03:00:00.000000000 +0300
++++ beaverdbg/README.qtcreator	2009-02-27 16:09:44.000000000 +0200
+@@ -0,0 +1,23 @@
++QtCreator 1.0.0
++===============
++QtCreator is a crossplatform C++ IDE for development with the Qt framework.
++
++Supported Platforms
++===================
++The binary packages support the following platforms:
++
++Windows XP SP2, Windows Vista
++(K)Ubuntu Linux 5.04, (K)Ubuntu Linux 7.04 32bit and 64bit
++Mac OS 10.4 and later
++
++Building the sources requires Qt 4.5.0 or later.
++
++Third-party components
++======================
++QtCreator includes the following third-party components,
++we thank the authors who made this possible:
++
++* Open Source front-end for C++ (license MIT), enhanced for use in Qt Creator
++  Roberto Raggi <roberto.raggi@gmail.com>
++  QtCreator/src/shared/cplusplus
++
+diff -Nur qt-creator-1.0.0-src/src/app/app.pro beaverdbg/src/app/app.pro
+--- qt-creator-1.0.0-src/src/app/app.pro	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/app/app.pro	2009-06-26 20:41:12.000000000 +0300
+@@ -1,30 +1,24 @@
+ IDE_BUILD_TREE = $$OUT_PWD/../../
+ 
+ include(../qworkbench.pri)
+-include(../shared/qtsingleapplication/qtsingleapplication.pri)
++include(../plugins/plugins.pri)
++include(../libs/aggregation/aggregation.pri)
++include(../libs/extensionsystem/extensionsystem.pri)
++include(../libs/cplusplus/cplusplus.pri)
++include(../libs/qtconcurrent/qtconcurrent.pri)
++include(../libs/utils/utils.pri)
+ 
+-macx {
+-    CONFIG(debug, debug|release):LIBS *= -lExtensionSystem_debug -lAggregation_debug
+-    else:LIBS *= -lExtensionSystem -lAggregation
+-}
+-win32 {
+-    CONFIG(debug, debug|release):LIBS *= -lExtensionSystemd -lAggregationd
+-    else:LIBS *= -lExtensionSystem -lAggregation
+-}
+-linux-* {
+-    LIBS *= -lExtensionSystem -lAggregation
+-    ISGCC33=$$(GCC33)
+-    !equals(ISGCC33, 1):QT += svg dbus
++PRE_TARGETDEPS *= ../plugins/projectexplorer ../libs
+ 
+-    target.path  = /bin
+-    INSTALLS    += target
+-
+-}
++INCLUDEPATH *= ../libs/extensionsystem ../plugins/coreplugin  ../plugins
+ 
+ TEMPLATE = app
+ TARGET = $$IDE_APP_TARGET
++TARGET = $$qtLibraryTarget($$TARGET)
+ DESTDIR = ../../bin
+ 
++QT *= core gui script xml webkit svg
++CONFIG *= help
+ 
+ SOURCES += main.cpp
+ 
+@@ -37,6 +31,3 @@
+ macx {
+         ICON = qtcreator.icns
+ }
+-
+-include(../../share/share.pri)
+-
+diff -Nur qt-creator-1.0.0-src/src/app/main.cpp beaverdbg/src/app/main.cpp
+--- qt-creator-1.0.0-src/src/app/main.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/app/main.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -1,286 +1,132 @@
+-/**************************************************************************
+-**
+-** This file is part of Qt Creator
+-**
+-** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+-**
+-** Contact:  Qt Software Information (qt-info@nokia.com)
+-**
+-** Commercial Usage
+-**
+-** Licensees holding valid Qt Commercial licenses may use this file in
+-** accordance with the Qt Commercial License Agreement provided with the
+-** Software or, alternatively, in accordance with the terms contained in
+-** a written agreement between you and Nokia.
+-**
+-** GNU Lesser General Public License Usage
+-**
+-** Alternatively, this file may be used under the terms of the GNU Lesser
+-** General Public License version 2.1 as published by the Free Software
+-** Foundation and appearing in the file LICENSE.LGPL included in the
+-** packaging of this file.  Please review the following information to
+-** ensure the GNU Lesser General Public License version 2.1 requirements
+-** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+-**
+-** If you are unsure which license is appropriate for your use, please
+-** contact the sales department at qt-sales@nokia.com.
+-**
+-**************************************************************************/
+-
+-#include "qtsingleapplication.h"
++#include <QApplication>
++#include <QMainWindow>
++#include <QStatusBar>
++#include <QLabel>
++#include <QStringList>
++#include <QProcess>
++#include <QFileInfo>
++#include <QDebug>
+ 
+ #include <extensionsystem/pluginmanager.h>
+-#include <extensionsystem/pluginspec.h>
+-#include <extensionsystem/iplugin.h>
+-
+-#include <QtCore/QDir>
+-#include <QtCore/QTextStream>
+-#include <QtCore/QFileInfo>
+-#include <QtCore/QDebug>
+-#include <QtCore/QTimer>
+-
+-#include <QtGui/QMessageBox>
+-#include <QtGui/QApplication>
+-#include <QtGui/QMainWindow>
+-
+-#ifdef Q_OS_DARWIN
+-#  include <sys/resource.h>
+-#endif
+-
+-enum { OptionIndent = 4, DescriptionIndent = 24 };
+-
+-static const char *appNameC = "Qt Creator";
+-static const char *corePluginNameC = "Core";
+-static const char *fixedOptionsC =
+-" [OPTION]... [FILE]...\n"
+-"Options:\n"
+-"    -help               Display this help\n"
+-"    -version            Display program version\n"
+-"    -client             Attempt to connect to already running instance\n";
+-
+-static const char *HELP_OPTION1 = "-h";
+-static const char *HELP_OPTION2 = "-help";
+-static const char *HELP_OPTION3 = "/h";
+-static const char *HELP_OPTION4 = "--help";
+-static const char *VERSION_OPTION = "-version";
+-static const char *CLIENT_OPTION = "-client";
++#include <iplugin.h>
+ 
+-typedef QList<ExtensionSystem::PluginSpec *> PluginSpecSet;
++#include <debuggermanager.h>
++#include <debuggerplugin.h>
+ 
+-// Helpers for displaying messages. Note that there is no console on Windows.
+-#ifdef Q_WS_WIN
+-// Format as <pre> HTML
+-static inline void toHtml(QString &t)
+-{
+-    t.replace(QLatin1Char('&'), QLatin1String("&amp;"));
+-    t.replace(QLatin1Char('<'), QLatin1String("&lt;"));
+-    t.replace(QLatin1Char('>'), QLatin1String("&gt;"));
+-    t.insert(0, QLatin1String("<html><pre>"));
+-    t.append(QLatin1String("</pre></html>"));
+-}
+-
+-static void displayHelpText(QString t) // No console on Windows.
+-{
+-    toHtml(t);
+-    QMessageBox::information(0, QLatin1String(appNameC), t);
+-}
+-
+-static void displayError(const QString &t) // No console on Windows.
+-{
+-    QMessageBox::critical(0, QLatin1String(appNameC), t);
+-}
+-
+-#else
+-
+-static void displayHelpText(const QString &t)
+-{
+-    qWarning("%s", qPrintable(t));
+-}
+-
+-static void displayError(const QString &t)
+-{
+-    qCritical("%s", qPrintable(t));
+-}
+-
+-#endif
+-
+-static void printVersion(const ExtensionSystem::PluginSpec *coreplugin,
+-                         const ExtensionSystem::PluginManager &pm)
+-{
+-    QString version;
+-    QTextStream str(&version);
+-    str << '\n' << appNameC << ' ' << coreplugin->version()<< " based on Qt " << qVersion() << "\n\n";
+-    pm.formatPluginVersions(str);
+-    str << '\n' << coreplugin->copyright() << '\n';
+-    displayHelpText(version);
+-}
+-
+-static void printHelp(const QString &a0, const ExtensionSystem::PluginManager &pm)
+-{
+-    QString help;
+-    QTextStream str(&help);
+-    str << "Usage: " << a0  << fixedOptionsC;
+-    ExtensionSystem::PluginManager::formatOptions(str, OptionIndent, DescriptionIndent);
+-    pm.formatPluginOptions(str,  OptionIndent, DescriptionIndent);
+-    displayHelpText(help);
+-}
+-
+-static inline QString msgCoreLoadFailure(const QString &why)
+-{
+-    return QCoreApplication::translate("Application", "Failed to load core: %1").arg(why);
+-}
+-
+-static inline QString msgSendArgumentFailed()
+-{
+-    return QCoreApplication::translate("Application", "Unable to send command line arguments to the already running instance. It appears to be not responding.");
+-}
+-
+-// Prepare a remote argument: If it is a relative file, add the current directory
+-// since the the central instance might be running in a different directory.
+-
+-static inline QString prepareRemoteArgument(const QString &a)
+-{
+-    QFileInfo fi(a);
+-    if (!fi.exists())
+-        return a;
+-    if (fi.isRelative())
+-        return fi.absoluteFilePath();
+-    return a;
+-}
+-
+-// Send the arguments to an already running instance of Qt Creator
+-static bool sendArguments(SharedTools::QtSingleApplication &app, const QStringList &arguments)
+-{
+-    if (!arguments.empty()) {
+-        // Send off arguments
+-        const QStringList::const_iterator acend = arguments.constEnd();
+-        for (QStringList::const_iterator it = arguments.constBegin(); it != acend; ++it) {
+-            if (!app.sendMessage(prepareRemoteArgument(*it))) {
+-                displayError(msgSendArgumentFailed());
+-                return false;
+-            }
+-        }
+-    }
+-    // Special empty argument means: Show and raise (the slot just needs to be triggered)
+-    if (!app.sendMessage(QString())) {
+-        displayError(msgSendArgumentFailed());
+-        return false;
+-    }
+-    return true;
+-}
+-
+-static inline QStringList getPluginPaths()
+-{
+-    QStringList rc;
+-    // Figure out root:  Up one from 'bin'
+-    QDir rootDir = QApplication::applicationDirPath();
+-    rootDir.cdUp();
+-    const QString rootDirPath = rootDir.canonicalPath();
+-    // 1) "plugins" (Win/Linux)
+-    QString pluginPath = rootDirPath;
+-    pluginPath += QDir::separator();
+-    pluginPath += QLatin1String("lib");
+-    pluginPath += QDir::separator();
+-    pluginPath += QLatin1String("qtcreator");
+-    pluginPath += QDir::separator();
+-    pluginPath += QLatin1String("plugins");
+-    rc.push_back(pluginPath);
+-    // 2) "PlugIns" (OS X)
+-    pluginPath = rootDirPath;
+-    pluginPath += QDir::separator();
+-    pluginPath += QLatin1String("PlugIns");
+-    rc.push_back(pluginPath);
+-    return rc;
++#include "mainwindow.h"
++#include "modemanager.h"
++#include "projectexplorer/projectexplorer.h"
++#include "coreplugin/coreplugin.h"
++#include "find/findplugin.h"
++#include "quickopen/quickopenplugin.h"
++#include "texteditor/texteditorplugin.h"
++#include "cppeditor/cppplugin.h"
++
++static void print_help()
++{
++	qWarning("Usage: beaver PROGRAMM ARGUMENTS");
++	qWarning("\nTODO: possibility to attach to running process, remote debugging, transcript file");
++	qWarning("	waits for volunteer");
+ }
+ 
+ int main(int argc, char **argv)
+-{
+-#ifdef Q_OS_DARWIN
+-    // increase the number of file that can be opened in Qt Creator.
+-    struct rlimit rl;
+-    getrlimit(RLIMIT_NOFILE, &rl);
+-    rl.rlim_cur = rl.rlim_max;
+-    setrlimit(RLIMIT_NOFILE, &rl);
++{	
++	QApplication app (argc, argv);
++	
++	QStringList args;
++	for (int i = 1; i < argc; i++)
++	{
++		args << argv[i];
++	}
++	
++	QString targetFileName;
++	if (args.size() == 1 &&
++		(args[0] == "-h" ||
++		 args[0] == "--help"))
++	{
++		print_help();
++		return 0;
++	}
++	
++	if (args.size() > 0)
++	{
++		QStringList path;
++		path << "" << ".";
++
++		QStringList env = QProcess::systemEnvironment();
++		foreach(QString var, env)
++		{
++			if (var.startsWith("PATH="))
++			{
++				var.remove(0, 5);
++#ifdef Q_OS_WIN
++				QStringList pathDirs = var.split(";");
++#else
++				QStringList pathDirs = var.split(":");
+ #endif
+-
+-    SharedTools::QtSingleApplication app((QLatin1String(appNameC)), argc, argv);
+-    // Load
+-    ExtensionSystem::PluginManager pluginManager;
+-    pluginManager.setFileExtension(QLatin1String("pluginspec"));
+-
+-    const QStringList pluginPaths = getPluginPaths();
+-    pluginManager.setPluginPaths(pluginPaths);
+-
+-    const QStringList arguments = app.arguments();
+-    QMap<QString, QString> foundAppOptions;
+-    if (arguments.size() > 1) {
+-        QMap<QString, bool> appOptions;
+-        appOptions.insert(QLatin1String(HELP_OPTION1), false);
+-        appOptions.insert(QLatin1String(HELP_OPTION2), false);
+-        appOptions.insert(QLatin1String(HELP_OPTION3), false);
+-        appOptions.insert(QLatin1String(HELP_OPTION4), false);
+-        appOptions.insert(QLatin1String(VERSION_OPTION), false);
+-        appOptions.insert(QLatin1String(CLIENT_OPTION), false);
+-        QString errorMessage;
+-        if (!pluginManager.parseOptions(arguments,
+-                                        appOptions,
+-                                        &foundAppOptions,
+-                                        &errorMessage)) {
+-            displayError(errorMessage);
+-            printHelp(QFileInfo(app.applicationFilePath()).baseName(), pluginManager);
+-            return -1;
+-        }
+-    }
+-
+-    const PluginSpecSet plugins = pluginManager.plugins();
+-    ExtensionSystem::PluginSpec *coreplugin = 0;
+-    foreach (ExtensionSystem::PluginSpec *spec, plugins) {
+-        if (spec->name() == QLatin1String(corePluginNameC)) {
+-            coreplugin = spec;
+-            break;
+-        }
+-    }
+-    if (!coreplugin) {
+-        const QString reason = QCoreApplication::translate("Application", "Couldn't find 'Core.pluginspec' in %1").arg(pluginPaths.join(QLatin1String(",")));
+-        displayError(msgCoreLoadFailure(reason));
+-        return 1;
+-    }
+-    if (coreplugin->hasError()) {
+-        displayError(msgCoreLoadFailure(coreplugin->errorString()));
+-        return 1;
+-    }
+-    if (foundAppOptions.contains(QLatin1String(VERSION_OPTION))) {
+-        printVersion(coreplugin, pluginManager);
+-        return 0;
+-    }
+-    if (foundAppOptions.contains(QLatin1String(HELP_OPTION1))
+-            || foundAppOptions.contains(QLatin1String(HELP_OPTION2))
+-            || foundAppOptions.contains(QLatin1String(HELP_OPTION3))
+-            || foundAppOptions.contains(QLatin1String(HELP_OPTION4))) {
+-        printHelp(QFileInfo(app.applicationFilePath()).baseName(), pluginManager);
+-        return 0;
+-    }
+-
+-    const bool isFirstInstance = !app.isRunning();
+-    if (!isFirstInstance && foundAppOptions.contains(QLatin1String(CLIENT_OPTION)))
+-        return sendArguments(app, pluginManager.arguments()) ? 0 : -1;
+-
+-    pluginManager.loadPlugins();
+-    if (coreplugin->hasError()) {
+-        displayError(msgCoreLoadFailure(coreplugin->errorString()));
+-        return 1;
+-    }
+-    if (isFirstInstance) {
+-        // Set up lock and remote arguments for the first instance only.
+-        // Silently fallback to unconnected instances for any subsequent
+-        // instances.
+-        app.initialize();
+-        QObject::connect(&app, SIGNAL(messageReceived(QString)), coreplugin->plugin(), SLOT(remoteArgument(QString)));
+-    }
+-    QObject::connect(&app, SIGNAL(fileOpenRequest(QString)), coreplugin->plugin(), SLOT(remoteArgument(QString)));
+-
+-    // Do this after the event loop has started
+-    QTimer::singleShot(100, &pluginManager, SLOT(startTests()));
+-    return app.exec();
++				path.append(pathDirs);
++			}
++		}
++		bool found  = false;
++		foreach(QString dir, path)
++		{
++			targetFileName = dir + "/" + args[0];
++			QFileInfo info(targetFileName);
++			if (info.isFile() && info.isExecutable())
++			{
++				found = true;
++				break;
++			}
++		}
++		if (found)
++		{
++			args.removeAt(0);
++		}
++		else
++		{
++			qWarning() << args[0] << "is not a valid executable file";
++			print_help();
++			return -1;
++		}
++	}
++	
++	ExtensionSystem::PluginManager pluginManager;
++	// for create instance
++	QString error;
++	
++	Core::Internal::CorePlugin *core = new Core::Internal::CorePlugin();
++	ProjectExplorer::ProjectExplorerPlugin *projectExplorer = new ProjectExplorer::ProjectExplorerPlugin();
++	Debugger::Internal::DebuggerPlugin *debugger = new Debugger::Internal::DebuggerPlugin();
++	Find::Internal::FindPlugin *find = new Find::Internal::FindPlugin();
++	//QuickOpen::Internal::QuickOpenPlugin quickOpen = new QuickOpen::Internal::QuickOpenPlugin();
++	TextEditor::Internal::TextEditorPlugin *textEditor = new TextEditor::Internal::TextEditorPlugin();
++	CppEditor::Internal::CppPlugin *cpp = new CppEditor::Internal::CppPlugin();
++	
++	core->initialize (QStringList(), &error);
++	projectExplorer->initialize(QStringList(), &error);
++	ExtensionSystem::IPlugin* i_debugger_plugin = static_cast<ExtensionSystem::IPlugin*>(debugger);
++	i_debugger_plugin->initialize (QStringList(), &error);	
++	find->initialize (QStringList(), &error);
++	//quickOpen.initialize (QStringList(), &error);
++	textEditor->initialize (QStringList(), &error);
++	cpp->initialize (QStringList(), &error);
++	
++	core->extensionsInitialized();
++	
++	if (! targetFileName.isEmpty())
++	{
++		debugger->startNewDebugger(targetFileName, args);
++	}
++	int res = app.exec();
++	
++	delete cpp;
++	delete textEditor;
++	//delete quickOpen;
++	delete find;
++	i_debugger_plugin->shutdown();
++	delete debugger;
++	delete projectExplorer;
++	delete core;
++	
++	return res;
+ }
+-
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.cpp beaverdbg/src/plugins/coreplugin/beaverversiondialog.cpp
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.cpp	1970-01-01 03:00:00.000000000 +0300
++++ beaverdbg/src/plugins/coreplugin/beaverversiondialog.cpp	2009-06-26 18:10:40.000000000 +0300
+@@ -0,0 +1,81 @@
++#include "beaverversiondialog.h"
++
++#include "coreconstants.h"
++#include "icore.h"
++
++#include <utils/qtcassert.h>
++
++#include <QtCore/QDate>
++#include <QtCore/QFile>
++
++#include <QtGui/QDialogButtonBox>
++#include <QtGui/QGridLayout>
++#include <QtGui/QLabel>
++#include <QtGui/QPushButton>
++#include <QtGui/QTextBrowser>
++
++using namespace Core;
++using namespace Core::Internal;
++using namespace Core::Constants;
++
++BeaverVersionDialog::BeaverVersionDialog(QWidget *parent)
++    : QDialog(parent)
++{
++    // We need to set the window icon explicitly here since for some reason the
++    // application icon isn't used when the size of the dialog is fixed (at least not on X11/GNOME)
++    setWindowIcon(QIcon(":/core/images/qtcreator_logo_128.png"));
++
++    setWindowTitle(tr("About Beaver"));
++    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
++    QGridLayout *layout = new QGridLayout(this);
++    layout->setSizeConstraint(QLayout::SetFixedSize);
++
++    QString version = QLatin1String(IDE_VERSION_LONG);
++    version += QDate(2007, 25, 10).toString(Qt::SystemLocaleDate);
++
++    const QString description = tr(
++        "<h3>Beaver %1</h3>"
++        "Based on Qt Creator %2<br/>"
++        "<br/>"
++        "Built on " __DATE__ " at " __TIME__ "<br />"
++#ifdef IDE_REVISION
++        "From revision %5<br/>"
++#endif
++        "<br/>"
++        "Beaver is <a href='http://www.qtsoftware.com/products/appdev/developer-tools/developer-tools#qt-tools-at-a'>Qt Creator</a> adaptation for usage as stand alone debugger.<br/>"
++        "Done by Andrei Kopats aka hlamer and <a href='http://www.monkeystudio.org'>Monkey Studio team.</a><br/>"
++        "See <a href='http://www.monkeystudio.org'>TODO project home page</a> for additional info.<br/>"
++        "For more information about original Qt Creator see <i>Help->About original Qt Creator</i> dialog<br/>"
++        "<br/>"
++        "You could report bugs on <a href='http://www.monkeystudio.org/node/24'>this page.</a><br/>"
++        "Use IRC channel <i>#monkeystudio</i> on <i>irc.freenode.net</i>, or <a href='http://www.monkeystudio.org/irc'>this page</a> for interactive contact with the developers<br/>"
++        "<br/>"
++        "Copyright 2008-%3 %4.<br/>"
++        "License: LGPL v2.1<br/>"
++        "<br/>"
++        "The program is provided AS IS with NO WARRANTY OF ANY KIND, "
++        "INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A "
++        "PARTICULAR PURPOSE.<br/>")
++        .arg("0.1a", version, "2009", "Andrei Kopats and Monkey Studio team"
++#ifdef IDE_REVISION
++             , QString(IDE_REVISION_STR).left(10)
++#endif
++             );
++
++    QLabel *copyRightLabel = new QLabel(description);
++    copyRightLabel->setWordWrap(true);
++    copyRightLabel->setOpenExternalLinks(true);
++    copyRightLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
++
++    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
++    QPushButton *closeButton = buttonBox->button(QDialogButtonBox::Close);
++    QTC_ASSERT(closeButton, /**/);
++    buttonBox->addButton(closeButton, QDialogButtonBox::ButtonRole(QDialogButtonBox::RejectRole | QDialogButtonBox::AcceptRole));
++    connect(buttonBox , SIGNAL(rejected()), this, SLOT(reject()));
++
++    QLabel *logoLabel = new QLabel;
++    logoLabel->setPixmap(QPixmap(QLatin1String(":/core/images/qtcreator_logo_128.png")));
++    layout->addWidget(logoLabel , 0, 0, 1, 1);
++    layout->addWidget(copyRightLabel, 0, 1, 4, 4);
++    layout->addWidget(buttonBox, 4, 0, 1, 5);
++}
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.h beaverdbg/src/plugins/coreplugin/beaverversiondialog.h
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.h	1970-01-01 03:00:00.000000000 +0300
++++ beaverdbg/src/plugins/coreplugin/beaverversiondialog.h	2009-06-26 18:10:40.000000000 +0300
+@@ -0,0 +1,19 @@
++#ifndef BEAVERVERSIONDIALOG_H
++#define BEAVERVERSIONDIALOG_H
++
++#include <QtGui/QDialog>
++
++namespace Core {
++namespace Internal {
++
++class BeaverVersionDialog : public QDialog
++{
++    Q_OBJECT
++public:
++    explicit BeaverVersionDialog(QWidget *parent);
++};
++
++} // namespace Internal
++} // namespace Core
++
++#endif // BEAVERVERSIONDIALOG_H
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/coreconstants.h beaverdbg/src/plugins/coreplugin/coreconstants.h
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/coreconstants.h	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/coreconstants.h	2009-06-25 17:53:45.000000000 +0300
+@@ -139,6 +139,7 @@
+ const char * const GOTONEXTGROUP         = "QtCreator.GotoNextTabGroup";
+ const char * const WINDOWSLIST           = "QtCreator.WindowsList";
+ const char * const ABOUT_WORKBENCH       = "QtCreator.AboutWorkbench";
++const char * const ABOUT_BEAVER          = "QtCreator.AboutBeaver";
+ const char * const ABOUT_PLUGINS         = "QtCreator.AboutPlugins";
+ const char * const ABOUT_QT              = "QtCreator.AboutQt";
+ const char * const S_RETURNTOEDITOR      = "QtCreator.ReturnToEditor";
+@@ -196,6 +197,7 @@
+ // help groups (global)
+ const char * const G_HELP_HELP           = "QtCreator.Group.Help.Help";
+ const char * const G_HELP_ABOUT          = "QtCreator.Group.Help.About";
++const char * const G_HELP_ABOUT_BEAVER   = "QtCreator.Group.Help.AboutBeaver";
+ 
+ const char * const ICON_MINUS            = ":/core/images/minus.png";
+ const char * const ICON_PLUS             = ":/core/images/plus.png";
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.cpp beaverdbg/src/plugins/coreplugin/coreplugin.cpp
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/coreplugin.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -48,6 +48,8 @@
+ CorePlugin::CorePlugin() :
+     m_mainWindow(new MainWindow), m_welcomeMode(0), m_editMode(0)
+ {
++	Q_INIT_RESOURCE(core);
++	Q_INIT_RESOURCE(fancyactionbar);
+ }
+ 
+ CorePlugin::~CorePlugin()
+@@ -78,19 +80,23 @@
+         webSettings->setFontFamily(QWebSettings::StandardFont, applicationFont.family());
+         //webSettings->setFontSize(QWebSettings::DefaultFontSize, applicationFont.pointSize());
+ #endif
++#if 0
+         m_welcomeMode = new WelcomeMode;
+         addObject(m_welcomeMode);
+ 
+         EditorManager *editorManager = m_mainWindow->editorManager();
+         m_editMode = new EditMode(editorManager);
+         addObject(m_editMode);
++#endif
+     }
+     return success;
+ }
+ 
+ void CorePlugin::extensionsInitialized()
+ {
++#if 0
+     m_mainWindow->modeManager()->activateMode(m_welcomeMode->uniqueModeName());
++#endif
+     m_mainWindow->extensionsInitialized();
+ }
+ 
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.pro beaverdbg/src/plugins/coreplugin/coreplugin.pro
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.pro	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/coreplugin.pro	2009-06-25 17:53:45.000000000 +0300
+@@ -34,6 +34,7 @@
+     vcsmanager.cpp \
+     viewmanager.cpp \
+     versiondialog.cpp \
++    beaverversiondialog.cpp \
+     editormanager/editorgroup.cpp \
+     editormanager/editormanager.cpp \
+     editormanager/stackededitorgroup.cpp \
+@@ -130,6 +131,7 @@
+     viewmanagerinterface.h \
+     icorelistener.h \
+     versiondialog.h \
++    beaverversiondialog.h \
+     scriptmanager/metatypedeclarations.h \
+     scriptmanager/qworkbench_wrapper.h \
+     scriptmanager/scriptmanager.h \
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editormanager.cpp beaverdbg/src/plugins/coreplugin/editormanager/editormanager.cpp
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editormanager.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/editormanager/editormanager.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -172,17 +172,23 @@
+     m_splitter(0),
+     m_core(core),
+     m_suppressEditorChanges(false),
++#if 0
+     m_revertToSavedAction(new QAction(EditorManager::tr("Revert to Saved"), parent)),
++#endif
+     m_saveAction(new QAction(parent)),
+     m_saveAsAction(new QAction(parent)),
+     m_closeCurrentEditorAction(new QAction(EditorManager::tr("Close"), parent)),
+     m_closeAllEditorsAction(new QAction(EditorManager::tr("Close All"), parent)),
+     m_gotoNextDocHistoryAction(new QAction(EditorManager::tr("Next Document in History"), parent)),
+     m_gotoPreviousDocHistoryAction(new QAction(EditorManager::tr("Previous Document in History"), parent)),
++#if 0
+     m_duplicateAction(new QAction(EditorManager::tr("Duplicate Document"), parent)),
++#endif
+     m_goBackAction(new QAction(EditorManager::tr("Go back"), parent)),
+     m_goForwardAction(new QAction(EditorManager::tr("Go forward"), parent)),
++#if 0
+     m_openInExternalEditorAction(new QAction(EditorManager::tr("Open in External Editor"), parent)),
++#endif
+     currentNavigationHistoryPosition(-1),
+     m_windowPopup(0),
+     m_coreListener(0)
+@@ -223,7 +229,8 @@
+ 
+     ActionManager *am = m_d->m_core->actionManager();
+     ActionContainer *mfile = am->actionContainer(Constants::M_FILE);
+-
++	Command *cmd;
++#if 0
+     //Revert to saved
+     Command *cmd = am->registerAction(m_d->m_revertToSavedAction,
+                                        Constants::REVERTTOSAVED, editManagerContext);
+@@ -231,7 +238,7 @@
+     cmd->setDefaultText(tr("Revert File to Saved"));
+     mfile->addAction(cmd, Constants::G_FILE_SAVE);
+     connect(m_d->m_revertToSavedAction, SIGNAL(triggered()), this, SLOT(revertToSaved()));
+-
++#endif
+     //Save Action
+     am->registerAction(m_d->m_saveAction, Constants::SAVE, editManagerContext);
+     connect(m_d->m_saveAction, SIGNAL(triggered()), this, SLOT(saveFile()));
+@@ -282,12 +289,12 @@
+     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+W")));
+     mfile->addAction(cmd, Constants::G_FILE_CLOSE);
+     connect(m_d->m_closeAllEditorsAction, SIGNAL(triggered()), this, SLOT(closeAllEditors()));
+-
++#if 0
+     //Duplicate Action
+     cmd = am->registerAction(m_d->m_duplicateAction, Constants::DUPLICATEDOCUMENT, editManagerContext);
+     mwindow->addAction(cmd, Constants::G_WINDOW_CLOSE);
+     connect(m_d->m_duplicateAction, SIGNAL(triggered()), this, SLOT(duplicateEditor()));
+-
++#endif
+     // Goto Previous In History Action
+     cmd = am->registerAction(m_d->m_gotoPreviousDocHistoryAction, Constants::GOTOPREVINHISTORY, editManagerContext);
+ #ifdef Q_WS_MAC
+@@ -330,6 +337,7 @@
+ 
+ 
+     ActionContainer *medit = am->actionContainer(Constants::M_EDIT);
++#if 0
+     ActionContainer *advancedMenu = am->createMenu(Constants::M_EDIT_ADVANCED);
+     medit->addMenu(advancedMenu, Constants::G_EDIT_ADVANCED);
+     advancedMenu->menu()->setTitle(tr("&Advanced"));
+@@ -337,7 +345,6 @@
+     advancedMenu->appendGroup(Constants::G_EDIT_COLLAPSING);
+     advancedMenu->appendGroup(Constants::G_EDIT_FONT);
+     advancedMenu->appendGroup(Constants::G_EDIT_EDITOR);
+-
+     // Advanced menu separators
+     cmd = createSeparator(am, this, QLatin1String("QtCreator.Edit.Sep.Collapsing"), editManagerContext);
+     advancedMenu->addAction(cmd, Constants::G_EDIT_COLLAPSING);
+@@ -345,12 +352,11 @@
+     advancedMenu->addAction(cmd, Constants::G_EDIT_FONT);
+     cmd = createSeparator(am, this, QLatin1String("QtCreator.Edit.Sep.Editor"), editManagerContext);
+     advancedMenu->addAction(cmd, Constants::G_EDIT_EDITOR);
+-
+     cmd = am->registerAction(m_d->m_openInExternalEditorAction, Constants::OPEN_IN_EXTERNAL_EDITOR, editManagerContext);
+     cmd->setDefaultKeySequence(QKeySequence(tr("Alt+V,Alt+I")));
+     advancedMenu->addAction(cmd, Constants::G_EDIT_EDITOR);
+     connect(m_d->m_openInExternalEditorAction, SIGNAL(triggered()), this, SLOT(openInExternalEditor()));
+-
++#endif
+ 
+     // other setup
+     connect(this, SIGNAL(currentEditorChanged(Core::IEditor*)),
+@@ -848,7 +854,7 @@
+     if (filters.empty())
+         return rc;
+     const QString filterSeparator = QLatin1String(";;");
+-    bool hasAllFilter = false;
++    bool hasAllFilter = true;
+     const int size = filters.size();
+     for (int i = 0; i < size; i++) {
+         const QString &filterString = filters.at(i);
+@@ -1175,13 +1181,15 @@
+ 
+     m_d->m_saveAction->setEnabled(curEditor != 0 && curEditor->file()->isModified());
+     m_d->m_saveAsAction->setEnabled(curEditor != 0 && curEditor->file()->isSaveAsAllowed());
++#if 0
+     m_d->m_revertToSavedAction->setEnabled(curEditor != 0
+         && !curEditor->file()->fileName().isEmpty() && curEditor->file()->isModified());
+-
++#endif
+     m_d->m_saveAsAction->setText(tr("Save %1 As...").arg(fName));
+     m_d->m_saveAction->setText(tr("&Save %1").arg(fName));
++#if 0
+     m_d->m_revertToSavedAction->setText(tr("Revert %1 to Saved").arg(fName));
+-
++#endif
+ 
+     m_d->m_closeCurrentEditorAction->setEnabled(m_d->m_splitter->currentGroup()->editorCount() > 0);
+     m_d->m_closeCurrentEditorAction->setText(tr("Close %1").arg(fName));
+@@ -1191,10 +1199,10 @@
+     m_d->m_gotoPreviousDocHistoryAction->setEnabled(m_d->m_editorHistory.count() > 0);
+     m_d->m_goBackAction->setEnabled(m_d->currentNavigationHistoryPosition > 0);
+     m_d->m_goForwardAction->setEnabled(m_d->currentNavigationHistoryPosition < m_d->m_navigationHistory.size()-1);
+-
++#if 0
+     m_d->m_duplicateAction->setEnabled(curEditor != 0 && curEditor->duplicateSupported());
+-
+     m_d->m_openInExternalEditorAction->setEnabled(curEditor != 0);
++#endif
+ }
+ 
+ QList<IEditor*> EditorManager::openedEditors() const
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editorsplitter.cpp beaverdbg/src/plugins/coreplugin/editormanager/editorsplitter.cpp
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editorsplitter.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/editormanager/editorsplitter.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -69,7 +69,7 @@
+     ActionManager *am = ICore::instance()->actionManager();
+     ActionContainer *mwindow = am->actionContainer(Constants::M_WINDOW);
+     Command *cmd;
+-
++#if 0
+     //Horizontal Action
+     m_horizontalSplitAction = new QAction(tr("Split Left/Right"), this);
+     cmd = am->registerAction(m_horizontalSplitAction, Constants::HORIZONTAL, editorManagerContext);
+@@ -109,7 +109,7 @@
+     mLayout->addAction(cmd);
+     connect(m_restoreDefault, SIGNAL(triggered()),
+             this, SLOT(restoreDefaultLayout()));
+-
++#endif
+     // TODO: The previous and next actions are removed, to be reenabled when they
+     // navigate according to code navigation history. And they need different shortcuts on the mac
+     // since Alt+Left/Right is jumping wordwise in editors
+@@ -127,7 +127,6 @@
+     cmd->setDefaultKeySequence(QKeySequence(tr("Alt+Right")));
+     mwindow->addAction(cmd, Constants::G_WINDOW_NAVIGATE);
+     connect(m_gotoNextEditorAction, SIGNAL(triggered()), this, SLOT(gotoNextEditor()));
+-#endif
+ 
+     // Previous Group Action
+     m_gotoPreviousGroupAction = new QAction(tr("Previous Group"), this);
+@@ -152,10 +151,12 @@
+     cmd = am->registerAction(m_moveDocToNextGroupAction, "QtCreator.DocumentToNextGroup", editorManagerContext);
+     mwindow->addAction(cmd, Constants::G_WINDOW_NAVIGATE_GROUPS);
+     connect(m_moveDocToNextGroupAction, SIGNAL(triggered()), this, SLOT(moveDocToNextGroup()));
++#endif
+ }
+ 
+ void EditorSplitter::updateActions()
+ {
++#if 0
+     const bool hasMultipleGroups = (qobject_cast<QSplitter*>(m_root) != 0);
+     QTC_ASSERT(currentGroup(), return);
+     const bool hasEditors = (currentGroup()->editorCount() != 0);
+@@ -169,6 +170,7 @@
+     m_gotoNextGroupAction->setEnabled(hasMultipleGroups);
+     m_moveDocToPreviousGroupAction->setEnabled(hasEditors && hasMultipleGroups);
+     m_moveDocToNextGroupAction->setEnabled(hasEditors && hasMultipleGroups);
++#endif
+ }
+ 
+ int EditorSplitter::editorCount() const
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/fancytabwidget.cpp beaverdbg/src/plugins/coreplugin/fancytabwidget.cpp
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/fancytabwidget.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/fancytabwidget.cpp	2009-06-26 18:10:40.000000000 +0300
+@@ -246,6 +246,7 @@
+     m_tabBar->setUsesScrollButtons(false);
+ 
+     m_selectionWidget = new QWidget(this);
++    m_selectionWidget->setMaximumWidth(0);
+     QVBoxLayout *selectionLayout = new QVBoxLayout;
+     selectionLayout->setSpacing(0);
+     selectionLayout->setMargin(0);
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.cpp beaverdbg/src/plugins/coreplugin/mainwindow.cpp
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/mainwindow.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -55,6 +55,7 @@
+ #include "stylehelper.h"
+ #include "variablemanager.h"
+ #include "versiondialog.h"
++#include "beaverversiondialog.h"
+ #include "viewmanager.h"
+ #include "uniqueidmanager.h"
+ #include "manhattanstyle.h"
+@@ -125,6 +126,7 @@
+     m_navigationWidget(0),
+     m_rightPaneWidget(0),
+     m_versionDialog(0),
++    m_beaverVersionDialog(0),
+     m_activeContext(0),
+     m_outputMode(0),
+     m_generalSettings(new GeneralSettings),
+@@ -144,9 +146,10 @@
+ #endif
+     m_toggleSideBarButton(new QToolButton)
+ {
++#if 0
+     OutputPaneManager::create();
+-
+-    setWindowTitle(tr("Qt Creator"));
++#endif
++    //setWindowTitle(tr("Beaver"));
+ #ifndef Q_OS_MAC
+     qApp->setWindowIcon(QIcon(":/core/images/qtcreator_logo_128.png"));
+ #endif
+@@ -182,7 +185,9 @@
+     m_modeStack = new FancyTabWidget(this);
+     m_modeManager = new ModeManager(this, m_modeStack);
+     m_modeManager->addWidget(m_progressManager->progressView());
++#if 0
+     m_viewManager = new ViewManager(this);
++#endif
+     m_messageManager = new MessageManager;
+     m_editorManager = new EditorManager(m_coreImpl, this);
+     m_editorManager->hide();
+@@ -241,23 +246,27 @@
+     m_uniqueIDManager = 0;
+     delete m_vcsManager;
+     m_vcsManager = 0;
++#if 0
+     pm->removeObject(m_outputMode);
+     delete m_outputMode;
+     m_outputMode = 0;
++#endif
+     //we need to delete editormanager and viewmanager explicitly before the end of the destructor,
+     //because they might trigger stuff that tries to access data from editorwindow, like removeContextWidget
+-
++#if 0
+     // All modes are now gone
+     OutputPaneManager::destroy();
+ 
+     // Now that the OutputPaneManager is gone, is a good time to delete the view
+     pm->removeObject(m_outputView);
+     delete m_outputView;
+-
++#endif
+     delete m_editorManager;
+     m_editorManager = 0;
++#if 0
+     delete m_viewManager;
+     m_viewManager = 0;
++#endif
+     delete m_progressManager;
+     m_progressManager = 0;
+     pm->removeObject(m_coreImpl);
+@@ -282,9 +291,12 @@
+ 
+     ExtensionSystem::PluginManager *pm = ExtensionSystem::PluginManager::instance();
+     pm->addObject(m_coreImpl);
++#if 0
+     m_viewManager->init();
++#endif
+     m_modeManager->init();
+     m_progressManager->init();
++#if 0
+     QWidget *outputModeWidget = new QWidget;
+     outputModeWidget->setLayout(new QVBoxLayout);
+     outputModeWidget->layout()->setMargin(0);
+@@ -304,9 +316,10 @@
+ 
+     m_outputMode->setContext(m_globalContext);
+     pm->addObject(m_outputMode);
++#endif
+     pm->addObject(m_generalSettings);
+     pm->addObject(m_shortcutSettings);
+-
++#if 0
+     // Add widget to the bottom, we create the view here instead of inside the
+     // OutputPaneManager, since the ViewManager needs to be initilized before
+     m_outputView = new Core::BaseView;
+@@ -314,18 +327,20 @@
+     m_outputView->setWidget(OutputPaneManager::instance()->buttonsWidget());
+     m_outputView->setDefaultPosition(Core::IView::Second);
+     pm->addObject(m_outputView);
++#endif
+     return true;
+ }
+ 
+ void MainWindow::extensionsInitialized()
+ {
+     m_editorManager->init();
+-
++#if 0
+     m_viewManager->extensionsInitalized();
+-
++#endif
+     m_messageManager->init();
++#if 0
+     OutputPaneManager::instance()->init();
+-
++#endif
+     m_actionManager->initialize();
+     readSettings();
+     updateContext();
+@@ -439,7 +454,9 @@
+     ActionContainer *filemenu = am->createMenu(Constants::M_FILE);
+     menubar->addMenu(filemenu, Constants::G_FILE);
+     filemenu->menu()->setTitle(tr("&File"));
++#if 0
+     filemenu->appendGroup(Constants::G_FILE_NEW);
++#endif
+     filemenu->appendGroup(Constants::G_FILE_OPEN);
+     filemenu->appendGroup(Constants::G_FILE_PROJECT);
+     filemenu->appendGroup(Constants::G_FILE_SAVE);
+@@ -452,7 +469,7 @@
+     // Edit Menu
+     ActionContainer *medit = am->createMenu(Constants::M_EDIT);
+     menubar->addMenu(medit, Constants::G_EDIT);
+-    medit->menu()->setTitle(tr("&Edit"));
++    medit->menu()->setTitle(tr("&Find"));
+     medit->appendGroup(Constants::G_EDIT_UNDOREDO);
+     medit->appendGroup(Constants::G_EDIT_COPYPASTE);
+     medit->appendGroup(Constants::G_EDIT_SELECTALL);
+@@ -541,32 +558,33 @@
+     cmd = am->registerShortcut(m_focusToEditor, Constants::S_RETURNTOEDITOR, m_globalContext);
+     cmd->setDefaultKeySequence(QKeySequence(Qt::Key_Escape));
+     connect(m_focusToEditor, SIGNAL(activated()), this, SLOT(setFocusToEditor()));
+-
++#if 0
+     // New File Action
+     m_newAction = new QAction(QIcon(Constants::ICON_NEWFILE), tr("&New..."), this);
+     cmd = am->registerAction(m_newAction, Constants::NEW, m_globalContext);
+     cmd->setDefaultKeySequence(QKeySequence::New);
+     mfile->addAction(cmd, Constants::G_FILE_NEW);
+     connect(m_newAction, SIGNAL(triggered()), this, SLOT(newFile()));
+-
++#endif
+     // Open Action
+     m_openAction = new QAction(QIcon(Constants::ICON_OPENFILE), tr("&Open..."), this);
+     cmd = am->registerAction(m_openAction, Constants::OPEN, m_globalContext);
+     cmd->setDefaultKeySequence(QKeySequence::Open);
+     mfile->addAction(cmd, Constants::G_FILE_OPEN);
+     connect(m_openAction, SIGNAL(triggered()), this, SLOT(openFile()));
+-
++#if 0
+     // Open With Action
+     m_openWithAction = new QAction(tr("&Open With..."), this);
+     cmd = am->registerAction(m_openWithAction, Constants::OPEN_WITH, m_globalContext);
+     mfile->addAction(cmd, Constants::G_FILE_OPEN);
+     connect(m_openWithAction, SIGNAL(triggered()), this, SLOT(openFileWith()));
+-
++#endif
+     // File->Recent Files Menu
+     ActionContainer *ac = am->createMenu(Constants::M_FILE_RECENTFILES);
+     mfile->addMenu(ac, Constants::G_FILE_OPEN);
+     ac->menu()->setTitle(tr("Recent Files"));
+-
++	QAction *tmpaction;
++#if 0
+     // Save Action
+     QAction *tmpaction = new QAction(QIcon(Constants::ICON_SAVEFILE), tr("&Save"), this);
+     cmd = am->registerAction(tmpaction, Constants::SAVE, m_globalContext);
+@@ -598,14 +616,14 @@
+     tmpaction = new QAction(tr("&Print..."), this);
+     cmd = am->registerAction(tmpaction, Constants::PRINT, m_globalContext);
+     mfile->addAction(cmd, Constants::G_FILE_PRINT);
+-
++#endif
+     // Exit Action
+     m_exitAction = new QAction(tr("E&xit"), this);
+     cmd = am->registerAction(m_exitAction, Constants::EXIT, m_globalContext);
+     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Q")));
+     mfile->addAction(cmd, Constants::G_FILE_OTHER);
+     connect(m_exitAction, SIGNAL(triggered()), this, SLOT(exit()));
+-
++#if 0
+     // Undo Action
+     tmpaction = new QAction(QIcon(Constants::ICON_UNDO), tr("&Undo"), this);
+     cmd = am->registerAction(tmpaction, Constants::UNDO, m_globalContext);
+@@ -645,7 +663,7 @@
+     cmd = am->registerAction(tmpaction, Constants::SELECTALL, m_globalContext);
+     cmd->setDefaultKeySequence(QKeySequence::SelectAll);
+     medit->addAction(cmd, Constants::G_EDIT_SELECTALL);
+-
++#endif
+     // Goto Action
+     tmpaction = new QAction(tr("&Go To Line..."), this);
+     cmd = am->registerAction(tmpaction, Constants::GOTO, m_globalContext);
+@@ -705,16 +723,27 @@
+     connect(m_toggleFullScreenAction, SIGNAL(triggered(bool)), this, SLOT(setFullScreen(bool)));
+ #endif
+ 
+-    // About IDE Action
++    // About original Qt Creator
+ #ifdef Q_OS_MAC
+-    tmpaction = new QAction(tr("About &Qt Creator"), this); // it's convention not to add dots to the about menu
++    tmpaction = new QAction(tr("About original &Qt Creator"), this); // it's convention not to add dots to the about menu
+ #else
+-    tmpaction = new QAction(tr("About &Qt Creator..."), this);
++    tmpaction = new QAction(tr("About original &Qt Creator..."), this);
+ #endif
+     cmd = am->registerAction(tmpaction, Constants:: ABOUT_WORKBENCH, m_globalContext);
+     mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
+     tmpaction->setEnabled(true);
+     connect(tmpaction, SIGNAL(triggered()), this,  SLOT(aboutQtCreator()));
++    // About beaver
++#ifdef Q_OS_MAC
++    tmpaction = new QAction(tr("About &Beaver"), this); // it's convention not to add dots to the about menu
++#else
++    tmpaction = new QAction(tr("About &Beaver..."), this);
++#endif
++    cmd = am->registerAction(tmpaction, Constants::ABOUT_BEAVER, m_globalContext);
++    mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
++    tmpaction->setEnabled(true);
++    connect(tmpaction, SIGNAL(triggered()), this,  SLOT(aboutBeaver()));
++#if 0
+     //About Plugins Action
+     tmpaction = new QAction(tr("About &Plugins..."), this);
+     cmd = am->registerAction(tmpaction, Constants::ABOUT_PLUGINS, m_globalContext);
+@@ -724,6 +753,7 @@
+     cmd->action()->setMenuRole(QAction::ApplicationSpecificRole);
+ #endif
+     connect(tmpaction, SIGNAL(triggered()), this,  SLOT(aboutPlugins()));
++#endif
+     // About Qt Action
+ //    tmpaction = new QAction(tr("About &Qt..."), this);
+ //    cmd = am->registerAction(tmpaction, Constants:: ABOUT_QT, m_globalContext);
+@@ -800,7 +830,7 @@
+     // ### Duplicated code from EditMode::makeSureEditorManagerVisible
+     IMode *currentMode = m_coreImpl->modeManager()->currentMode();
+     if (currentMode && currentMode->uniqueModeName() != QLatin1String(Constants::MODE_EDIT) &&
+-        currentMode->uniqueModeName() != QLatin1String("GdbDebugger.Mode.Debug"))
++        currentMode->uniqueModeName() != QLatin1String("Debugger.Mode.Debug"))
+     {
+         m_coreImpl->modeManager()->activateMode(QLatin1String(Constants::MODE_EDIT));
+     }
+@@ -811,7 +841,9 @@
+     if (focusWidget && focusWidget == qApp->focusWidget()) {
+         if (FindToolBarPlaceHolder::getCurrent())
+             FindToolBarPlaceHolder::getCurrent()->hide();
++#if 0
+         OutputPaneManager::instance()->slotHide();
++#endif
+         RightPaneWidget::instance()->setShown(false);
+     }
+ }
+@@ -1066,7 +1098,9 @@
+     m_settings->endGroup();
+ 
+     m_fileManager->saveRecentFiles();
++#if 0
+     m_viewManager->saveSettings(m_settings);
++#endif
+     m_actionManager->saveSettings(m_settings);
+     m_editorManager->saveSettings(m_settings);
+     m_navigationWidget->saveSettings(m_settings);
+@@ -1163,6 +1197,24 @@
+     }
+ }
+ 
++void MainWindow::aboutBeaver()
++{
++    if (!m_beaverVersionDialog) {
++        m_beaverVersionDialog = new BeaverVersionDialog(this);
++        connect(m_beaverVersionDialog, SIGNAL(finished(int)),
++                this, SLOT(destroyBeaverVersionDialog()));
++    }
++    m_beaverVersionDialog->show();
++}
++
++void MainWindow::destroyBeaverVersionDialog()
++{
++    if (m_beaverVersionDialog) {
++        m_beaverVersionDialog->deleteLater();
++        m_beaverVersionDialog = 0;
++    }
++}
++
+ void MainWindow::aboutPlugins()
+ {
+     PluginDialog dialog(this);
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.h beaverdbg/src/plugins/coreplugin/mainwindow.h
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.h	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/mainwindow.h	2009-06-25 17:53:45.000000000 +0300
+@@ -76,6 +76,7 @@
+ class ShortcutSettings;
+ class ViewManager;
+ class VersionDialog;
++class BeaverVersionDialog;
+ 
+ class CORE_EXPORT MainWindow : public QMainWindow
+ {
+@@ -147,10 +148,12 @@
+     void setFocusToEditor();
+     void saveAll();
+     void aboutQtCreator();
++    void aboutBeaver();
+     void aboutPlugins();
+     void updateFocusWidget(QWidget *old, QWidget *now);
+     void setSidebarVisible(bool visible);
+     void destroyVersionDialog();
++    void destroyBeaverVersionDialog();
+ 
+ private:
+     void updateContextObject(IContext *context);
+@@ -182,6 +185,7 @@
+     RightPaneWidget *m_rightPaneWidget;
+     Core::BaseView *m_outputView;
+     VersionDialog *m_versionDialog;
++    BeaverVersionDialog *m_beaverVersionDialog;
+ 
+     IContext * m_activeContext;
+ 
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/modemanager.cpp beaverdbg/src/plugins/coreplugin/modemanager.cpp
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/modemanager.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/modemanager.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -125,7 +125,6 @@
+     IMode *mode = Aggregation::query<IMode>(obj);
+     if (!mode)
+         return;
+-
+     m_mainWindow->addContextObject(mode);
+ 
+     // Count the number of modes with a higher priority
+diff -Nur qt-creator-1.0.0-src/src/plugins/coreplugin/outputpane.cpp beaverdbg/src/plugins/coreplugin/outputpane.cpp
+--- qt-creator-1.0.0-src/src/plugins/coreplugin/outputpane.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/coreplugin/outputpane.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -87,8 +87,10 @@
+     sp.setHorizontalStretch(0);
+     setSizePolicy(sp);
+     layout()->setMargin(0);
++#if 0
+     connect(Core::ModeManager::instance(), SIGNAL(currentModeChanged(Core::IMode *)),
+             this, SLOT(currentModeChanged(Core::IMode *)));
++#endif
+ }
+ 
+ OutputPanePlaceHolder::~OutputPanePlaceHolder()
+diff -Nur qt-creator-1.0.0-src/src/plugins/cppeditor/cppeditor.pro beaverdbg/src/plugins/cppeditor/cppeditor.pro
+--- qt-creator-1.0.0-src/src/plugins/cppeditor/cppeditor.pro	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/cppeditor/cppeditor.pro	2009-06-26 20:41:12.000000000 +0300
+@@ -2,9 +2,9 @@
+ TARGET = CppEditor
+ DEFINES += CPPEDITOR_LIBRARY
+ CONFIG += help
++include(../../qworkbenchplugin.pri)
+ include(../../libs/utils/utils.pri)
+ include(../../shared/indenter/indenter.pri)
+-include(../../qworkbenchplugin.pri)
+ include(cppeditor_dependencies.pri)
+ HEADERS += cppplugin.h \
+     cppeditor.h \
+diff -Nur qt-creator-1.0.0-src/src/plugins/cppeditor/cppplugin.cpp beaverdbg/src/plugins/cppeditor/cppplugin.cpp
+--- qt-creator-1.0.0-src/src/plugins/cppeditor/cppplugin.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/cppeditor/cppplugin.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -111,6 +111,7 @@
+     m_factory(0)
+ {
+     m_instance = this;
++    Q_INIT_RESOURCE(cppeditor);
+ }
+ 
+ CppPlugin::~CppPlugin()
+@@ -128,9 +129,10 @@
+ 
+ void CppPlugin::initializeEditor(CPPEditor *editor)
+ {
++#if 0
+     // common actions
+     m_actionHandler->setupActions(editor);
+-
++#endif
+     // settings
+     TextEditor::TextEditorSettings *settings = TextEditor::TextEditorSettings::instance();
+     connect(settings, SIGNAL(fontSettingsChanged(TextEditor::FontSettings)),
+@@ -186,7 +188,7 @@
+ 
+     Core::ActionManager *am = core->actionManager();
+     am->createMenu(CppEditor::Constants::M_CONTEXT);
+-
++#if 0
+     Core::Command *cmd;
+ 
+     QAction *jumpToDefinition = new QAction(tr("Follow Symbol under Cursor"), this);
+@@ -211,7 +213,7 @@
+         TextEditor::TextEditorActionHandler::Format
+         | TextEditor::TextEditorActionHandler::UnCommentSelection
+         | TextEditor::TextEditorActionHandler::UnCollapseAll);
+-
++#endif
+     // Check Suffixes
+     if (const QSettings *settings = core->settings()) {
+         const QString headerSuffixKey = QLatin1String(headerSuffixKeyC);
+@@ -247,5 +249,3 @@
+     if (editor)
+         editor->jumpToDefinition();
+ }
+-
+-Q_EXPORT_PLUGIN(CppPlugin)
+diff -Nur qt-creator-1.0.0-src/src/plugins/cpptools/cpptoolsplugin.cpp beaverdbg/src/plugins/cpptools/cpptoolsplugin.cpp
+--- qt-creator-1.0.0-src/src/plugins/cpptools/cpptoolsplugin.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/cpptools/cpptoolsplugin.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -285,5 +285,3 @@
+         qDebug() << Q_FUNC_INFO << fileName << rc;
+     return rc;
+ }
+-
+-Q_EXPORT_PLUGIN(CppToolsPlugin)
+diff -Nur qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.cpp beaverdbg/src/plugins/debugger/debuggermanager.cpp
+--- qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/debugger/debuggermanager.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -133,6 +133,7 @@
+ 
+ DebuggerManager::DebuggerManager()
+ {
++    Q_INIT_RESOURCE(debugger);
+     init();
+ }
+ 
+@@ -280,10 +281,10 @@
+         this, SLOT(updateWatchModel()));
+ 
+     m_startExternalAction = new QAction(this);
+-    m_startExternalAction->setText(tr("Start and Debug External Application..."));
++    m_startExternalAction->setText(tr("Start Application..."));
+ 
+     m_attachExternalAction = new QAction(this);
+-    m_attachExternalAction->setText(tr("Attach to Running External Application..."));
++    m_attachExternalAction->setText(tr("Attach to Running Application..."));
+ 
+     m_continueAction = new QAction(this);
+     m_continueAction->setText(tr("Continue"));
+@@ -837,6 +838,32 @@
+     return true;
+ }
+ 
++bool DebuggerManager::startNewDebugger(const QString& programm, const QStringList& arguments)
++{
++    m_startMode = StartExternal;
++    
++    m_executable = programm;
++    m_processArgs = arguments;
++    m_workingDir = QString();
++    m_attachedPID = -1;
++    
++    emit debugModeRequested();
++
++    if (m_executable.endsWith(".js"))
++        setDebuggerType(ScriptDebugger);
++    else 
++        setDebuggerType(GdbDebugger);
++
++    setStatus(DebuggerProcessStartingUp);
++    if (!m_engine->startDebugger()) {
++        setStatus(DebuggerProcessNotReady);
++        return false;
++    }
++
++    m_busy = false;
++    return true;
++}
++
+ void DebuggerManager::cleanupViews()
+ {
+     resetLocation();
+diff -Nur qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.h beaverdbg/src/plugins/debugger/debuggermanager.h
+--- qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.h	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/debugger/debuggermanager.h	2009-06-25 17:53:45.000000000 +0300
+@@ -218,6 +218,7 @@
+ 
+ public slots:
+     bool startNewDebugger(StartMode mode);
++    bool startNewDebugger(const QString& programm, const QStringList& arguments);
+     void exitDebugger(); 
+ 
+     void setSimpleDockWidgetArrangement();
+@@ -342,9 +343,10 @@
+     //    
+     // internal implementation
+     //  
+-    Q_SLOT void loadSessionData();
+-    Q_SLOT void saveSessionData();
+-    Q_SLOT void dumpLog();
++private slots:
++    void loadSessionData();
++    void saveSessionData();
++    void dumpLog();
+ 
+ public:
+     // stuff in this block should be made private by moving it to 
+diff -Nur qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.cpp beaverdbg/src/plugins/debugger/debuggerplugin.cpp
+--- qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/debugger/debuggerplugin.cpp	2009-06-26 18:20:58.000000000 +0300
+@@ -104,6 +104,8 @@
+ const char * const ADD_TO_WATCH         = "Debugger.AddToWatch";
+ 
+ #ifdef Q_OS_MAC
++const char * const STARTEXTERNAL_KEY        = "Ctrl+E";
++const char * const ATTACHEXTERNAL_KEY       = "Ctrl+T";
+ const char * const INTERRUPT_KEY            = "Shift+F5";
+ const char * const RESET_KEY                = "Ctrl+Shift+F5";
+ const char * const STEP_KEY                 = "F7";
+@@ -119,6 +121,8 @@
+ const char * const BREAK_AT_MAIN_KEY        = "Alt+D,Alt+M";
+ const char * const ADD_TO_WATCH_KEY         = "Alt+D,Alt+W";
+ #else
++const char * const STARTEXTERNAL_KEY        = "Ctrl+E";
++const char * const ATTACHEXTERNAL_KEY       = "Ctrl+T";
+ const char * const INTERRUPT_KEY            = "Shift+F5";
+ const char * const RESET_KEY                = "Ctrl+Shift+F5";
+ const char * const STEP_KEY                 = "F11";
+@@ -353,11 +357,18 @@
+     m_locationMark = 0;
+     m_manager = 0;
+     m_debugMode = 0;
++    Q_INIT_RESOURCE(debugger);
+ }
+ 
+ DebuggerPlugin::~DebuggerPlugin()
+ {}
+ 
++bool DebuggerPlugin::startNewDebugger(const QString& programm, const QStringList& arguments)
++{
++    m_manager->breakAtMain();
++    return m_manager->startNewDebugger(programm, arguments);
++}
++
+ static QSettings *settings()
+ {
+     return ICore::instance()->settings();
+@@ -440,11 +451,13 @@
+     Core::Command *cmd = 0;
+     cmd = am->registerAction(m_manager->m_startExternalAction,
+         Constants::STARTEXTERNAL, globalcontext);
++    cmd->setDefaultKeySequence(QKeySequence(Constants::STARTEXTERNAL_KEY));
+     mdebug->addAction(cmd, Core::Constants::G_DEFAULT_ONE);
+ 
+ #ifndef Q_OS_WIN
+     cmd = am->registerAction(m_manager->m_attachExternalAction,
+         Constants::ATTACHEXTERNAL, globalcontext);
++    cmd->setDefaultKeySequence(QKeySequence(Constants::ATTACHEXTERNAL_KEY));
+     mdebug->addAction(cmd, Core::Constants::G_DEFAULT_ONE);
+ #endif
+ 
+@@ -964,5 +977,3 @@
+ }
+ 
+ #include "debuggerplugin.moc"
+-
+-Q_EXPORT_PLUGIN(DebuggerPlugin)
+diff -Nur qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.h beaverdbg/src/plugins/debugger/debuggerplugin.h
+--- qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.h	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/debugger/debuggerplugin.h	2009-06-25 17:53:45.000000000 +0300
+@@ -66,7 +66,8 @@
+ public:
+     DebuggerPlugin();
+     ~DebuggerPlugin();
+-
++    bool startNewDebugger(const QString& programm, const QStringList& arguments);
++    
+ private:
+     bool initialize(const QStringList &arguments, QString *error_message);
+     void shutdown();
+diff -Nur qt-creator-1.0.0-src/src/plugins/find/findplugin.cpp beaverdbg/src/plugins/find/findplugin.cpp
+--- qt-creator-1.0.0-src/src/plugins/find/findplugin.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/find/findplugin.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -63,6 +63,7 @@
+     m_findCompletionModel(new QStringListModel(this)),
+     m_replaceCompletionModel(new QStringListModel(this))
+ {
++    Q_INIT_RESOURCE(find);
+ }
+ 
+ FindPlugin::~FindPlugin()
+@@ -124,23 +125,26 @@
+ {
+     Core::ActionManager *am = Core::ICore::instance()->actionManager();
+     Core::ActionContainer *medit = am->actionContainer(Core::Constants::M_EDIT);
++#if 0
+     Core::ActionContainer *mfind = am->createMenu(Constants::M_FIND);
+     medit->addMenu(mfind, Core::Constants::G_EDIT_FIND);
+     mfind->menu()->setTitle(tr("&Find/Replace"));
+-    mfind->appendGroup(Constants::G_FIND_FILTERS);
+-    mfind->appendGroup(Constants::G_FIND_FLAGS);
+-    mfind->appendGroup(Constants::G_FIND_ACTIONS);
++#endif
++    medit->appendGroup(Constants::G_FIND_FILTERS);
++    medit->appendGroup(Constants::G_FIND_FLAGS);
++    medit->appendGroup(Constants::G_FIND_ACTIONS);
++
+     QList<int> globalcontext = QList<int>() << Core::Constants::C_GLOBAL_ID;
+     Core::Command *cmd;
+     QAction *separator;
+     separator = new QAction(this);
+     separator->setSeparator(true);
+     cmd = am->registerAction(separator, QLatin1String("Find.Sep.Flags"), globalcontext);
+-    mfind->addAction(cmd, Constants::G_FIND_FLAGS);
++    medit->addAction(cmd, Constants::G_FIND_FLAGS);
+     separator = new QAction(this);
+     separator->setSeparator(true);
+     cmd = am->registerAction(separator, QLatin1String("Find.Sep.Actions"), globalcontext);
+-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
++    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
+ }
+ 
+ void FindPlugin::setupFilterMenuItems()
+@@ -256,5 +260,3 @@
+         completions.removeLast();
+     model->setStringList(completions);
+ }
+-
+-Q_EXPORT_PLUGIN(FindPlugin)
+diff -Nur qt-creator-1.0.0-src/src/plugins/find/findtoolbar.cpp beaverdbg/src/plugins/find/findtoolbar.cpp
+--- qt-creator-1.0.0-src/src/plugins/find/findtoolbar.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/find/findtoolbar.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -143,20 +143,20 @@
+     globalcontext << Core::Constants::C_GLOBAL_ID;
+ 
+     Core::ActionManager *am = Core::ICore::instance()->actionManager();
+-    Core::ActionContainer *mfind = am->actionContainer(Constants::M_FIND);
++    Core::ActionContainer *medit = am->actionContainer(Core::Constants::M_EDIT);
+     Core::Command *cmd;
+ 
+-    m_findInDocumentAction = new QAction(tr("Current Document"), this);
++    m_findInDocumentAction = new QAction(tr("Find..."), this);
+     cmd = am->registerAction(m_findInDocumentAction, Constants::FIND_IN_DOCUMENT, globalcontext);
+     cmd->setDefaultKeySequence(QKeySequence::Find);
+-    mfind->addAction(cmd, Constants::G_FIND_FILTERS);
++    medit->addAction(cmd, Constants::G_FIND_FILTERS);
+     connect(m_findInDocumentAction, SIGNAL(triggered()), this, SLOT(openFind()));
+ 
+     if (QApplication::clipboard()->supportsFindBuffer()) {
+         m_enterFindStringAction = new QAction(tr("Enter Find String"), this);
+         cmd = am->registerAction(m_enterFindStringAction, tr("Find.EnterFindString"), globalcontext);
+         cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+E")));
+-        mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
++        medit->addAction(cmd, Constants::G_FIND_ACTIONS);
+         connect(m_enterFindStringAction, SIGNAL(triggered()), this, SLOT(putSelectionToFindClipboard()));
+         connect(QApplication::clipboard(), SIGNAL(findBufferChanged()), this, SLOT(updateFromFindClipboard()));
+     }
+@@ -164,21 +164,21 @@
+     m_findNextAction = new QAction(tr("Find Next"), this);
+     cmd = am->registerAction(m_findNextAction, Constants::FIND_NEXT, globalcontext);
+     cmd->setDefaultKeySequence(QKeySequence::FindNext);
+-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
++    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
+     connect(m_findNextAction, SIGNAL(triggered()), this, SLOT(invokeFindNext()));
+     m_ui.findNextButton->setDefaultAction(cmd->action());
+ 
+     m_findPreviousAction = new QAction(tr("Find Previous"), this);
+     cmd = am->registerAction(m_findPreviousAction, Constants::FIND_PREVIOUS, globalcontext);
+     cmd->setDefaultKeySequence(QKeySequence::FindPrevious);
+-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
++    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
+     connect(m_findPreviousAction, SIGNAL(triggered()), this, SLOT(invokeFindPrevious()));
+     m_ui.findPreviousButton->setDefaultAction(cmd->action());
+-
++#if 0
+     m_replaceNextAction = new QAction(tr("Replace && Find Next"), this);
+     cmd = am->registerAction(m_replaceNextAction, Constants::REPLACE_NEXT, globalcontext);
+     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+=")));
+-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
++    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
+     connect(m_replaceNextAction, SIGNAL(triggered()), this, SLOT(invokeReplaceNext()));
+     m_ui.replaceNextButton->setDefaultAction(cmd->action());
+ 
+@@ -186,22 +186,22 @@
+     cmd = am->registerAction(m_replacePreviousAction, Constants::REPLACE_PREVIOUS, globalcontext);
+     // shortcut removed, clashes with Ctrl++ on many keyboard layouts
+     //cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+=")));
+-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
++    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
+     connect(m_replacePreviousAction, SIGNAL(triggered()), this, SLOT(invokeReplacePrevious()));
+     m_ui.replacePreviousButton->setDefaultAction(cmd->action());
+ 
+     m_replaceAllAction = new QAction(tr("Replace All"), this);
+     cmd = am->registerAction(m_replaceAllAction, Constants::REPLACE_ALL, globalcontext);
+-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
++    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
+     connect(m_replaceAllAction, SIGNAL(triggered()), this, SLOT(invokeReplaceAll()));
+     m_ui.replaceAllButton->setDefaultAction(cmd->action());
+-
++#endif
+     m_caseSensitiveAction = new QAction(tr("Case Sensitive"), this);
+     m_caseSensitiveAction->setIcon(QIcon(":/find/images/casesensitively.png"));
+     m_caseSensitiveAction->setCheckable(true);
+     m_caseSensitiveAction->setChecked(false);
+     cmd = am->registerAction(m_caseSensitiveAction, Constants::CASE_SENSITIVE, globalcontext);
+-    mfind->addAction(cmd, Constants::G_FIND_FLAGS);
++    medit->addAction(cmd, Constants::G_FIND_FLAGS);
+     connect(m_caseSensitiveAction, SIGNAL(triggered(bool)), m_plugin, SLOT(setCaseSensitive(bool)));
+     lineEditMenu->addAction(m_caseSensitiveAction);
+ 
+@@ -210,7 +210,7 @@
+     m_wholeWordAction->setCheckable(true);
+     m_wholeWordAction->setChecked(false);
+     cmd = am->registerAction(m_wholeWordAction, Constants::WHOLE_WORDS, globalcontext);
+-    mfind->addAction(cmd, Constants::G_FIND_FLAGS);
++    medit->addAction(cmd, Constants::G_FIND_FLAGS);
+     connect(m_wholeWordAction, SIGNAL(triggered(bool)), m_plugin, SLOT(setWholeWord(bool)));
+     lineEditMenu->addAction(m_wholeWordAction);
+ 
+@@ -274,9 +274,11 @@
+     m_findInDocumentAction->setEnabled(enabled);
+     m_findNextAction->setEnabled(enabled);
+     m_findPreviousAction->setEnabled(enabled);
++#if 0
+     m_replaceNextAction->setEnabled(replaceEnabled);
+     m_replacePreviousAction->setEnabled(replaceEnabled);
+     m_replaceAllAction->setEnabled(replaceEnabled);
++#endif
+     m_caseSensitiveAction->setEnabled(enabled);
+     m_wholeWordAction->setEnabled(enabled);
+     if (QApplication::clipboard()->supportsFindBuffer())
+diff -Nur qt-creator-1.0.0-src/src/plugins/find/textfindconstants.h beaverdbg/src/plugins/find/textfindconstants.h
+--- qt-creator-1.0.0-src/src/plugins/find/textfindconstants.h	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/find/textfindconstants.h	2009-06-25 17:53:45.000000000 +0300
+@@ -34,9 +34,9 @@
+ namespace Constants {
+ 
+ const char * const M_FIND            = "Find.FindMenu";
+-const char * const G_FIND_FILTERS    = "Find.FindMenu.Filters";
+-const char * const G_FIND_FLAGS      = "Find.FindMenu.Flags";
+-const char * const G_FIND_ACTIONS    = "Find.FindMenu.Actions";
++const char * const G_FIND_FILTERS    = "QtCreator.Group.Edit.Filters";
++const char * const G_FIND_FLAGS      = "QtCreator.Group.Edit.Flags";
++const char * const G_FIND_ACTIONS    = "QtCreator.Group.Edit.Actions";
+ 
+ const char * const FIND              = "Find.FindReplace";
+ const char * const FIND_IN_DOCUMENT  = "Find.FindInCurrentDocument";
+diff -Nur qt-creator-1.0.0-src/src/plugins/plugins.pri beaverdbg/src/plugins/plugins.pri
+--- qt-creator-1.0.0-src/src/plugins/plugins.pri	1970-01-01 03:00:00.000000000 +0300
++++ beaverdbg/src/plugins/plugins.pri	2009-06-26 20:41:12.000000000 +0300
+@@ -0,0 +1,11 @@
++LIBS *=  -l$$qtLibraryTarget(CppEditor) -l$$qtLibraryTarget(CppTools ) \
++	-l$$qtLibraryTarget(Debugger) -l$$qtLibraryTarget(ProjectExplorer) \
++	-l$$qtLibraryTarget(TextEditor) -l$$qtLibraryTarget(Find) \
++	-l$$qtLibraryTarget(QuickOpen) -l$$qtLibraryTarget(Core)
++
++PRE_TARGETDEPS *= $$PWD/debugger $$PWD/texteditor $$PWD/find $$PWD/projectexplorer $$PWD/coreplugin
++
++INCLUDEPATH *=  $$PWD/debugger
++
++#hack for include to main.cpp ui_findwidget.h
++INCLUDEPATH *=  $$PWD/find/.uic
+\ No newline at end of file
+diff -Nur qt-creator-1.0.0-src/src/plugins/plugins.pro beaverdbg/src/plugins/plugins.pro
+--- qt-creator-1.0.0-src/src/plugins/plugins.pro	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/plugins.pro	2009-06-25 17:53:45.000000000 +0300
+@@ -1,156 +1,12 @@
+-# USE .subdir AND .depends !
+-# OTHERWISE PLUGINS WILL BUILD IN WRONG ORDER (DIRECTORIES ARE COMPILED IN PARALLEL)
+-
+ TEMPLATE  = subdirs
++CONFIG *= ordered
+ 
+-SUBDIRS   = plugin_coreplugin \
+-            plugin_find \
+-            plugin_texteditor \
+-            plugin_cppeditor \
+-            plugin_bineditor \
+-            plugin_bookmarks \
+-            plugin_projectexplorer \
+-            plugin_vcsbase \
+-            plugin_perforce \
+-            plugin_subversion \
+-            plugin_git \
+-            plugin_cpptools \
+-            plugin_qt4projectmanager \
+-#            plugin_snippets \ # buggy and annoying
+-            plugin_quickopen \
+-            plugin_debugger \
+-#            plugin_qtestlib \ # this seems to be dead
+-#            plugin_helloworld \ # sample plugin
+-            plugin_help \
+-#            plugin_regexp \ # don't know what to do with this
+-            plugin_qtscripteditor \
+-#            plugin_cpaster \
+-            plugin_cmakeprojectmanager \
+-            plugin_fakevim
+-
+-# These two plugins require private headers from Qt and therefore don't work
+-# with an installed/released version of Qt.
+-exists($$(QTDIR)/.qmake.cache) {
+-    SUBDIRS += plugin_designer plugin_resourceeditor
+-} else {
+-    message(Designer and Resource Editor plugins are not build! They require private headers and do not compile with your released/installed version of Qt)
+-}
+-
+-plugin_coreplugin.subdir = coreplugin
+-
+-plugin_find.subdir = find
+-plugin_find.depends += plugin_coreplugin
+-
+-plugin_texteditor.subdir = texteditor
+-plugin_texteditor.depends = plugin_find
+-plugin_texteditor.depends += plugin_quickopen
+-plugin_texteditor.depends += plugin_coreplugin
+-
+-plugin_cppeditor.subdir = cppeditor
+-plugin_cppeditor.depends = plugin_texteditor
+-plugin_cppeditor.depends += plugin_coreplugin
+-plugin_cppeditor.depends += plugin_cpptools
+-
+-plugin_bineditor.subdir = bineditor
+-plugin_bineditor.depends = plugin_texteditor
+-plugin_bineditor.depends += plugin_coreplugin
+-
+-plugin_designer.subdir = designer
+-plugin_designer.depends = plugin_coreplugin plugin_cppeditor plugin_projectexplorer
+-
+-plugin_vcsbase.subdir = vcsbase
+-plugin_vcsbase.depends = plugin_find
+-plugin_vcsbase.depends += plugin_texteditor
+-plugin_vcsbase.depends += plugin_coreplugin
+-plugin_vcsbase.depends += plugin_projectexplorer
+-
+-plugin_perforce.subdir = perforce
+-plugin_perforce.depends = plugin_vcsbase
+-plugin_perforce.depends += plugin_projectexplorer
+-plugin_perforce.depends += plugin_coreplugin
+-
+-plugin_git.subdir = git
+-plugin_git.depends = plugin_texteditor
+-plugin_git.depends = plugin_vcsbase
+-plugin_git.depends += plugin_projectexplorer
+-plugin_git.depends += plugin_coreplugin
+-
+-plugin_subversion.subdir = subversion
+-plugin_subversion.depends = plugin_vcsbase
+-plugin_subversion.depends += plugin_projectexplorer
+-plugin_subversion.depends += plugin_coreplugin
+-
+-plugin_projectexplorer.subdir = projectexplorer
+-plugin_projectexplorer.depends = plugin_quickopen
+-plugin_projectexplorer.depends += plugin_find
+-plugin_projectexplorer.depends += plugin_coreplugin
+-plugin_projectexplorer.depends += plugin_texteditor
+-
+-plugin_qt4projectmanager.subdir = qt4projectmanager
+-plugin_qt4projectmanager.depends = plugin_texteditor
+-plugin_qt4projectmanager.depends += plugin_projectexplorer
+-plugin_qt4projectmanager.depends += plugin_cpptools
+-plugin_qt4projectmanager.depends += plugin_cppeditor
+-plugin_qt4projectmanager.depends += plugin_help
+-
+-plugin_quickopen.subdir = quickopen
+-plugin_quickopen.depends = plugin_coreplugin
+-
+-plugin_cpptools.subdir = cpptools
+-plugin_cpptools.depends = plugin_projectexplorer
+-plugin_cpptools.depends += plugin_coreplugin
+-plugin_cpptools.depends += plugin_texteditor
+-
+-plugin_bookmarks.subdir = bookmarks
+-plugin_bookmarks.depends = plugin_projectexplorer
+-plugin_bookmarks.depends += plugin_coreplugin
+-plugin_bookmarks.depends += plugin_texteditor
+-
+-plugin_snippets.subdir = snippets
+-plugin_snippets.depends = plugin_projectexplorer
+-plugin_snippets.depends += plugin_coreplugin
+-plugin_snippets.depends += plugin_texteditor
+-
+-plugin_debugger.subdir = debugger
+-plugin_debugger.depends = plugin_projectexplorer
+-plugin_debugger.depends += plugin_coreplugin
+-plugin_debugger.depends += plugin_cppeditor
+-
+-plugin_fakevim.subdir = fakevim
+-plugin_fakevim.depends = plugin_projectexplorer
+-plugin_fakevim.depends += plugin_coreplugin
+-plugin_fakevim.depends += plugin_cppeditor
+-
+-plugin_qtestlib.subdir = qtestlib
+-plugin_qtestlib.depends = plugin_projectexplorer
+-plugin_qtestlib.depends += plugin_coreplugin
+-
+-plugin_helloworld.subdir = helloworld
+-plugin_helloworld.depends += plugin_coreplugin
+-
+-plugin_help.subdir = help
+-plugin_help.depends = plugin_find
+-plugin_help.depends += plugin_quickopen
+-plugin_help.depends += plugin_coreplugin
+-
+-plugin_resourceeditor.subdir = resourceeditor
+-plugin_resourceeditor.depends = plugin_coreplugin
+-
+-plugin_regexp.subdir = regexp
+-plugin_regexp.depends = plugin_coreplugin
+-
+-plugin_qtscripteditor.subdir = qtscripteditor
+-plugin_qtscripteditor.depends = plugin_texteditor
+-plugin_qtscripteditor.depends += plugin_coreplugin
+-
+-plugin_cpaster.subdir = cpaster
+-plugin_cpaster.depends += plugin_texteditor
+-plugin_cpaster.depends += plugin_coreplugin
+-plugin_cpaster.depends += plugin_projectexplorer
+-
+-plugin_cmakeprojectmanager.subdir = cmakeprojectmanager
+-plugin_cmakeprojectmanager.depends = plugin_texteditor
+-plugin_cmakeprojectmanager.depends += plugin_projectexplorer
+-plugin_cmakeprojectmanager.depends += plugin_cpptools
+-plugin_cmakeprojectmanager.depends += plugin_cppeditor
+-plugin_cmakeprojectmanager.depends += plugin_help
++SUBDIRS   = \
++  coreplugin \
++  quickopen \
++  find \
++  texteditor \
++  projectexplorer \
++  debugger \
++  cpptools \
++  cppeditor
+diff -Nur qt-creator-1.0.0-src/src/plugins/projectexplorer/projectexplorer.cpp beaverdbg/src/plugins/projectexplorer/projectexplorer.cpp
+--- qt-creator-1.0.0-src/src/plugins/projectexplorer/projectexplorer.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/projectexplorer/projectexplorer.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -132,6 +132,7 @@
+       m_debuggingRunControl(0)
+ {
+     m_instance = this;
++    Q_INIT_RESOURCE(projectexplorer);
+ }
+ 
+ ProjectExplorerPlugin::~ProjectExplorerPlugin()
+@@ -183,7 +184,9 @@
+     mode->setPriority(Constants::P_MODE_SESSION);
+     mode->setWidget(m_proWindow);
+     mode->setContext(QList<int>() << pecontext);
++#if 0
+     addAutoReleasedObject(mode);
++#endif
+     m_proWindow->layout()->addWidget(new Core::FindToolBarPlaceHolder(mode));
+ 
+     m_buildManager = new BuildManager(this);
+@@ -254,24 +257,24 @@
+ 
+     // mode manager (for fancy actions)
+     Core::ModeManager *modeManager = core->modeManager();
+-
++#if 0
+     // build menu
+     Core::ActionContainer *mbuild =
+         am->createMenu(Constants::M_BUILDPROJECT);
+     mbuild->menu()->setTitle("&Build");
+     menubar->addMenu(mbuild, Core::Constants::G_VIEW);
+-
++#endif
+     // debug menu
+     Core::ActionContainer *mdebug =
+         am->createMenu(Constants::M_DEBUG);
+     mdebug->menu()->setTitle("&Debug");
+-    menubar->addMenu(mdebug, Core::Constants::G_VIEW);
++    menubar->addMenu(mdebug, Core::Constants::G_EDIT);
+ 
+ 
+     //
+     // Groups
+     //
+-
++#if 0
+     mbuild->appendGroup(Constants::G_BUILD_SESSION);
+     mbuild->appendGroup(Constants::G_BUILD_PROJECT);
+     mbuild->appendGroup(Constants::G_BUILD_OTHER);
+@@ -319,7 +322,6 @@
+     // Separators
+     //
+ 
+-    Core::Command *cmd;
+     QAction *sep;
+ 
+     sep = new QAction(this);
+@@ -394,7 +396,7 @@
+     cmd = am->registerAction(m_newAction, Constants::NEWPROJECT, globalcontext);
+     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+N")));
+     msessionContextMenu->addAction(cmd, Constants::G_SESSION_FILES);
+-
++#endif
+ #if 0
+     // open action
+     m_loadAction = new QAction(tr("Load Project..."), this);
+@@ -404,6 +406,7 @@
+     msessionContextMenu->addAction(cmd, Constants::G_SESSION_FILES);
+ #endif
+ 
++#if 0
+     // Default open action
+     m_openFileAction = new QAction(tr("Open File"), this);
+     cmd = am->registerAction(m_openFileAction, ProjectExplorer::Constants::OPENFILE,
+@@ -622,6 +625,7 @@
+     connect(m_openFileAction, SIGNAL(triggered()), this, SLOT(openFile()));
+     connect(m_removeFileAction, SIGNAL(triggered()), this, SLOT(removeFile()));
+     connect(m_renameFileAction, SIGNAL(triggered()), this, SLOT(renameFile()));
++#endif
+ 
+     updateActions();
+ 
+@@ -981,7 +985,7 @@
+     } else {
+         m_session->loadSession(sessionToLoad);
+     }
+-
++#if 0
+     // update welcome page
+     Core::ModeManager *modeManager = Core::ModeManager::instance();
+     connect(modeManager, SIGNAL(currentModeChanged(Core::IMode*)), this, SLOT(currentModeChanged(Core::IMode*)));
+@@ -990,7 +994,7 @@
+         connect(welcomeMode, SIGNAL(requestSession(QString)), this, SLOT(loadSession(QString)));
+         connect(welcomeMode, SIGNAL(requestProject(QString)), this, SLOT(loadProject(QString)));
+     }
+-
++#endif
+     Core::ICore::instance()->openFiles(arguments);
+     updateActions();
+ 
+@@ -1170,6 +1174,7 @@
+ 
+ void ProjectExplorerPlugin::updateActions()
+ {
++#if 0
+     if (debug)
+         qDebug() << "ProjectExplorerPlugin::updateActions";
+ 
+@@ -1201,6 +1206,7 @@
+     updateRunAction();
+ 
+     updateTaskActions();
++#endif
+ }
+ 
+ 
+@@ -1829,5 +1835,3 @@
+     if (session != m_session->activeSession())
+         m_session->loadSession(session);
+ }
+-
+-Q_EXPORT_PLUGIN(ProjectExplorerPlugin)
+diff -Nur qt-creator-1.0.0-src/src/plugins/projectexplorer/session.cpp beaverdbg/src/plugins/projectexplorer/session.cpp
+--- qt-creator-1.0.0-src/src/plugins/projectexplorer/session.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/projectexplorer/session.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -907,7 +907,7 @@
+ 
+ void SessionManager::updateWindowTitle()
+ {
+-    QString windowTitle = tr("Qt Creator");
++    QString windowTitle = tr("Beaver");
+     if (!isDefaultSession(m_sessionName)) {
+         QString sessionName = m_sessionName;
+         if (sessionName.isEmpty())
+diff -Nur qt-creator-1.0.0-src/src/plugins/quickopen/quickopenplugin.cpp beaverdbg/src/plugins/quickopen/quickopenplugin.cpp
+--- qt-creator-1.0.0-src/src/plugins/quickopen/quickopenplugin.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/quickopen/quickopenplugin.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -63,6 +63,7 @@
+ 
+ QuickOpenPlugin::QuickOpenPlugin()
+ {
++    Q_INIT_RESOURCE(quickopen);
+     m_refreshTimer.setSingleShot(false);
+     connect(&m_refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
+ }
+@@ -246,5 +247,3 @@
+             ->progressManager()->addTask(task, tr("Indexing"), Constants::TASK_INDEX, Core::ProgressManager::CloseOnSuccess);
+     connect(progress, SIGNAL(finished()), this, SLOT(saveSettings()));
+ }
+-
+-Q_EXPORT_PLUGIN(QuickOpenPlugin)
+diff -Nur qt-creator-1.0.0-src/src/plugins/texteditor/basetexteditor.cpp beaverdbg/src/plugins/texteditor/basetexteditor.cpp
+--- qt-creator-1.0.0-src/src/plugins/texteditor/basetexteditor.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/texteditor/basetexteditor.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -3479,6 +3479,9 @@
+ 
+ void BaseTextEditor::setReadOnly(bool b)
+ {
++    // no any editing for debugger
++    b = true;
++    
+     QPlainTextEdit::setReadOnly(b);
+     if (b)
+         setTextInteractionFlags(textInteractionFlags() | Qt::TextSelectableByKeyboard);
+diff -Nur qt-creator-1.0.0-src/src/plugins/texteditor/texteditoractionhandler.cpp beaverdbg/src/plugins/texteditor/texteditoractionhandler.cpp
+--- qt-creator-1.0.0-src/src/plugins/texteditor/texteditoractionhandler.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/texteditor/texteditoractionhandler.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -111,6 +111,7 @@
+ 
+ void TextEditorActionHandler::createActions()
+ {
++#if 0
+     m_undoAction      = registerNewAction(QLatin1String(Core::Constants::UNDO),      this, SLOT(undoAction()),
+                                           tr("&Undo"));
+     m_redoAction      = registerNewAction(QLatin1String(Core::Constants::REDO),      this, SLOT(redoAction()),
+@@ -246,6 +247,7 @@
+     command = am->registerAction(m_moveLineDownAction, Constants::MOVE_LINE_DOWN, m_contextId);
+     command->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+Down")));
+     connect(m_moveLineDownAction, SIGNAL(triggered()), this, SLOT(moveLineDown()));
++#endif
+ }
+ 
+ bool TextEditorActionHandler::supportsAction(const QString & /*id */) const
+@@ -290,6 +292,7 @@
+ 
+ void TextEditorActionHandler::updateActions(UpdateMode um)
+ {
++#if 0
+     if (!m_initialized)
+         return;
+     m_pasteAction->setEnabled(um != NoEditor);
+@@ -326,6 +329,7 @@
+     updateRedoAction();
+     updateUndoAction();
+     updateCopyAction();
++#endif
+ }
+ 
+ void TextEditorActionHandler::updateRedoAction()
+diff -Nur qt-creator-1.0.0-src/src/plugins/texteditor/texteditorplugin.cpp beaverdbg/src/plugins/texteditor/texteditorplugin.cpp
+--- qt-creator-1.0.0-src/src/plugins/texteditor/texteditorplugin.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/plugins/texteditor/texteditorplugin.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -68,6 +68,7 @@
+ {
+     QTC_ASSERT(!m_instance, return);
+     m_instance = this;
++    Q_INIT_RESOURCE(texteditor);
+ }
+ 
+ TextEditorPlugin::~TextEditorPlugin()
+@@ -115,7 +116,7 @@
+     int contextId = core->uniqueIDManager()->uniqueIdentifier(TextEditor::Constants::C_TEXTEDITOR);
+     QList<int> context = QList<int>() << contextId;
+     Core::ActionManager *am = core->actionManager();
+-
++#if 0
+     // Add shortcut for invoking automatic completion
+     QShortcut *completionShortcut = new QShortcut(core->mainWindow());
+     completionShortcut->setWhatsThis(tr("Triggers a completion in this scope"));
+@@ -128,7 +129,7 @@
+     command->setDefaultKeySequence(QKeySequence(tr("Meta+Space")));
+ #endif
+     connect(completionShortcut, SIGNAL(activated()), this, SLOT(invokeCompletion()));
+-
++#endif
+     addAutoReleasedObject(new FindInFiles(
+         ExtensionSystem::PluginManager::instance()->getObject<Find::SearchResultWindow>()));
+ 
+@@ -169,6 +170,3 @@
+     if (editor)
+         editor->triggerCompletions();
+ }
+-
+-
+-Q_EXPORT_PLUGIN(TextEditorPlugin)
+diff -Nur qt-creator-1.0.0-src/src/qworkbenchlibrary.pri beaverdbg/src/qworkbenchlibrary.pri
+--- qt-creator-1.0.0-src/src/qworkbenchlibrary.pri	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/qworkbenchlibrary.pri	2009-06-26 18:10:40.000000000 +0300
+@@ -1,6 +1,9 @@
+ IDE_BUILD_TREE = $$OUT_PWD/../../../
+ include(qworkbench.pri)
+ 
++CONFIG -= shared
++CONFIG *= staticlib
++
+ win32 {
+ 	DLLDESTDIR = $$IDE_APP_PATH
+ }
+diff -Nur qt-creator-1.0.0-src/src/qworkbenchplugin.pri beaverdbg/src/qworkbenchplugin.pri
+--- qt-creator-1.0.0-src/src/qworkbenchplugin.pri	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/qworkbenchplugin.pri	2009-06-26 19:18:59.000000000 +0300
+@@ -1,61 +1,15 @@
+-isEmpty(IDE_BUILD_TREE) {
+-  IDE_BUILD_TREE = $$OUT_PWD/../../../
+-}
+-include(qworkbench.pri)
+-
+-isEmpty(PROVIDER) {
+-    PROVIDER = Nokia
+-}
++IDE_BUILD_TREE = $$OUT_PWD/../../../
+ 
+-DESTDIR = $$IDE_PLUGIN_PATH/$$PROVIDER/
+-LIBS += -L$$DESTDIR
+-INCLUDEPATH += $$IDE_SOURCE_TREE/src/plugins
+-DEPENDPATH += $$IDE_SOURCE_TREE/src/plugins
++include(qworkbench.pri)
++# include 'plugins' dirrectory
++INCLUDEPATH	*= ${PWD}/..
++# include 'core' dirrectory
++INCLUDEPATH	*= ${PWD}/../../core
+ 
+-# copy the plugin spec
+-isEmpty(TARGET) {
+-    error("qworkbenchplugin.pri: You must provide a TARGET")
+-}
++include(qworkbench.pri)
++DESTDIR = $$IDE_LIBRARY_PATH
+ 
+-# Copy the pluginspec file to the liberary directyory.
+-# Note: On Windows/MinGW with some sh.exe in the path,
+-# QMAKE_COPY is some cp command that does not understand
+-# "\". Force the standard windows copy.
+-COPYDEST = $${DESTDIR}
+-COPYSRC = $${_PRO_FILE_PWD_}/$${TARGET}.pluginspec
++CONFIG -= shared
++CONFIG *= staticlib
+ 
+ TARGET = $$qtLibraryTarget($$TARGET)
+-
+-win32 {
+-    COPYDEST ~= s|/+|\|
+-    COPYSRC ~= s|/+|\|
+-    COPY_CMD=xcopy /y
+-} else {
+-    COPY_CMD=$${QMAKE_COPY}
+-}
+-
+-QMAKE_POST_LINK += $${COPY_CMD} $${COPYSRC} $${COPYDEST}
+-
+-macx {
+-        QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/../PlugIns/$${PROVIDER}/
+-} else:linux-* {
+-    #do the rpath by hand since it's not possible to use ORIGIN in QMAKE_RPATHDIR
+-    QMAKE_RPATHDIR += \$\$ORIGIN
+-    QMAKE_RPATHDIR += \$\$ORIGIN/..
+-    QMAKE_RPATHDIR += \$\$ORIGIN/../..
+-    IDE_PLUGIN_RPATH = $$join(QMAKE_RPATHDIR, ":")
+-    QMAKE_LFLAGS += -Wl,-z,origin \'-Wl,-rpath,$${IDE_PLUGIN_RPATH}\'
+-    QMAKE_RPATHDIR =
+-}
+-
+-
+-contains(QT_CONFIG, reduce_exports):CONFIG += hide_symbols
+-
+-CONFIG += plugin plugin_with_soname
+-
+-linux-* {
+-    target.path = /lib/qtcreator/plugins/$$PROVIDER
+-    pluginspec.files += $${TARGET}.pluginspec
+-    pluginspec.path = /lib/qtcreator/plugins/$$PROVIDER
+-    INSTALLS += target pluginspec
+-}
+diff -Nur qt-creator-1.0.0-src/src/qworkbench.pri beaverdbg/src/qworkbench.pri
+--- qt-creator-1.0.0-src/src/qworkbench.pri	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/qworkbench.pri	2009-07-23 12:11:15.000000000 +0300
+@@ -1,5 +1,8 @@
+ IDE_SOURCE_TREE = $$PWD/../
+ 
++CONFIG -= release debug
++CONFIG *= release
++
+ isEmpty(TEST):CONFIG(debug, debug|release) {
+     !debug_and_release|build_pass {
+         TEST = 1
+@@ -15,13 +18,14 @@
+     error("qworkbench.pri: including file must define IDE_BUILD_TREE (probably a relative path)")
+ }
+ macx {
+-    IDE_APP_TARGET   = QtCreator
+-    IDE_LIBRARY_PATH = $$IDE_BUILD_TREE/bin/$${IDE_APP_TARGET}.app/Contents/PlugIns
+-    IDE_PLUGIN_PATH  = $$IDE_LIBRARY_PATH 
++    IDE_APP_TARGET   = Beaver
++    
++    IDE_PLUGIN_PATH  = $$IDE_LIBRARY_PATH
++	IDE_LIBRARY_PATH = $$IDE_BUILD_TREE/bin/$${IDE_APP_TARGET}.app/Contents/PlugIns
+     contains(QT_CONFIG, ppc):CONFIG += ppc x86
+ } else {
+-    IDE_APP_TARGET   = qtcreator
+-    IDE_LIBRARY_PATH = $$IDE_BUILD_TREE/lib/qtcreator
++    IDE_APP_TARGET   = beaverdbg
++	IDE_LIBRARY_PATH = $$IDE_BUILD_TREE/lib/qtcreator
+     IDE_PLUGIN_PATH  = $$IDE_LIBRARY_PATH/plugins/
+ }
+ IDE_APP_PATH = $$IDE_BUILD_TREE/bin
+@@ -30,6 +34,19 @@
+     IDE_APP_PATH ~= s|/+|\|
+ }
+ 
++defineReplace(qtLibraryTarget) {
++	unset(Q_LIB_NAME)
++	Q_LIB_NAME = $$1
++	CONFIG(debug, debug|release) {
++		!debug_and_release|build_pass {
++			unix:RET = $$member(Q_LIB_NAME, 0)_debug
++			else:win32:RET = $$member(Q_LIB_NAME, 0)d
++		}
++	}
++	isEmpty(RET):RET = $$Q_LIB_NAME
++	return($$RET)
++}
++
+ INCLUDEPATH += \
+     $$IDE_SOURCE_TREE/src/libs \
+     $$IDE_SOURCE_TREE/tools \
+diff -Nur qt-creator-1.0.0-src/src/shared/cpaster/cgi.cpp beaverdbg/src/shared/cpaster/cgi.cpp
+--- qt-creator-1.0.0-src/src/shared/cpaster/cgi.cpp	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/shared/cpaster/cgi.cpp	2009-06-25 17:53:45.000000000 +0300
+@@ -34,10 +34,10 @@
+ 
+ const char *cgi_chars = "0123456789abcdef"; // RFC 1738 suggests lower-case to be optimal
+ 
+-QString CGI::encodeURL(const QString &rawText)
++QString CGI::longlonglonglonglonglonglonglonglonglongnamespace::encodeURL(const QString &rawText)
+ {
+     QByteArray utf = rawText.toUtf8();
+-    QString enc;
++    QString enc; 
+     enc.reserve(utf.length()); // Make sure we at least have space for a normal US-ASCII URL
+     
+     QByteArray::const_iterator it = utf.constBegin();
+@@ -157,13 +157,13 @@
+     case 0x00BD: return "frac12";  // (189 ) vulgar fraction one half = fraction one half
+     case 0x00BE: return "frac34";  // (190 ) vulgar fraction three quarters = fraction three quarters
+     case 0x00BF: return "iquest";  // (191 ) inverted question mark = turned question mark
+-    case 0x00C0: return "Agrave";  // (192 ) capital letter A with grave = capital letter À
++    case 0x00C0: return "Agrave";  // (192 ) capital letter A with grave = capital letter ï¿½
+     case 0x00C1: return "Aacute";  // (193 ) capital letter A with acute
+     case 0x00C2: return "Acirc";   // (194 ) capital letter A with circumflex
+     case 0x00C3: return "Atilde";  // (195 ) capital letter A with tilde
+     case 0x00C4: return "Auml";    // (196 ) capital letter A with diaeresis
+-    case 0x00C5: return "Aring";   // (197 ) capital letter A with ring above = capital letter Å
+-    case 0x00C6: return "AElig";   // (198 ) capital letter AE =  capital ligature Æ
++    case 0x00C5: return "Aring";   // (197 ) capital letter A with ring above = capital letter ï¿½
++    case 0x00C6: return "AElig";   // (198 ) capital letter AE =  capital ligature ï¿½
+     case 0x00C7: return "Ccedil";  // (199 ) capital letter C with cedilla
+     case 0x00C8: return "Egrave";  // (200 ) capital letter E with grave
+     case 0x00C9: return "Eacute";  // (201 ) capital letter E with acute
+@@ -181,7 +181,7 @@
+     case 0x00D5: return "Otilde";  // (213 ) capital letter O with tilde
+     case 0x00D6: return "Ouml";    // (214 ) capital letter O with diaeresis
+     case 0x00D7: return "times";   // (215 ) multiplication sign
+-    case 0x00D8: return "Oslash";  // (216 ) capital letter O with stroke = capital letter Ø
++    case 0x00D8: return "Oslash";  // (216 ) capital letter O with stroke = capital letter ï¿½
+     case 0x00D9: return "Ugrave";  // (217 ) capital letter U with grave
+     case 0x00DA: return "Uacute";  // (218 ) capital letter U with acute
+     case 0x00DB: return "Ucirc";   // (219 ) capital letter U with circumflex
+@@ -189,13 +189,13 @@
+     case 0x00DD: return "Yacute";  // (221 ) capital letter Y with acute
+     case 0x00DE: return "THORN";   // (222 ) capital letter THORN
+     case 0x00DF: return "szlig";   // (223 ) small letter sharp s = ess-zed
+-    case 0x00E0: return "agrave";  // (224 ) small letter a with grave = small letter à
++    case 0x00E0: return "agrave";  // (224 ) small letter a with grave = small letter ï¿½
+     case 0x00E1: return "aacute";  // (225 ) small letter a with acute
+     case 0x00E2: return "acirc";   // (226 ) small letter a with circumflex
+     case 0x00E3: return "atilde";  // (227 ) small letter a with tilde
+     case 0x00E4: return "auml";    // (228 ) small letter a with diaeresis
+-    case 0x00E5: return "aring";   // (229 ) small letter a with ring above = small letter å
+-    case 0x00E6: return "aelig";   // (230 ) small letter ae = small letter æ
++    case 0x00E5: return "aring";   // (229 ) small letter a with ring above = small letter ï¿½
++    case 0x00E6: return "aelig";   // (230 ) small letter ae = small letter ï¿½
+     case 0x00E7: return "ccedil";  // (231 ) small letter c with cedilla
+     case 0x00E8: return "egrave";  // (232 ) small letter e with grave
+     case 0x00E9: return "eacute";  // (233 ) small letter e with acute
+@@ -213,7 +213,7 @@
+     case 0x00F5: return "otilde";  // (245 ) small letter o with tilde
+     case 0x00F6: return "ouml";    // (246 ) small letter o with diaeresis
+     case 0x00F7: return "divide";  // (247 ) division sign
+-    case 0x00F8: return "oslash";  // (248 ) small letter o with stroke = small letter ø
++    case 0x00F8: return "oslash";  // (248 ) small letter o with stroke = small letter ï¿½
+     case 0x00F9: return "ugrave";  // (249 ) small letter u with grave
+     case 0x00FA: return "uacute";  // (250 ) small letter u with acute
+     case 0x00FB: return "ucirc";   // (251 ) small letter u with circumflex
+diff -Nur qt-creator-1.0.0-src/src/src.pro beaverdbg/src/src.pro
+--- qt-creator-1.0.0-src/src/src.pro	2009-02-27 16:09:44.000000000 +0200
++++ beaverdbg/src/src.pro	2009-06-26 18:10:40.000000000 +0300
+@@ -3,7 +3,7 @@
+ 
+ SUBDIRS = \
+     libs \
+-    app \
+-    plugins
++    plugins \
++    app
+ 
+  
