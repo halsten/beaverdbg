@@ -170,7 +170,7 @@ QString WelcomeMode::name() const
 
 QIcon WelcomeMode::icon() const
 {
-    return QIcon(QLatin1String(":/core/images/qtcreator_logo_32.png"));
+    return QIcon(QLatin1String(":/core/images/beaverdbg_logo_32.png"));
 }
 
 int WelcomeMode::priority() const
