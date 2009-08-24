@@ -6,12 +6,18 @@ Supported Platforms
 ===================
 Building the sources requires Qt 4.5.0 or later.
 
+Configuration
+===================
+If you want to change default installation path for executable file and link, set qmake variables BEAVER_PREFIX and BEAVER_LINK_PREFIX before build project
+	qmake -set BEAVER_PREFIX /opt
+	qmake -set BEAVER_LINK_PREFIX /usr/local/
+
 Building
 ===================
 	cd beaverdbg
 	qmake
 	make
-Now you can run buillt application
+Now you can run built application
 bin/beaverdbg
 
 Installation
@@ -19,7 +25,6 @@ Installation
 After you builded project you can install it by command
 	make install
 This command may require administrator privileges.
-If you want to configure install path, when building project, set environment variables BEAVER_PREFIX and BEAVER_LINK_PREFIX
 
 Third-party components
 ======================
