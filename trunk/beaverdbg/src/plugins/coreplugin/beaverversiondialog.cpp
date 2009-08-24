@@ -23,11 +23,11 @@ BeaverVersionDialog::BeaverVersionDialog(QWidget *parent)
 {
     // We need to set the window icon explicitly here since for some reason the
     // application icon isn't used when the size of the dialog is fixed (at least not on X11/GNOME)
-    setWindowIcon(QIcon(":/core/images/qtcreator_logo_128.png"));
+    setWindowIcon(QIcon(":/core/images/beaverdbg_logo_128.png"));
 
     setWindowTitle(tr("About Beaver"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    QGridLayout *layout = new QGridLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSizeConstraint(QLayout::SetFixedSize);
 
     QString version = QLatin1String(IDE_VERSION_LONG);
@@ -44,7 +44,7 @@ BeaverVersionDialog::BeaverVersionDialog(QWidget *parent)
         "<br/>"
         "Beaver is <a href='http://www.qtsoftware.com/products/appdev/developer-tools/developer-tools#qt-tools-at-a'>Qt Creator</a> adaptation for usage as stand alone debugger.<br/>"
         "Done by Andrei Kopats aka hlamer and <a href='http://www.monkeystudio.org'>Monkey Studio team.</a><br/>"
-        "See <a href='http://www.monkeystudio.org'>TODO project home page</a> for additional info.<br/>"
+        "See <a href='http://beaverdbg.googlecode.com'> project home page</a> for additional info.<br/>"
         "For more information about original Qt Creator see <i>Help->About original Qt Creator</i> dialog<br/>"
         "<br/>"
         "You could report bugs on <a href='http://www.monkeystudio.org/node/24'>this page.</a><br/>"
@@ -74,8 +74,8 @@ BeaverVersionDialog::BeaverVersionDialog(QWidget *parent)
     connect(buttonBox , SIGNAL(rejected()), this, SLOT(reject()));
 
     QLabel *logoLabel = new QLabel;
-    logoLabel->setPixmap(QPixmap(QLatin1String(":/core/images/qtcreator_logo_128.png")));
-    layout->addWidget(logoLabel , 0, 0, 1, 1);
-    layout->addWidget(copyRightLabel, 0, 1, 4, 4);
-    layout->addWidget(buttonBox, 4, 0, 1, 5);
+    logoLabel->setPixmap(QPixmap(QLatin1String(":/core/images/beaverdbg_logo_wide.png")));
+    layout->addWidget(logoLabel);
+    layout->addWidget(copyRightLabel);
+    layout->addWidget(buttonBox);
 }

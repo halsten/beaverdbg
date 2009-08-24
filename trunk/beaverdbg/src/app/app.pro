@@ -29,5 +29,5 @@ win32 {
 }
 
 macx {
-        ICON = qtcreator.icns
+        ICON = beaverdbg.icns
 }

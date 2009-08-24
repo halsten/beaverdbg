@@ -151,7 +151,7 @@ MainWindow::MainWindow() :
 #endif
     //setWindowTitle(tr("Beaver"));
 #ifndef Q_OS_MAC
-    qApp->setWindowIcon(QIcon(":/core/images/qtcreator_logo_128.png"));
+    qApp->setWindowIcon(QIcon(":/core/images/beaverdbg_logo_128.png"));
 #endif
     QCoreApplication::setApplicationName(QLatin1String("QtCreator"));
     QCoreApplication::setApplicationVersion(QLatin1String(Core::Constants::IDE_VERSION_LONG));
