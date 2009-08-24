@@ -174,5 +174,4 @@ linux-* {
     images.files = images/qtcreator_logo_*.png
     images.path  = /share/pixmaps
 
-    INSTALLS += images
 }

@@ -14,6 +14,13 @@ Building
 Now you can run buillt application
 bin/beaverdbg
 
+Installation
+===================
+After you builded project you can install it by command
+	make install
+This command may require administrator privileges.
+If you want to configure install path, when building project, set environment variables BEAVER_PREFIX and BEAVER_LINK_PREFIX
+
 Third-party components
 ======================
 Beaver Debugger is based on Qt Creator sources.

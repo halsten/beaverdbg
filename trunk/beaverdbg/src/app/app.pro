@@ -31,3 +31,28 @@ win32 {
 macx {
         ICON = beaverdbg.icns
 }
+
+unix:!mac {
+	BEAVER_PREFIX=$(BEAVER_PREFIX)
+	BEAVER_LINK_PREFIX=$(BEAVER_LINK_PREFIX)
+
+	isEmpty( BEAVER_PREFIX ):BEAVER_PREFIX = /usr/local
+	isEmpty( BEAVER_LINK_PREFIX ):BEAVER_LINK_PREFIX = /usr/
+    
+    message( "Beaverdbg binary will be installed to : $$BEAVER_PREFIX" )
+    message( "Beaverdbg link will be installed to : $$BEAVER_LINK_PREFIX" )
+    # binary
+    target.path = $${BEAVER_PREFIX}/bin
+    target.files	= $${DESTDIR}/$${IDE_APP_TARGET}
+    target.CONFIG += no_check_exist
+
+    # desktop file
+    desktop.path	= $${BEAVER_LINK_PREFIX}/share/applications
+    desktop.files	= beaverdbg.desktop
+
+    # desktop icon file
+    desktopicon.path	= $${BEAVER_PREFIX}/share/pixmaps
+    desktopicon.files	= beaverdbg.png
+
+    INSTALLS	+= target desktop desktopicon
+}
