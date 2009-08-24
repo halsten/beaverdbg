@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Development;Qt;IDE;
+Exec=beaverdbg
+Name=Beaver debugger
+GenericName=Beaver debugger
+Terminal=false
+Type=Application
+Icon=beaverdbg
