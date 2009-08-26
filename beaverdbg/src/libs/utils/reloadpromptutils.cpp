@@ -38,7 +38,7 @@ QWORKBENCH_UTILS_EXPORT Core::Utils::ReloadPromptAnswer
     Core::Utils::reloadPrompt(const QString &fileName, QWidget *parent)
 {
     return reloadPrompt(QObject::tr("File Changed"),
-                        QObject::tr("The file %1 has changed outside Qt Creator. Do you want to reload it?").arg(fileName),
+                        QObject::tr("The file %1 has changed outside Beaver. Do you want to reload it?").arg(fileName),
                         parent);
 }
 
