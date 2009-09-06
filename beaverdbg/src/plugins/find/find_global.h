@@ -32,9 +32,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(FIND_LIBRARY)
-#  define FIND_EXPORT Q_DECL_EXPORT
+#  define FIND_EXPORT 
 #else
-#  define FIND_EXPORT Q_DECL_IMPORT
+#  define FIND_EXPORT 
 #endif
 
 #endif // FIND_GLOBAL_H

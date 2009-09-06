@@ -54,9 +54,9 @@
 #  define CPLUSPLUS_BEGIN_HEADER
 #  define CPLUSPLUS_END_HEADER
 #  if defined(CPLUSPLUS_BUILD_LIB)
-#    define CPLUSPLUS_EXPORT Q_DECL_EXPORT
+#    define CPLUSPLUS_EXPORT 
 #  else
-#    define CPLUSPLUS_EXPORT Q_DECL_IMPORT
+#    define CPLUSPLUS_EXPORT 
 #  endif
 #else
 #  define CPLUSPLUS_BEGIN_HEADER

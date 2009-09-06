@@ -33,9 +33,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(QWORKBENCH_UTILS_LIBRARY)
-#  define QWORKBENCH_UTILS_EXPORT Q_DECL_EXPORT
+#  define QWORKBENCH_UTILS_EXPORT 
 #else
-#  define QWORKBENCH_UTILS_EXPORT Q_DECL_IMPORT
+#  define QWORKBENCH_UTILS_EXPORT 
 #endif
 
 #endif // UTILS_GLOBAL_H

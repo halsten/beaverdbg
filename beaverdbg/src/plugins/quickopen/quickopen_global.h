@@ -33,9 +33,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(QUICKOPEN_LIBRARY)
-#  define QUICKOPEN_EXPORT Q_DECL_EXPORT
+#  define QUICKOPEN_EXPORT 
 #else
-#  define QUICKOPEN_EXPORT Q_DECL_IMPORT
+#  define QUICKOPEN_EXPORT 
 #endif
 
 #endif // QUICKOPEN_GLOBAL_H

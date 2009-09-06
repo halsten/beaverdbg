@@ -33,9 +33,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(AGGREGATION_LIBRARY)
-#  define AGGREGATION_EXPORT Q_DECL_EXPORT
+#  define AGGREGATION_EXPORT 
 #else
-#  define AGGREGATION_EXPORT Q_DECL_IMPORT
+#  define AGGREGATION_EXPORT 
 #endif
 
 #endif // AGGREGATION_GLOBAL_H

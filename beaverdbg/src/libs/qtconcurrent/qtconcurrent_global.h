@@ -33,9 +33,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(BUILD_QTCONCURRENT)
-#  define QTCONCURRENT_EXPORT Q_DECL_EXPORT
+#  define QTCONCURRENT_EXPORT 
 #else
-#  define QTCONCURRENT_EXPORT Q_DECL_IMPORT
+#  define QTCONCURRENT_EXPORT 
 #endif
 
 #endif // QTCONCURRENT_GLOBAL_H

@@ -33,9 +33,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(HELP_LIBRARY)
-#  define HELP_EXPORT Q_DECL_EXPORT
+#  define HELP_EXPORT 
 #else
-#  define HELP_EXPORT Q_DECL_IMPORT
+#  define HELP_EXPORT 
 #endif
 
 #endif // HELP_GLOBAL_H
