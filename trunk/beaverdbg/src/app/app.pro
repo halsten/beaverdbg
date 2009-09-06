@@ -17,7 +17,12 @@ TARGET = $$IDE_APP_TARGET
 TARGET = $$qtLibraryTarget($$TARGET)
 DESTDIR = ../../bin
 
-QT *= core gui script xml webkit svg network
+QT *= core gui script webkit svg
+
+win32{
+	QT *= network
+}
+
 CONFIG *= help
 
 SOURCES += main.cpp
