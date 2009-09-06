@@ -33,9 +33,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(MYPLUGIN_LIBRARY)
-#  define MYPLUGIN_EXPORT Q_DECL_EXPORT
+#  define MYPLUGIN_EXPORT 
 #else
-#  define MYPLUGIN_EXPORT Q_DECL_IMPORT
+#  define MYPLUGIN_EXPORT 
 #endif
 
 #endif // TESTPLUGIN_GLOBAL_H
