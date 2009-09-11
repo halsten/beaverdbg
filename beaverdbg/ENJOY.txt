@@ -1,0 +1,5 @@
+Enjoy Beaver Debugger
+
+And if you don't, do not forget to report bugs on the official site http://beaverdbg.googlecode.com
+
+Monkey Studio team
