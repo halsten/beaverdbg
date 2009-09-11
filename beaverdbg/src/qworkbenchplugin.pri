@@ -13,3 +13,5 @@ CONFIG -= shared
 CONFIG *= staticlib
 
 TARGET = $$qtLibraryTarget($$TARGET)
+
+DEFINES *= QT_NO_WEBKIT
