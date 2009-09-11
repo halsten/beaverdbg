@@ -22,7 +22,7 @@ VersionInfoCopyright={cm:BEAVER_COPYRIGHTS}
 AppCopyright={cm:BEAVER_COPYRIGHTS}
 AppName={cm:BEAVER_NAME}
 AppVerName={cm:BEAVER_NAME} {#BEAVER_VERSION}
-InfoAfterFile=README.txt
+InfoAfterFile=ENJOY.txt
 InfoBeforeFile=README.txt
 LicenseFile=LICENSE.LGPL
 ChangesAssociations=true
@@ -47,16 +47,16 @@ UseAbsolutePaths=false
 
 [Files]
 ; MkS related files
-Source: bin\beaverdbg.exe; DestDir: {app}; Flags: confirmoverwrite promptifolder
-Source: README; DestDir: {app}; Flags: confirmoverwrite promptifolder isreadme
-Source: README.qtcreator; DestDir: {app}; Flags: confirmoverwrite promptifolder isreadme
-Source: LICENSE.LGPL; DestDir: {app}; Flags: confirmoverwrite promptifolder isreadme
 Source: LGPL_EXCEPTION.TXT; DestDir: {app}; Flags: confirmoverwrite promptifolder isreadme
+Source: LICENSE.LGPL; DestDir: {app}; Flags: confirmoverwrite promptifolder isreadme
+Source: bin\beaverdbg.exe; DestDir: {app}; Flags: confirmoverwrite promptifolder
+Source: README.qtcreator; DestDir: {app}; Flags: confirmoverwrite promptifolder isreadme
+Source: README.txt; DestDir: {app}; Flags: confirmoverwrite promptifolder isreadme
+
 ; Qt related files
 Source: {#QT_PATH}\qt\bin\QtCore4.dll; DestDir: {app}; Flags: confirmoverwrite
 Source: {#QT_PATH}\qt\bin\QtGui4.dll; DestDir: {app}; Flags: confirmoverwrite
 Source: {#QT_PATH}\qt\bin\QtScript4.dll; DestDir: {app}; Flags: confirmoverwrite
-Source: {#QT_PATH}\qt\bin\QtWebKit4.dll; DestDir: {app}; Flags: confirmoverwrite
 Source: {#QT_PATH}\qt\bin\QtSvg4.dll; DestDir: {app}; Flags: confirmoverwrite
 Source: {#QT_PATH}\qt\bin\QtNetwork4.dll; DestDir: {app}; Flags: confirmoverwrite
 Source: {#QT_PATH}\qt\bin\QtXml4.dll; DestDir: {app}; Flags: confirmoverwrite
