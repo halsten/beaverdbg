@@ -22,11 +22,21 @@
 #include "texteditor/texteditorplugin.h"
 #include "cppeditor/cppplugin.h"
 
-static void print_help()
+static void print_help(char* name)
 {
-	qWarning("Usage: beaver PROGRAMM ARGUMENTS");
-	qWarning("\nTODO: possibility to attach to running process, remote debugging, transcript file");
-	qWarning("	waits for volunteer");
+	qWarning("Usage:");
+	qWarning("    %s [OPTIONS ] [PROGRAMM [ ARGUMENTS ]]", name);
+	qWarning("Options:");
+	qWarning("  -v | --version           Print programm version");
+	qWarning("  -h | --help              Print this help");
+	qWarning("\nTODO: Possibility to attach to running process, remote debugging, transcript file");
+	qWarning("      waits for volunteer");
+}
+
+static void print_version()
+{
+	qWarning("Beaver Debugger version 1.0.0.b1");
+	qWarning("www.beaverdbg.googlecode.com");
 }
 
 int main(int argc, char **argv)
@@ -44,7 +54,15 @@ int main(int argc, char **argv)
 		(args[0] == "-h" ||
 		 args[0] == "--help"))
 	{
-		print_help();
+		print_help(argv[0]);
+		return 0;
+	}
+	
+	if (args.size() == 1 &&
+		(args[0] == "-v" ||
+		 args[0] == "--version"))
+	{
+		print_version();
 		return 0;
 	}
 	
@@ -85,7 +103,7 @@ int main(int argc, char **argv)
 		else
 		{
 			qWarning() << args[0] << "is not a valid executable file";
-			print_help();
+			print_help(argv[0]);
 			return -1;
 		}
 	}
