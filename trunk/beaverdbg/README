@@ -25,6 +25,10 @@ Installation
 After you builded project you can install it by command
 	make install
 This command may require administrator privileges.
+NOTE: qmake from Qt 4.5 has bug, it installs binary with mask 644, so, it becomes not executable.
+      You can fix it manualy by command
+          chmod a+x /usr/bin/beaverdbg
+      where "/usr/bin" is your installation path
 
 Third-party components
 ======================
