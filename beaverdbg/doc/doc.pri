@@ -21,11 +21,6 @@ qch_docs.commands = $$HELPGENERATOR -o $$QCH_FILE $$QHP_FILE
 qch_docs.depends += html_docs
 qch_docs.files = $$QCH_FILE
 
-linux-* {
-    qch_docs.path = /share/doc/qtcreator
-    INSTALLS += qch_docs
-}
-
 macx {
     DOC_DIR = $${OUT_PWD}/bin/QtCreator.app/Contents/Resources/doc 
     cp_docs.commands = mkdir -p $${DOC_DIR} ; $${QMAKE_COPY} $${QCH_FILE} $${DOC_DIR}
