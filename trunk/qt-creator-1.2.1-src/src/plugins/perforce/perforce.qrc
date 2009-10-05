@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/trolltech.perforce" >
+        <file>Perforce.mimetypes.xml</file>
+    </qresource>
+</RCC>

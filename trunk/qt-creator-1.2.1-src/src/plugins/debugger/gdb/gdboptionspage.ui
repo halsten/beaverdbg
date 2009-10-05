@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GdbOptionsPage</class>
+ <widget class="QWidget" name="GdbOptionsPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>429</width>
+    <height>452</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="groupBoxLocations">
+     <property name="title">
+      <string>Gdb interaction</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="margin">
+       <number>9</number>
+      </property>
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="environmentEdit"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelGdbLocation">
+        <property name="toolTip">
+         <string>This is either a full absolute path leading to the gdb binary you intend to use or the name of a gdb binary that will be searched in your PATH.</string>
+        </property>
+        <property name="text">
+         <string>Gdb location:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelEnvironment">
+        <property name="text">
+         <string>Environment:</string>
+        </property>
+        <property name="buddy">
+         <cstring>environmentEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelGdbStartupScript">
+        <property name="toolTip">
+         <string>This is either empty or points to a file containing gdb commands that will be executed immediately after gdb starts up.</string>
+        </property>
+        <property name="text">
+         <string>Gdb startup script:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="Core::Utils::PathChooser" name="scriptFileChooser" native="true"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="Core::Utils::PathChooser" name="gdbLocationChooser" native="true"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBoxPluginDebugging">
+     <property name="title">
+      <string>Behaviour of breakpoint setting in plugins</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="radioButtonAllPluginBreakpoints">
+        <property name="toolTip">
+         <string>This is the slowest but safest option.</string>
+        </property>
+        <property name="text">
+         <string>Try to set breakpoints in plugins always automatically.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radioButtonSelectedPluginBreakpoints">
+        <property name="text">
+         <string>Try to set breakpoints in selected plugins</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>10</width>
+            <height>10</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelSelectedPluginBreakpoints">
+          <property name="text">
+           <string>Matching regular expression: </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEditSelectedPluginBreakpointsPattern"/>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="0">
+       <widget class="QRadioButton" name="radioButtonNoPluginBreakpoints">
+        <property name="text">
+         <string>Never set breakpoints in plugins automatically</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>10</width>
+       <height>1</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Core::Utils::PathChooser</class>
+   <extends>QWidget</extends>
+   <header location="global">utils/pathchooser.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
