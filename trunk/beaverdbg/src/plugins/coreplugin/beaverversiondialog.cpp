@@ -1,3 +1,19 @@
+/**************************************************************************
+**
+** This file is part of Beaver Debugger
+**
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
+**
+** GNU Lesser General Public License Usage
+**
+** This file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU Lesser General Public License version 2.1 requirements
+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+**
+**************************************************************************/
 #include "beaverversiondialog.h"
 
 #include "coreconstants.h"
@@ -34,7 +50,7 @@ BeaverVersionDialog::BeaverVersionDialog(QWidget *parent)
     version += QDate(2007, 25, 10).toString(Qt::SystemLocaleDate);
 
     const QString description = tr(
-        "<h3>Beaver %1</h3>"
+        "<h3>Beaver Debugger %1</h3>"
         "Based on Qt Creator %2<br/>"
         "<br/>"
         "Built on " __DATE__ " at " __TIME__ "<br />"
@@ -56,7 +72,7 @@ BeaverVersionDialog::BeaverVersionDialog(QWidget *parent)
         "The program is provided AS IS with NO WARRANTY OF ANY KIND, "
         "INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A "
         "PARTICULAR PURPOSE.<br/>")
-        .arg("0.1a", version, "2009", "Andrei Kopats and Monkey Studio team"
+        .arg("1.0.0.b2", version, "2009", "Andrei Kopats and Monkey Studio team"
 #ifdef IDE_REVISION
              , QString(IDE_REVISION_STR).left(10)
 #endif

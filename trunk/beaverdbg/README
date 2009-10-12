@@ -14,6 +14,10 @@ If you want to change default installation path for executable file and link, se
 
 Building
 ===================
+Project requires Qt library version 4.5 or highter installed.
+See www.qtsoftware.com for downloads.
+If you are Linux user, you probably have packages libqt4 and libqt4-dev
+
 	cd beaverdbg
 	qmake
 	make

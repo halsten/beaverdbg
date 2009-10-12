@@ -5,7 +5,7 @@ BEAVER_NAME=Beaver Debugger
 BEAVER_COPYRIGHTS=2009 Andrei Kopats & The Monkey Studio Team
 BEAVER_URL=http://beaverdbg.googlecode.com
 
-#define BEAVER_VERSION "1.0.0.1"
+#define BEAVER_VERSION "1.0.0.2"
 #define BEAVER_REVISION "11"
 #define BEAVER_SETUP_NAME "setup_beaver_" +BEAVER_VERSION +"-svn" +BEAVER_REVISION +"-win32"
 #define QT_PATH "C:\Qt\2009.02"
