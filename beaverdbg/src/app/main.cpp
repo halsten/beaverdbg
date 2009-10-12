@@ -35,7 +35,7 @@ static void print_help(char* name)
 
 static void print_version()
 {
-	qWarning("Beaver Debugger version 1.0.0.b1");
+	qWarning("Beaver Debugger version 1.0.0.b2");
 	qWarning("www.beaverdbg.googlecode.com");
 }
 

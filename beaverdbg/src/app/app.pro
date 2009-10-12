@@ -27,7 +27,7 @@ CONFIG *= help
 
 SOURCES += main.cpp
 
-include(../rpath.pri)
+#include(../rpath.pri)
 
 win32 {
         RC_FILE = qtcreator.rc
