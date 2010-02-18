@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+    <mime-type type="text/x-patch">
+        <sub-class-of type="text/plain"/>
+        <comment>Differences between files</comment>
+        <glob pattern="*.patch"/>
+    </mime-type>
+</mime-info>
