@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -327,5 +328,3 @@ QString CppToolsPlugin::correspondingHeaderOrSource(const QString &fileName) con
         qDebug() << Q_FUNC_INFO << fileName << rc;
     return rc;
 }
-
-Q_EXPORT_PLUGIN(CppToolsPlugin)

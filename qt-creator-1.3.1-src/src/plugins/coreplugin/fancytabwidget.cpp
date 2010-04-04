@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -301,6 +302,7 @@ FancyTabWidget::FancyTabWidget(QWidget *parent)
     m_tabBar = new FancyTabBar(this);
 
     m_selectionWidget = new QWidget(this);
+    m_selectionWidget->setMaximumWidth(0);
     QVBoxLayout *selectionLayout = new QVBoxLayout;
     selectionLayout->setSpacing(0);
     selectionLayout->setMargin(0);

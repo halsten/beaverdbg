@@ -1,0 +1,38 @@
+***************
+*** 218,223 ****
+  
+  public slots:
+      bool startNewDebugger(StartMode mode);
+      void exitDebugger(); 
+  
+      void setSimpleDockWidgetArrangement();
+--- 219,225 ----
+  
+  public slots:
+      bool startNewDebugger(StartMode mode);
++     bool startNewDebugger(const QString& programm, const QStringList& arguments);
+      void exitDebugger(); 
+  
+      void setSimpleDockWidgetArrangement();
+***************
+*** 342,350 ****
+      //    
+      // internal implementation
+      //  
+-     Q_SLOT void loadSessionData();
+-     Q_SLOT void saveSessionData();
+-     Q_SLOT void dumpLog();
+  
+  public:
+      // stuff in this block should be made private by moving it to 
+--- 344,353 ----
+      //    
+      // internal implementation
+      //  
++ private slots:
++     void loadSessionData();
++     void saveSessionData();
++     void dumpLog();
+  
+  public:
+      // stuff in this block should be made private by moving it to 

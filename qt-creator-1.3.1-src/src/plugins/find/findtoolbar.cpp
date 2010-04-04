@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -154,21 +155,21 @@ FindToolBar::FindToolBar(FindPlugin *plugin, CurrentDocumentFind *currentDocumen
     m_findNextAction = new QAction(tr("Find Next"), this);
     cmd = am->registerAction(m_findNextAction, Constants::FIND_NEXT, globalcontext);
     cmd->setDefaultKeySequence(QKeySequence::FindNext);
-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
+    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
     connect(m_findNextAction, SIGNAL(triggered()), this, SLOT(invokeFindNext()));
     m_ui.findNextButton->setDefaultAction(cmd->action());
 
     m_findPreviousAction = new QAction(tr("Find Previous"), this);
     cmd = am->registerAction(m_findPreviousAction, Constants::FIND_PREVIOUS, globalcontext);
     cmd->setDefaultKeySequence(QKeySequence::FindPrevious);
-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
+    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
     connect(m_findPreviousAction, SIGNAL(triggered()), this, SLOT(invokeFindPrevious()));
     m_ui.findPreviousButton->setDefaultAction(cmd->action());
-
+#if 0
     m_replaceNextAction = new QAction(tr("Replace && Find Next"), this);
     cmd = am->registerAction(m_replaceNextAction, Constants::REPLACE_NEXT, globalcontext);
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+=")));
-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
+    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
     connect(m_replaceNextAction, SIGNAL(triggered()), this, SLOT(invokeReplaceNext()));
     m_ui.replaceNextButton->setDefaultAction(cmd->action());
 

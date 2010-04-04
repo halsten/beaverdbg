@@ -1,0 +1,29 @@
+***************
+*** 130,136 ****
+      command->setDefaultKeySequence(QKeySequence(tr("Meta+Space")));
+  #endif
+      connect(completionShortcut, SIGNAL(activated()), this, SLOT(invokeCompletion()));
+- 
+      addAutoReleasedObject(new FindInFiles(
+          ExtensionSystem::PluginManager::instance()->getObject<Find::SearchResultWindow>()));
+  
+--- 132,138 ----
+      command->setDefaultKeySequence(QKeySequence(tr("Meta+Space")));
+  #endif
+      connect(completionShortcut, SIGNAL(activated()), this, SLOT(invokeCompletion()));
++ #endif
+      addAutoReleasedObject(new FindInFiles(
+          ExtensionSystem::PluginManager::instance()->getObject<Find::SearchResultWindow>()));
+  
+***************
+*** 171,176 ****
+      if (editor)
+          editor->triggerCompletions();
+  }
+- 
+- 
+- Q_EXPORT_PLUGIN(TextEditorPlugin)
+--- 173,175 ----
+      if (editor)
+          editor->triggerCompletions();
+  }

@@ -1,0 +1,234 @@
+***************
+*** 152,162 ****
+  #endif
+      m_toggleSideBarButton(new QToolButton)
+  {
+      OutputPaneManager::create();
+- 
+-     setWindowTitle(tr("Qt Creator"));
+  #ifndef Q_OS_MAC
+-     qApp->setWindowIcon(QIcon(":/core/images/qtcreator_logo_128.png"));
+  #endif
+      QCoreApplication::setApplicationName(QLatin1String("QtCreator"));
+      QCoreApplication::setApplicationVersion(QLatin1String(Core::Constants::IDE_VERSION_LONG));
+--- 155,166 ----
+  #endif
+      m_toggleSideBarButton(new QToolButton)
+  {
++ #if 0
+      OutputPaneManager::create();
++ #endif
++     //setWindowTitle(tr("Beaver"));
+  #ifndef Q_OS_MAC
++     qApp->setWindowIcon(QIcon(":/core/images/beaverdbg_logo_128.png"));
+  #endif
+      QCoreApplication::setApplicationName(QLatin1String("QtCreator"));
+      QCoreApplication::setApplicationVersion(QLatin1String(Core::Constants::IDE_VERSION_LONG));
+***************
+*** 323,340 ****
+      m_outputView->setWidget(OutputPaneManager::instance()->buttonsWidget());
+      m_outputView->setDefaultPosition(Core::IView::Second);
+      pm->addObject(m_outputView);
+      return true;
+  }
+  
+  void MainWindow::extensionsInitialized()
+  {
+      m_editorManager->init();
+- 
+      m_viewManager->extensionsInitalized();
+- 
+      m_messageManager->init();
+      OutputPaneManager::instance()->init();
+- 
+      m_actionManager->initialize();
+      readSettings();
+      updateContext();
+--- 337,356 ----
+      m_outputView->setWidget(OutputPaneManager::instance()->buttonsWidget());
+      m_outputView->setDefaultPosition(Core::IView::Second);
+      pm->addObject(m_outputView);
++ #endif
+      return true;
+  }
+  
+  void MainWindow::extensionsInitialized()
+  {
+      m_editorManager->init();
++ #if 0
+      m_viewManager->extensionsInitalized();
++ #endif
+      m_messageManager->init();
++ #if 0
+      OutputPaneManager::instance()->init();
++ #endif
+      m_actionManager->initialize();
+      readSettings();
+      updateContext();
+***************
+*** 562,593 ****
+      cmd = am->registerShortcut(m_focusToEditor, Constants::S_RETURNTOEDITOR, m_globalContext);
+      cmd->setDefaultKeySequence(QKeySequence(Qt::Key_Escape));
+      connect(m_focusToEditor, SIGNAL(activated()), this, SLOT(setFocusToEditor()));
+- 
+      // New File Action
+      m_newAction = new QAction(QIcon(Constants::ICON_NEWFILE), tr("&New..."), this);
+      cmd = am->registerAction(m_newAction, Constants::NEW, m_globalContext);
+      cmd->setDefaultKeySequence(QKeySequence::New);
+      mfile->addAction(cmd, Constants::G_FILE_NEW);
+      connect(m_newAction, SIGNAL(triggered()), this, SLOT(newFile()));
+- 
+      // Open Action
+      m_openAction = new QAction(QIcon(Constants::ICON_OPENFILE), tr("&Open..."), this);
+      cmd = am->registerAction(m_openAction, Constants::OPEN, m_globalContext);
+      cmd->setDefaultKeySequence(QKeySequence::Open);
+      mfile->addAction(cmd, Constants::G_FILE_OPEN);
+      connect(m_openAction, SIGNAL(triggered()), this, SLOT(openFile()));
+- 
+      // Open With Action
+      m_openWithAction = new QAction(tr("&Open With..."), this);
+      cmd = am->registerAction(m_openWithAction, Constants::OPEN_WITH, m_globalContext);
+      mfile->addAction(cmd, Constants::G_FILE_OPEN);
+      connect(m_openWithAction, SIGNAL(triggered()), this, SLOT(openFileWith()));
+- 
+      // File->Recent Files Menu
+      ActionContainer *ac = am->createMenu(Constants::M_FILE_RECENTFILES);
+      mfile->addMenu(ac, Constants::G_FILE_OPEN);
+      ac->menu()->setTitle(tr("Recent Files"));
+- 
+      // Save Action
+      QAction *tmpaction = new QAction(QIcon(Constants::ICON_SAVEFILE), tr("&Save"), this);
+      cmd = am->registerAction(tmpaction, Constants::SAVE, m_globalContext);
+--- 580,612 ----
+      cmd = am->registerShortcut(m_focusToEditor, Constants::S_RETURNTOEDITOR, m_globalContext);
+      cmd->setDefaultKeySequence(QKeySequence(Qt::Key_Escape));
+      connect(m_focusToEditor, SIGNAL(activated()), this, SLOT(setFocusToEditor()));
++ #if 0
+      // New File Action
+      m_newAction = new QAction(QIcon(Constants::ICON_NEWFILE), tr("&New..."), this);
+      cmd = am->registerAction(m_newAction, Constants::NEW, m_globalContext);
+      cmd->setDefaultKeySequence(QKeySequence::New);
+      mfile->addAction(cmd, Constants::G_FILE_NEW);
+      connect(m_newAction, SIGNAL(triggered()), this, SLOT(newFile()));
++ #endif
+      // Open Action
+      m_openAction = new QAction(QIcon(Constants::ICON_OPENFILE), tr("&Open..."), this);
+      cmd = am->registerAction(m_openAction, Constants::OPEN, m_globalContext);
+      cmd->setDefaultKeySequence(QKeySequence::Open);
+      mfile->addAction(cmd, Constants::G_FILE_OPEN);
+      connect(m_openAction, SIGNAL(triggered()), this, SLOT(openFile()));
++ #if 0
+      // Open With Action
+      m_openWithAction = new QAction(tr("&Open With..."), this);
+      cmd = am->registerAction(m_openWithAction, Constants::OPEN_WITH, m_globalContext);
+      mfile->addAction(cmd, Constants::G_FILE_OPEN);
+      connect(m_openWithAction, SIGNAL(triggered()), this, SLOT(openFileWith()));
++ #endif
+      // File->Recent Files Menu
+      ActionContainer *ac = am->createMenu(Constants::M_FILE_RECENTFILES);
+      mfile->addMenu(ac, Constants::G_FILE_OPEN);
+      ac->menu()->setTitle(tr("Recent Files"));
++ 	QAction *tmpaction;
++ #if 0
+      // Save Action
+      QAction *tmpaction = new QAction(QIcon(Constants::ICON_SAVEFILE), tr("&Save"), this);
+      cmd = am->registerAction(tmpaction, Constants::SAVE, m_globalContext);
+***************
+*** 663,669 ****
+      cmd = am->registerAction(tmpaction, Constants::SELECTALL, m_globalContext);
+      cmd->setDefaultKeySequence(QKeySequence::SelectAll);
+      medit->addAction(cmd, Constants::G_EDIT_SELECTALL);
+- 
+      // Goto Action
+      tmpaction = new QAction(tr("&Go To Line..."), this);
+      cmd = am->registerAction(tmpaction, Constants::GOTO, m_globalContext);
+--- 682,688 ----
+      cmd = am->registerAction(tmpaction, Constants::SELECTALL, m_globalContext);
+      cmd->setDefaultKeySequence(QKeySequence::SelectAll);
+      medit->addAction(cmd, Constants::G_EDIT_SELECTALL);
++ #endif
+      // Goto Action
+      tmpaction = new QAction(tr("&Go To Line..."), this);
+      cmd = am->registerAction(tmpaction, Constants::GOTO, m_globalContext);
+***************
+*** 723,738 ****
+      connect(m_toggleFullScreenAction, SIGNAL(triggered(bool)), this, SLOT(setFullScreen(bool)));
+  #endif
+  
+-     // About IDE Action
+  #ifdef Q_OS_MAC
+-     tmpaction = new QAction(tr("About &Qt Creator"), this); // it's convention not to add dots to the about menu
+  #else
+-     tmpaction = new QAction(tr("About &Qt Creator..."), this);
+  #endif
+      cmd = am->registerAction(tmpaction, Constants:: ABOUT_WORKBENCH, m_globalContext);
+      mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
+      tmpaction->setEnabled(true);
+      connect(tmpaction, SIGNAL(triggered()), this,  SLOT(aboutQtCreator()));
+      //About Plugins Action
+      tmpaction = new QAction(tr("About &Plugins..."), this);
+      cmd = am->registerAction(tmpaction, Constants::ABOUT_PLUGINS, m_globalContext);
+--- 742,768 ----
+      connect(m_toggleFullScreenAction, SIGNAL(triggered(bool)), this, SLOT(setFullScreen(bool)));
+  #endif
+  
++     // About original Qt Creator
+  #ifdef Q_OS_MAC
++     tmpaction = new QAction(tr("About original &Qt Creator"), this); // it's convention not to add dots to the about menu
+  #else
++     tmpaction = new QAction(tr("About original &Qt Creator..."), this);
+  #endif
+      cmd = am->registerAction(tmpaction, Constants:: ABOUT_WORKBENCH, m_globalContext);
+      mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
+      tmpaction->setEnabled(true);
+      connect(tmpaction, SIGNAL(triggered()), this,  SLOT(aboutQtCreator()));
++     // About beaver
++ #ifdef Q_OS_MAC
++     tmpaction = new QAction(tr("About &Beaver"), this); // it's convention not to add dots to the about menu
++ #else
++     tmpaction = new QAction(tr("About &Beaver..."), this);
++ #endif
++     cmd = am->registerAction(tmpaction, Constants::ABOUT_BEAVER, m_globalContext);
++     mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
++     tmpaction->setEnabled(true);
++     connect(tmpaction, SIGNAL(triggered()), this,  SLOT(aboutBeaver()));
++ #if 0
+      //About Plugins Action
+      tmpaction = new QAction(tr("About &Plugins..."), this);
+      cmd = am->registerAction(tmpaction, Constants::ABOUT_PLUGINS, m_globalContext);
+***************
+*** 830,836 ****
+      // ### Duplicated code from EditMode::makeSureEditorManagerVisible
+      IMode *currentMode = m_coreImpl->modeManager()->currentMode();
+      if (currentMode && currentMode->uniqueModeName() != QLatin1String(Constants::MODE_EDIT) &&
+-         currentMode->uniqueModeName() != QLatin1String("GdbDebugger.Mode.Debug"))
+      {
+          m_coreImpl->modeManager()->activateMode(QLatin1String(Constants::MODE_EDIT));
+      }
+--- 861,867 ----
+      // ### Duplicated code from EditMode::makeSureEditorManagerVisible
+      IMode *currentMode = m_coreImpl->modeManager()->currentMode();
+      if (currentMode && currentMode->uniqueModeName() != QLatin1String(Constants::MODE_EDIT) &&
++         currentMode->uniqueModeName() != QLatin1String("Debugger.Mode.Debug"))
+      {
+          m_coreImpl->modeManager()->activateMode(QLatin1String(Constants::MODE_EDIT));
+      }
+***************
+*** 841,847 ****
+      if (focusWidget && focusWidget == qApp->focusWidget()) {
+          if (FindToolBarPlaceHolder::getCurrent())
+              FindToolBarPlaceHolder::getCurrent()->hide();
+          OutputPaneManager::instance()->slotHide();
+          RightPaneWidget::instance()->setShown(false);
+      }
+  }
+--- 872,880 ----
+      if (focusWidget && focusWidget == qApp->focusWidget()) {
+          if (FindToolBarPlaceHolder::getCurrent())
+              FindToolBarPlaceHolder::getCurrent()->hide();
++ #if 0
+          OutputPaneManager::instance()->slotHide();
++ #endif
+          RightPaneWidget::instance()->setShown(false);
+      }
+  }

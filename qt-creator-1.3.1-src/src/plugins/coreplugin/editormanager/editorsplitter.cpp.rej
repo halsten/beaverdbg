@@ -1,0 +1,17 @@
+***************
+*** 69,75 ****
+      ActionManager *am = ICore::instance()->actionManager();
+      ActionContainer *mwindow = am->actionContainer(Constants::M_WINDOW);
+      Command *cmd;
+- 
+      //Horizontal Action
+      m_horizontalSplitAction = new QAction(tr("Split Left/Right"), this);
+      cmd = am->registerAction(m_horizontalSplitAction, Constants::HORIZONTAL, editorManagerContext);
+--- 70,76 ----
+      ActionManager *am = ICore::instance()->actionManager();
+      ActionContainer *mwindow = am->actionContainer(Constants::M_WINDOW);
+      Command *cmd;
++ #if 0
+      //Horizontal Action
+      m_horizontalSplitAction = new QAction(tr("Split Left/Right"), this);
+      cmd = am->registerAction(m_horizontalSplitAction, Constants::HORIZONTAL, editorManagerContext);

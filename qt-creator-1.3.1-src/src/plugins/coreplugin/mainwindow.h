@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -76,6 +77,7 @@ class ProgressManagerPrivate;
 class ShortcutSettings;
 class ViewManager;
 class VersionDialog;
+class BeaverVersionDialog;
 
 class CORE_EXPORT MainWindow : public EventFilteringMainWindow
 {
@@ -194,6 +196,7 @@ private:
     RightPaneWidget *m_rightPaneWidget;
     Core::BaseView *m_outputView;
     VersionDialog *m_versionDialog;
+    BeaverVersionDialog *m_beaverVersionDialog;
 
     IContext * m_activeContext;
 

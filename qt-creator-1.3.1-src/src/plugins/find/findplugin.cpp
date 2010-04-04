@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -77,6 +78,7 @@ FindPlugin::FindPlugin()
     m_findCompletionModel(new QStringListModel(this)),
     m_replaceCompletionModel(new QStringListModel(this))
 {
+    Q_INIT_RESOURCE(find);
 }
 
 FindPlugin::~FindPlugin()
@@ -293,5 +295,3 @@ void FindPlugin::updateCompletion(const QString &text, QStringList &completions,
         completions.removeLast();
     model->setStringList(completions);
 }
-
-Q_EXPORT_PLUGIN(FindPlugin)

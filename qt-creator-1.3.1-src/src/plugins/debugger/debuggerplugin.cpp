@@ -136,6 +136,8 @@ const char * const BREAK_BY_FUNCTION_KEY    = "Alt+D,Alt+F";
 const char * const BREAK_AT_MAIN_KEY        = "Alt+D,Alt+M";
 const char * const ADD_TO_WATCH_KEY         = "Alt+D,Alt+W";
 #else
+const char * const STARTEXTERNAL_KEY        = "Ctrl+E";
+const char * const ATTACHEXTERNAL_KEY       = "Ctrl+T";
 const char * const INTERRUPT_KEY            = "Shift+F5";
 const char * const RESET_KEY                = "Ctrl+Shift+F5";
 const char * const STEP_KEY                 = "F11";
@@ -1375,5 +1377,3 @@ void DebuggerPlugin::startRemoteApplication()
 }
 
 #include "debuggerplugin.moc"
-
-Q_EXPORT_PLUGIN(DebuggerPlugin)

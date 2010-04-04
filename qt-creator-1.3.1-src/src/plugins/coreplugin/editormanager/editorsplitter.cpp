@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -112,7 +113,7 @@ void EditorSplitter::registerActions()
     mLayout->addAction(cmd);
     connect(m_restoreDefault, SIGNAL(triggered()),
             this, SLOT(restoreDefaultLayout()));
-
+#endif
     // TODO: The previous and next actions are removed, to be reenabled when they
     // navigate according to code navigation history. And they need different shortcuts on the mac
     // since Alt+Left/Right is jumping wordwise in editors
@@ -130,7 +131,6 @@ void EditorSplitter::registerActions()
     cmd->setDefaultKeySequence(QKeySequence(tr("Alt+Right")));
     mwindow->addAction(cmd, Constants::G_WINDOW_NAVIGATE);
     connect(m_gotoNextEditorAction, SIGNAL(triggered()), this, SLOT(gotoNextEditor()));
-#endif
 
     // Previous Group Action
     m_gotoPreviousGroupAction = new QAction(tr("Previous Group"), this);
@@ -155,10 +155,12 @@ void EditorSplitter::registerActions()
     cmd = am->registerAction(m_moveDocToNextGroupAction, "QtCreator.DocumentToNextGroup", editorManagerContext);
     mwindow->addAction(cmd, Constants::G_WINDOW_NAVIGATE_GROUPS);
     connect(m_moveDocToNextGroupAction, SIGNAL(triggered()), this, SLOT(moveDocToNextGroup()));
+#endif
 }
 
 void EditorSplitter::updateActions()
 {
+#if 0
     const bool hasMultipleGroups = (qobject_cast<QSplitter*>(m_root) != 0);
     QTC_ASSERT(currentGroup(), return);
     const bool hasEditors = (currentGroup()->editorCount() != 0);
@@ -172,6 +174,7 @@ void EditorSplitter::updateActions()
     m_gotoNextGroupAction->setEnabled(hasMultipleGroups);
     m_moveDocToPreviousGroupAction->setEnabled(hasEditors && hasMultipleGroups);
     m_moveDocToNextGroupAction->setEnabled(hasEditors && hasMultipleGroups);
+#endif
 }
 
 int EditorSplitter::editorCount() const

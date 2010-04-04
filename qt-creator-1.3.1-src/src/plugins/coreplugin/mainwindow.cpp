@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -53,6 +54,7 @@
 #include "settingsdialog.h"
 #include "variablemanager.h"
 #include "versiondialog.h"
+#include "beaverversiondialog.h"
 #include "viewmanager.h"
 #include "uniqueidmanager.h"
 #include "manhattanstyle.h"
@@ -133,6 +135,7 @@ MainWindow::MainWindow() :
     m_navigationWidget(0),
     m_rightPaneWidget(0),
     m_versionDialog(0),
+    m_beaverVersionDialog(0),
     m_activeContext(0),
     m_outputMode(0),
     m_generalSettings(new GeneralSettings),
@@ -190,7 +193,9 @@ MainWindow::MainWindow() :
     m_modeStack = new FancyTabWidget(this);
     m_modeManager = new ModeManager(this, m_modeStack);
     m_modeManager->addWidget(m_progressManager->progressView());
+#if 0
     m_viewManager = new ViewManager(this);
+#endif
     m_messageManager = new MessageManager;
     m_editorManager = new EditorManager(m_coreImpl, this);
     m_editorManager->hide();
@@ -248,23 +253,27 @@ MainWindow::~MainWindow()
     m_uniqueIDManager = 0;
     delete m_vcsManager;
     m_vcsManager = 0;
+#if 0
     pm->removeObject(m_outputMode);
     delete m_outputMode;
     m_outputMode = 0;
+#endif
     //we need to delete editormanager and viewmanager explicitly before the end of the destructor,
     //because they might trigger stuff that tries to access data from editorwindow, like removeContextWidget
-
+#if 0
     // All modes are now gone
     OutputPaneManager::destroy();
 
     // Now that the OutputPaneManager is gone, is a good time to delete the view
     pm->removeObject(m_outputView);
     delete m_outputView;
-
+#endif
     delete m_editorManager;
     m_editorManager = 0;
+#if 0
     delete m_viewManager;
     m_viewManager = 0;
+#endif
     delete m_progressManager;
     m_progressManager = 0;
     pm->removeObject(m_coreImpl);
@@ -289,9 +298,12 @@ bool MainWindow::init(QString *errorMessage)
 
     ExtensionSystem::PluginManager *pm = ExtensionSystem::PluginManager::instance();
     pm->addObject(m_coreImpl);
+#if 0
     m_viewManager->init();
+#endif
     m_modeManager->init();
     m_progressManager->init();
+#if 0
     QWidget *outputModeWidget = new QWidget;
     outputModeWidget->setLayout(new QVBoxLayout);
     outputModeWidget->layout()->setMargin(0);
@@ -313,9 +325,10 @@ bool MainWindow::init(QString *errorMessage)
 
     m_outputMode->setContext(m_globalContext);
     pm->addObject(m_outputMode);
+#endif
     pm->addObject(m_generalSettings);
     pm->addObject(m_shortcutSettings);
-
+#if 0
     // Add widget to the bottom, we create the view here instead of inside the
     // OutputPaneManager, since the ViewManager needs to be initilized before
     m_outputView = new Core::BaseView;
@@ -460,7 +473,9 @@ void MainWindow::registerDefaultContainers()
     ActionContainer *filemenu = am->createMenu(Constants::M_FILE);
     menubar->addMenu(filemenu, Constants::G_FILE);
     filemenu->menu()->setTitle(tr("&File"));
+#if 0
     filemenu->appendGroup(Constants::G_FILE_NEW);
+#endif
     filemenu->appendGroup(Constants::G_FILE_OPEN);
     filemenu->appendGroup(Constants::G_FILE_PROJECT);
     filemenu->appendGroup(Constants::G_FILE_SAVE);
@@ -473,7 +488,7 @@ void MainWindow::registerDefaultContainers()
     // Edit Menu
     ActionContainer *medit = am->createMenu(Constants::M_EDIT);
     menubar->addMenu(medit, Constants::G_EDIT);
-    medit->menu()->setTitle(tr("&Edit"));
+    medit->menu()->setTitle(tr("&Find"));
     medit->appendGroup(Constants::G_EDIT_UNDOREDO);
     medit->appendGroup(Constants::G_EDIT_COPYPASTE);
     medit->appendGroup(Constants::G_EDIT_SELECTALL);
@@ -616,14 +631,14 @@ void MainWindow::registerDefaultActions()
     tmpaction = new QAction(tr("&Print..."), this);
     cmd = am->registerAction(tmpaction, Constants::PRINT, m_globalContext);
     mfile->addAction(cmd, Constants::G_FILE_PRINT);
-
+#endif
     // Exit Action
     m_exitAction = new QAction(tr("E&xit"), this);
     cmd = am->registerAction(m_exitAction, Constants::EXIT, m_globalContext);
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Q")));
     mfile->addAction(cmd, Constants::G_FILE_OTHER);
     connect(m_exitAction, SIGNAL(triggered()), this, SLOT(exit()));
-
+#if 0
     // Undo Action
     tmpaction = new QAction(QIcon(Constants::ICON_UNDO), tr("&Undo"), this);
     cmd = am->registerAction(tmpaction, Constants::UNDO, m_globalContext);
@@ -754,6 +769,7 @@ void MainWindow::registerDefaultActions()
     cmd->action()->setMenuRole(QAction::ApplicationSpecificRole);
 #endif
     connect(tmpaction, SIGNAL(triggered()), this,  SLOT(aboutPlugins()));
+#endif
     // About Qt Action
 //    tmpaction = new QAction(tr("About &Qt..."), this);
 //    cmd = am->registerAction(tmpaction, Constants:: ABOUT_QT, m_globalContext);
@@ -1140,7 +1156,9 @@ void MainWindow::writeSettings()
     m_settings->endGroup();
 
     m_fileManager->saveRecentFiles();
+#if 0
     m_viewManager->saveSettings(m_settings);
+#endif
     m_actionManager->saveSettings(m_settings);
     m_editorManager->saveSettings();
     m_navigationWidget->saveSettings(m_settings);
@@ -1232,6 +1250,24 @@ void MainWindow::destroyVersionDialog()
     if (m_versionDialog) {
         m_versionDialog->deleteLater();
         m_versionDialog = 0;
+    }
+}
+
+void MainWindow::aboutBeaver()
+{
+    if (!m_beaverVersionDialog) {
+        m_beaverVersionDialog = new BeaverVersionDialog(this);
+        connect(m_beaverVersionDialog, SIGNAL(finished(int)),
+                this, SLOT(destroyBeaverVersionDialog()));
+    }
+    m_beaverVersionDialog->show();
+}
+
+void MainWindow::destroyBeaverVersionDialog()
+{
+    if (m_beaverVersionDialog) {
+        m_beaverVersionDialog->deleteLater();
+        m_beaverVersionDialog = 0;
     }
 }
 

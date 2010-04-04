@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -113,6 +114,7 @@ void TextEditorActionHandler::initializeActions()
 
 void TextEditorActionHandler::createActions()
 {
+#if 0
     m_undoAction      = registerNewAction(QLatin1String(Core::Constants::UNDO),      this, SLOT(undoAction()),
                                           tr("&Undo"));
     m_redoAction      = registerNewAction(QLatin1String(Core::Constants::REDO),      this, SLOT(redoAction()),
@@ -334,6 +336,7 @@ void TextEditorActionHandler::updateActions(UpdateMode um)
     updateRedoAction();
     updateUndoAction();
     updateCopyAction();
+#endif
 }
 
 void TextEditorActionHandler::updateRedoAction()

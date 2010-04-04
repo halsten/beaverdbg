@@ -1,0 +1,25 @@
+***************
+*** 147,156 ****
+      void setFocusToEditor();
+      void saveAll();
+      void aboutQtCreator();
+      void aboutPlugins();
+      void updateFocusWidget(QWidget *old, QWidget *now);
+      void setSidebarVisible(bool visible);
+      void destroyVersionDialog();
+  
+  private:
+      void updateContextObject(IContext *context);
+--- 149,160 ----
+      void setFocusToEditor();
+      void saveAll();
+      void aboutQtCreator();
++     void aboutBeaver();
+      void aboutPlugins();
+      void updateFocusWidget(QWidget *old, QWidget *now);
+      void setSidebarVisible(bool visible);
+      void destroyVersionDialog();
++     void destroyBeaverVersionDialog();
+  
+  private:
+      void updateContextObject(IContext *context);

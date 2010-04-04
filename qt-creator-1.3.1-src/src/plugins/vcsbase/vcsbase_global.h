@@ -33,9 +33,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(VCSBASE_LIBRARY)
-#  define VCSBASE_EXPORT Q_DECL_EXPORT
+#  define VCSBASE_EXPORT 
 #else
-#  define VCSBASE_EXPORT Q_DECL_IMPORT
+#  define VCSBASE_EXPORT 
 #endif
 
 #endif // VCSBASEGLOBAL_H
