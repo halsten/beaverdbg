@@ -155,11 +155,14 @@ MainWindow::MainWindow() :
 #endif
     m_toggleSideBarButton(new QToolButton)
 {
+#if 0
     OutputPaneManager::create();
-
+#endif
+#if 0
     setWindowTitle(tr("Qt Creator"));
+#endif
 #ifndef Q_WS_MAC
-    qApp->setWindowIcon(QIcon(":/core/images/qtcreator_logo_128.png"));
+    qApp->setWindowIcon(QIcon(":/core/images/beaverdbg_logo_128.png"));
 #endif
     QCoreApplication::setApplicationName(QLatin1String("QtCreator"));
     QCoreApplication::setApplicationVersion(QLatin1String(Core::Constants::IDE_VERSION_LONG));
@@ -336,6 +339,7 @@ bool MainWindow::init(QString *errorMessage)
     m_outputView->setWidget(OutputPaneManager::instance()->buttonsWidget());
     m_outputView->setDefaultPosition(Core::IView::Second);
     pm->addObject(m_outputView);
+#endif
     return true;
 }
 
@@ -352,14 +356,17 @@ void MainWindow::modeChanged(Core::IMode *mode)
 void MainWindow::extensionsInitialized()
 {
     m_editorManager->init();
-
+#if 0
     m_viewManager->extensionsInitalized();
-
+#endif
     m_messageManager->init();
+#if 0
     OutputPaneManager::instance()->init();
-
+#endif
     m_actionManager->initialize();
+#if 0
     m_vcsManager->extensionsInitialized();
+#endif
     readSettings();
     updateContext();
 
@@ -537,6 +544,7 @@ void MainWindow::registerDefaultActions()
     ActionContainer *mtools = am->actionContainer(Constants::M_TOOLS);
     ActionContainer *mwindow = am->actionContainer(Constants::M_WINDOW);
     ActionContainer *mhelp = am->actionContainer(Constants::M_HELP);
+    QAction *tmpaction;
 
     // File menu separators
     Command *cmd = createSeparator(am, this, QLatin1String("QtCreator.File.Sep.Save"), m_globalContext);
@@ -574,32 +582,32 @@ void MainWindow::registerDefaultActions()
     cmd = am->registerShortcut(m_focusToEditor, Constants::S_RETURNTOEDITOR, m_globalContext);
     cmd->setDefaultKeySequence(QKeySequence(Qt::Key_Escape));
     connect(m_focusToEditor, SIGNAL(activated()), this, SLOT(setFocusToEditor()));
-
+#if 0
     // New File Action
     m_newAction = new QAction(QIcon(Constants::ICON_NEWFILE), tr("&New File or Project..."), this);
     cmd = am->registerAction(m_newAction, Constants::NEW, m_globalContext);
     cmd->setDefaultKeySequence(QKeySequence::New);
     mfile->addAction(cmd, Constants::G_FILE_NEW);
     connect(m_newAction, SIGNAL(triggered()), this, SLOT(newFile()));
-
+#endif
     // Open Action
     m_openAction = new QAction(QIcon(Constants::ICON_OPENFILE), tr("&Open File or Project..."), this);
     cmd = am->registerAction(m_openAction, Constants::OPEN, m_globalContext);
     cmd->setDefaultKeySequence(QKeySequence::Open);
     mfile->addAction(cmd, Constants::G_FILE_OPEN);
     connect(m_openAction, SIGNAL(triggered()), this, SLOT(openFile()));
-
+#if 0
     // Open With Action
     m_openWithAction = new QAction(tr("&Open File With..."), this);
     cmd = am->registerAction(m_openWithAction, Constants::OPEN_WITH, m_globalContext);
     mfile->addAction(cmd, Constants::G_FILE_OPEN);
     connect(m_openWithAction, SIGNAL(triggered()), this, SLOT(openFileWith()));
-
+#endif
     // File->Recent Files Menu
     ActionContainer *ac = am->createMenu(Constants::M_FILE_RECENTFILES);
     mfile->addMenu(ac, Constants::G_FILE_OPEN);
     ac->menu()->setTitle(tr("Recent Files"));
-
+#if 0
     // Save Action
     QAction *tmpaction = new QAction(QIcon(Constants::ICON_SAVEFILE), tr("&Save"), this);
     cmd = am->registerAction(tmpaction, Constants::SAVE, m_globalContext);
@@ -607,7 +615,7 @@ void MainWindow::registerDefaultActions()
     cmd->setAttribute(Command::CA_UpdateText);
     cmd->setDefaultText(tr("&Save"));
     mfile->addAction(cmd, Constants::G_FILE_SAVE);
-
+#endif
     // Save As Action
     tmpaction = new QAction(tr("Save &As..."), this);
     cmd = am->registerAction(tmpaction, Constants::SAVEAS, m_globalContext);
@@ -626,7 +634,7 @@ void MainWindow::registerDefaultActions()
 #endif
     mfile->addAction(cmd, Constants::G_FILE_SAVE);
     connect(m_saveAllAction, SIGNAL(triggered()), this, SLOT(saveAll()));
-
+#if 0
     // Print Action
     tmpaction = new QAction(tr("&Print..."), this);
     cmd = am->registerAction(tmpaction, Constants::PRINT, m_globalContext);
@@ -684,7 +692,7 @@ void MainWindow::registerDefaultActions()
     cmd->setDefaultKeySequence(QKeySequence::SelectAll);
     medit->addAction(cmd, Constants::G_EDIT_SELECTALL);
     tmpaction->setEnabled(false);
-
+#endif
     // Goto Action
     tmpaction = new QAction(tr("&Go To Line..."), this);
     cmd = am->registerAction(tmpaction, Constants::GOTO, m_globalContext);
@@ -748,9 +756,9 @@ void MainWindow::registerDefaultActions()
 
     // About IDE Action
 #ifdef Q_WS_MAC
-    tmpaction = new QAction(tr("About &Qt Creator"), this); // it's convention not to add dots to the about menu
+    tmpaction = new QAction(tr("About original &Qt Creator"), this); // it's convention not to add dots to the about menu
 #else
-    tmpaction = new QAction(tr("About &Qt Creator..."), this);
+    tmpaction = new QAction(tr("About original &Qt Creator..."), this);
 #endif
     cmd = am->registerAction(tmpaction, Constants::ABOUT_QTCREATOR, m_globalContext);
     mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
@@ -759,7 +767,13 @@ void MainWindow::registerDefaultActions()
     cmd->action()->setMenuRole(QAction::ApplicationSpecificRole);
 #endif
     connect(tmpaction, SIGNAL(triggered()), this,  SLOT(aboutQtCreator()));
-
+    // About beaver
+#ifdef Q_WS_MAC
+    tmpaction = new QAction(tr("About &Beaver"), this); // it's convention not to add dots to the about menu
+#else
+    tmpaction = new QAction(tr("About &Beaver..."), this);
+#endif
+#if 0
     //About Plugins Action
     tmpaction = new QAction(tr("About &Plugins..."), this);
     cmd = am->registerAction(tmpaction, Constants::ABOUT_PLUGINS, m_globalContext);
@@ -865,7 +879,9 @@ void MainWindow::setFocusToEditor()
         if (stuffVisible) {
             if (FindToolBarPlaceHolder::getCurrent())
                 FindToolBarPlaceHolder::getCurrent()->hide();
+#if 0
             OutputPaneManager::instance()->slotHide();
+#endif
             RightPaneWidget::instance()->setShown(false);
         } else {
             m_coreImpl->modeManager()->activateMode(QLatin1String(Constants::MODE_EDIT));

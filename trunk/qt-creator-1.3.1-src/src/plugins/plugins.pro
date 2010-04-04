@@ -5,36 +5,36 @@ TEMPLATE  = subdirs
 
 SUBDIRS   = plugin_coreplugin \
             plugin_welcome \
-            plugin_find \
+#            plugin_find \
             plugin_texteditor \
             plugin_cppeditor \
             plugin_bineditor \
-            plugin_bookmarks \
-            plugin_projectexplorer \
+#            plugin_bookmarks \
+#            plugin_projectexplorer \
             plugin_vcsbase \
-            plugin_perforce \
-            plugin_subversion \
-            plugin_git \
-            plugin_cvs \
-            plugin_cpptools \
+#            plugin_perforce \
+#            plugin_subversion \
+#            plugin_git \
+#            plugin_cvs \
+#            plugin_cpptools \
             plugin_qt4projectmanager \
 #            plugin_snippets \ # buggy and annoying
-            plugin_locator \
-            plugin_debugger \
+#            plugin_locator \
+#            plugin_debugger \
 #            plugin_qtestlib \ # this seems to be dead
 #            plugin_helloworld \ # sample plugin
-            plugin_help \
+#            plugin_help \
 #            plugin_regexp \ # don't know what to do with this
-            plugin_qtscripteditor \
-            plugin_cpaster \
-            plugin_cmakeprojectmanager \
-            plugin_fakevim \
-            plugin_designer \
-            plugin_resourceeditor \
-            plugin_genericprojectmanager \
-            plugin_qmleditor \
-            plugin_qmlprojectmanager \
-            debugger/dumper.pro
+#            plugin_qtscripteditor \
+#            plugin_cpaster \
+#            plugin_cmakeprojectmanager \
+#            plugin_fakevim \
+#            plugin_designer \
+#            plugin_resourceeditor \
+#            plugin_genericprojectmanager \
+#            plugin_qmleditor \
+#            plugin_qmlprojectmanager \
+#            debugger/dumper.pro
 
 plugin_coreplugin.subdir = coreplugin
 

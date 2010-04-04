@@ -159,10 +159,12 @@ private slots:
     void setFocusToEditor();
     void saveAll();
     void aboutQtCreator();
+    void aboutBeaver();
     void aboutPlugins();
     void updateFocusWidget(QWidget *old, QWidget *now);
     void setSidebarVisible(bool visible);
     void destroyVersionDialog();
+    void destroyBeaverVersionDialog();
     void modeChanged(Core::IMode *mode);
 
 private:

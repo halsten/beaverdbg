@@ -142,6 +142,7 @@ const char * const GOTOPREVIOUSGROUP     = "QtCreator.GotoPreviousTabGroup";
 const char * const GOTONEXTGROUP         = "QtCreator.GotoNextTabGroup";
 const char * const WINDOWSLIST           = "QtCreator.WindowsList";
 const char * const ABOUT_QTCREATOR       = "QtCreator.AboutQtCreator";
+const char * const ABOUT_BEAVER          = "QtCreator.AboutBeaver";
 const char * const ABOUT_PLUGINS         = "QtCreator.AboutPlugins";
 const char * const ABOUT_QT              = "QtCreator.AboutQt";
 const char * const S_RETURNTOEDITOR      = "QtCreator.ReturnToEditor";
