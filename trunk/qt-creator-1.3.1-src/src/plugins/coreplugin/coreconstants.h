@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -195,6 +196,7 @@ const char * const G_WINDOW_OTHER        = "QtCreator.Group.Window.Other";
 // help groups (global)
 const char * const G_HELP_HELP           = "QtCreator.Group.Help.Help";
 const char * const G_HELP_ABOUT          = "QtCreator.Group.Help.About";
+const char * const G_HELP_ABOUT_BEAVER   = "QtCreator.Group.Help.AboutBeaver";
 
 const char * const ICON_MINUS            = ":/core/images/minus.png";
 const char * const ICON_PLUS             = ":/core/images/plus.png";

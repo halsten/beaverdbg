@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -91,8 +92,10 @@ OutputPanePlaceHolder::OutputPanePlaceHolder(Core::IMode *mode, QWidget *parent)
     sp.setHorizontalStretch(0);
     setSizePolicy(sp);
     layout()->setMargin(0);
+#if 0
     connect(Core::ModeManager::instance(), SIGNAL(currentModeChanged(Core::IMode *)),
             this, SLOT(currentModeChanged(Core::IMode *)));
+#endif
 }
 
 OutputPanePlaceHolder::~OutputPanePlaceHolder()

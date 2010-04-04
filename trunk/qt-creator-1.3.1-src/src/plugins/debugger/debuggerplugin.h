@@ -70,7 +70,8 @@ class DebuggerPlugin : public ExtensionSystem::IPlugin
 public:
     DebuggerPlugin();
     ~DebuggerPlugin();
-
+    bool startNewDebugger(const QString& programm, const QStringList& arguments);
+    
 private:
     virtual bool initialize(const QStringList &arguments, QString *error_message);
     virtual void shutdown();

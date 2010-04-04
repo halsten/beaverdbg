@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -70,6 +71,7 @@ TextEditorPlugin::TextEditorPlugin()
 {
     QTC_ASSERT(!m_instance, return);
     m_instance = this;
+    Q_INIT_RESOURCE(texteditor);
 }
 
 TextEditorPlugin::~TextEditorPlugin()
@@ -117,7 +119,7 @@ bool TextEditorPlugin::initialize(const QStringList &arguments, QString *errorMe
     int contextId = core->uniqueIDManager()->uniqueIdentifier(TextEditor::Constants::C_TEXTEDITOR);
     QList<int> context = QList<int>() << contextId;
     Core::ActionManager *am = core->actionManager();
-
+#if 0
     // Add shortcut for invoking automatic completion
     QShortcut *completionShortcut = new QShortcut(core->mainWindow());
     completionShortcut->setWhatsThis(tr("Triggers a completion in this scope"));

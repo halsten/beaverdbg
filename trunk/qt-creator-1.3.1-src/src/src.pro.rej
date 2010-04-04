@@ -1,0 +1,17 @@
+***************
+*** 3,9 ****
+  
+  SUBDIRS = \
+      libs \
+-     app \
+-     plugins
+  
+   
+--- 3,9 ----
+  
+  SUBDIRS = \
+      libs \
++     plugins \
++     app
+  
+   

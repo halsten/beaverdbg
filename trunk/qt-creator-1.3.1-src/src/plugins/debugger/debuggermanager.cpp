@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -1018,6 +1019,32 @@ void DebuggerManager::startFailed()
     disconnect(d->m_engine, SIGNAL(startFailed()), this, SLOT(startFailed()));
     setState(DebuggerNotReady);
     emit debuggingFinished();
+}
+
+bool DebuggerManager::startNewDebugger(const QString& programm, const QStringList& arguments)
+{
+    m_startMode = StartExternal;
+    
+    m_executable = programm;
+    m_processArgs = arguments;
+    m_workingDir = QString();
+    m_attachedPID = -1;
+    
+    emit debugModeRequested();
+
+    if (m_executable.endsWith(".js"))
+        setDebuggerType(ScriptDebugger);
+    else 
+        setDebuggerType(GdbDebugger);
+
+    setStatus(DebuggerProcessStartingUp);
+    if (!m_engine->startDebugger()) {
+        setStatus(DebuggerProcessNotReady);
+        return false;
+    }
+
+    m_busy = false;
+    return true;
 }
 
 void DebuggerManager::cleanupViews()

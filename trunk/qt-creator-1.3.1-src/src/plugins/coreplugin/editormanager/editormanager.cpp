@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -234,7 +235,8 @@ EditorManager::EditorManager(ICore *core, QWidget *parent) :
 
     ActionManager *am = m_d->m_core->actionManager();
     ActionContainer *mfile = am->actionContainer(Constants::M_FILE);
-
+	Command *cmd;
+#if 0
     //Revert to saved
     Command *cmd = am->registerAction(m_d->m_revertToSavedAction,
                                        Constants::REVERTTOSAVED, editManagerContext);
@@ -242,7 +244,7 @@ EditorManager::EditorManager(ICore *core, QWidget *parent) :
     cmd->setDefaultText(tr("Revert File to Saved"));
     mfile->addAction(cmd, Constants::G_FILE_SAVE);
     connect(m_d->m_revertToSavedAction, SIGNAL(triggered()), this, SLOT(revertToSaved()));
-
+#endif
     //Save Action
     am->registerAction(m_d->m_saveAction, Constants::SAVE, editManagerContext);
     connect(m_d->m_saveAction, SIGNAL(triggered()), this, SLOT(saveFile()));
@@ -362,6 +364,7 @@ EditorManager::EditorManager(ICore *core, QWidget *parent) :
     connect(m_d->m_gotoOtherSplitAction, SIGNAL(triggered()), this, SLOT(gotoOtherSplit()));
 
     ActionContainer *medit = am->actionContainer(Constants::M_EDIT);
+#if 0
     ActionContainer *advancedMenu = am->createMenu(Constants::M_EDIT_ADVANCED);
     medit->addMenu(advancedMenu, Constants::G_EDIT_ADVANCED);
     advancedMenu->menu()->setTitle(tr("&Advanced"));
@@ -370,7 +373,6 @@ EditorManager::EditorManager(ICore *core, QWidget *parent) :
     advancedMenu->appendGroup(Constants::G_EDIT_BLOCKS);
     advancedMenu->appendGroup(Constants::G_EDIT_FONT);
     advancedMenu->appendGroup(Constants::G_EDIT_EDITOR);
-
     // Advanced menu separators
     cmd = createSeparator(am, this, QLatin1String("QtCreator.Edit.Sep.Collapsing"), editManagerContext);
     advancedMenu->addAction(cmd, Constants::G_EDIT_COLLAPSING);
@@ -1087,7 +1089,7 @@ static QString formatFileFilters(const Core::ICore *core, QString *selectedFilte
     if (filters.empty())
         return rc;
     const QString filterSeparator = QLatin1String(";;");
-    bool hasAllFilter = false;
+    bool hasAllFilter = true;
     const int size = filters.size();
     for (int i = 0; i < size; i++) {
         const QString &filterString = filters.at(i);

@@ -1,0 +1,76 @@
+***************
+*** 104,109 ****
+  const char * const ADD_TO_WATCH         = "Debugger.AddToWatch";
+  
+  #ifdef Q_OS_MAC
+  const char * const INTERRUPT_KEY            = "Shift+F5";
+  const char * const RESET_KEY                = "Ctrl+Shift+F5";
+  const char * const STEP_KEY                 = "F7";
+--- 104,111 ----
+  const char * const ADD_TO_WATCH         = "Debugger.AddToWatch";
+  
+  #ifdef Q_OS_MAC
++ const char * const STARTEXTERNAL_KEY        = "Ctrl+E";
++ const char * const ATTACHEXTERNAL_KEY       = "Ctrl+T";
+  const char * const INTERRUPT_KEY            = "Shift+F5";
+  const char * const RESET_KEY                = "Ctrl+Shift+F5";
+  const char * const STEP_KEY                 = "F7";
+***************
+*** 370,380 ****
+      m_locationMark = 0;
+      m_manager = 0;
+      m_debugMode = 0;
+  }
+  
+  DebuggerPlugin::~DebuggerPlugin()
+  {}
+  
+  static QSettings *settings()
+  {
+      return ICore::instance()->settings();
+--- 374,391 ----
+      m_locationMark = 0;
+      m_manager = 0;
+      m_debugMode = 0;
++     Q_INIT_RESOURCE(debugger);
+  }
+  
+  DebuggerPlugin::~DebuggerPlugin()
+  {}
+  
++ bool DebuggerPlugin::startNewDebugger(const QString& programm, const QStringList& arguments)
++ {
++     m_manager->breakAtMain();
++     return m_manager->startNewDebugger(programm, arguments);
++ }
++ 
+  static QSettings *settings()
+  {
+      return ICore::instance()->settings();
+***************
+*** 457,467 ****
+      Core::Command *cmd = 0;
+      cmd = am->registerAction(m_manager->m_startExternalAction,
+          Constants::STARTEXTERNAL, globalcontext);
+      mdebug->addAction(cmd, Core::Constants::G_DEFAULT_ONE);
+  
+  #ifndef Q_OS_WIN
+      cmd = am->registerAction(m_manager->m_attachExternalAction,
+          Constants::ATTACHEXTERNAL, globalcontext);
+      mdebug->addAction(cmd, Core::Constants::G_DEFAULT_ONE);
+  #endif
+  
+--- 468,480 ----
+      Core::Command *cmd = 0;
+      cmd = am->registerAction(m_manager->m_startExternalAction,
+          Constants::STARTEXTERNAL, globalcontext);
++     cmd->setDefaultKeySequence(QKeySequence(Constants::STARTEXTERNAL_KEY));
+      mdebug->addAction(cmd, Core::Constants::G_DEFAULT_ONE);
+  
+  #ifndef Q_OS_WIN
+      cmd = am->registerAction(m_manager->m_attachExternalAction,
+          Constants::ATTACHEXTERNAL, globalcontext);
++     cmd->setDefaultKeySequence(QKeySequence(Constants::ATTACHEXTERNAL_KEY));
+      mdebug->addAction(cmd, Core::Constants::G_DEFAULT_ONE);
+  #endif
+  

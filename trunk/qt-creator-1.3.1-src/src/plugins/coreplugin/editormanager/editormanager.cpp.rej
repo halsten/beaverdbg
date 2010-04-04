@@ -1,0 +1,150 @@
+***************
+*** 172,188 ****
+      m_splitter(0),
+      m_core(core),
+      m_suppressEditorChanges(false),
+      m_revertToSavedAction(new QAction(EditorManager::tr("Revert to Saved"), parent)),
+      m_saveAction(new QAction(parent)),
+      m_saveAsAction(new QAction(parent)),
+      m_closeCurrentEditorAction(new QAction(EditorManager::tr("Close"), parent)),
+      m_closeAllEditorsAction(new QAction(EditorManager::tr("Close All"), parent)),
+      m_gotoNextDocHistoryAction(new QAction(EditorManager::tr("Next Document in History"), parent)),
+      m_gotoPreviousDocHistoryAction(new QAction(EditorManager::tr("Previous Document in History"), parent)),
+      m_duplicateAction(new QAction(EditorManager::tr("Duplicate Document"), parent)),
+      m_goBackAction(new QAction(EditorManager::tr("Go back"), parent)),
+      m_goForwardAction(new QAction(EditorManager::tr("Go forward"), parent)),
+      m_openInExternalEditorAction(new QAction(EditorManager::tr("Open in External Editor"), parent)),
+      currentNavigationHistoryPosition(-1),
+      m_windowPopup(0),
+      m_coreListener(0)
+--- 173,195 ----
+      m_splitter(0),
+      m_core(core),
+      m_suppressEditorChanges(false),
++ #if 0
+      m_revertToSavedAction(new QAction(EditorManager::tr("Revert to Saved"), parent)),
++ #endif
+      m_saveAction(new QAction(parent)),
+      m_saveAsAction(new QAction(parent)),
+      m_closeCurrentEditorAction(new QAction(EditorManager::tr("Close"), parent)),
+      m_closeAllEditorsAction(new QAction(EditorManager::tr("Close All"), parent)),
+      m_gotoNextDocHistoryAction(new QAction(EditorManager::tr("Next Document in History"), parent)),
+      m_gotoPreviousDocHistoryAction(new QAction(EditorManager::tr("Previous Document in History"), parent)),
++ #if 0
+      m_duplicateAction(new QAction(EditorManager::tr("Duplicate Document"), parent)),
++ #endif
+      m_goBackAction(new QAction(EditorManager::tr("Go back"), parent)),
+      m_goForwardAction(new QAction(EditorManager::tr("Go forward"), parent)),
++ #if 0
+      m_openInExternalEditorAction(new QAction(EditorManager::tr("Open in External Editor"), parent)),
++ #endif
+      currentNavigationHistoryPosition(-1),
+      m_windowPopup(0),
+      m_coreListener(0)
+***************
+*** 293,304 ****
+      cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+W")));
+      mfile->addAction(cmd, Constants::G_FILE_CLOSE);
+      connect(m_d->m_closeAllEditorsAction, SIGNAL(triggered()), this, SLOT(closeAllEditors()));
+- 
+      //Duplicate Action
+      cmd = am->registerAction(m_d->m_duplicateAction, Constants::DUPLICATEDOCUMENT, editManagerContext);
+      mwindow->addAction(cmd, Constants::G_WINDOW_CLOSE);
+      connect(m_d->m_duplicateAction, SIGNAL(triggered()), this, SLOT(duplicateEditor()));
+- 
+      // Goto Previous In History Action
+      cmd = am->registerAction(m_d->m_gotoPreviousDocHistoryAction, Constants::GOTOPREVINHISTORY, editManagerContext);
+  #ifdef Q_WS_MAC
+--- 301,312 ----
+      cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+W")));
+      mfile->addAction(cmd, Constants::G_FILE_CLOSE);
+      connect(m_d->m_closeAllEditorsAction, SIGNAL(triggered()), this, SLOT(closeAllEditors()));
++ #if 0
+      //Duplicate Action
+      cmd = am->registerAction(m_d->m_duplicateAction, Constants::DUPLICATEDOCUMENT, editManagerContext);
+      mwindow->addAction(cmd, Constants::G_WINDOW_CLOSE);
+      connect(m_d->m_duplicateAction, SIGNAL(triggered()), this, SLOT(duplicateEditor()));
++ #endif
+      // Goto Previous In History Action
+      cmd = am->registerAction(m_d->m_gotoPreviousDocHistoryAction, Constants::GOTOPREVINHISTORY, editManagerContext);
+  #ifdef Q_WS_MAC
+***************
+*** 378,389 ****
+      advancedMenu->addAction(cmd, Constants::G_EDIT_FONT);
+      cmd = createSeparator(am, this, QLatin1String("QtCreator.Edit.Sep.Editor"), editManagerContext);
+      advancedMenu->addAction(cmd, Constants::G_EDIT_EDITOR);
+- 
+      cmd = am->registerAction(m_d->m_openInExternalEditorAction, Constants::OPEN_IN_EXTERNAL_EDITOR, editManagerContext);
+      cmd->setDefaultKeySequence(QKeySequence(tr("Alt+V,Alt+I")));
+      advancedMenu->addAction(cmd, Constants::G_EDIT_EDITOR);
+      connect(m_d->m_openInExternalEditorAction, SIGNAL(triggered()), this, SLOT(openInExternalEditor()));
+- 
+  
+      // other setup
+      connect(this, SIGNAL(currentEditorChanged(Core::IEditor*)),
+--- 386,396 ----
+      advancedMenu->addAction(cmd, Constants::G_EDIT_FONT);
+      cmd = createSeparator(am, this, QLatin1String("QtCreator.Edit.Sep.Editor"), editManagerContext);
+      advancedMenu->addAction(cmd, Constants::G_EDIT_EDITOR);
+      cmd = am->registerAction(m_d->m_openInExternalEditorAction, Constants::OPEN_IN_EXTERNAL_EDITOR, editManagerContext);
+      cmd->setDefaultKeySequence(QKeySequence(tr("Alt+V,Alt+I")));
+      advancedMenu->addAction(cmd, Constants::G_EDIT_EDITOR);
+      connect(m_d->m_openInExternalEditorAction, SIGNAL(triggered()), this, SLOT(openInExternalEditor()));
++ #endif
+  
+      // other setup
+      connect(this, SIGNAL(currentEditorChanged(Core::IEditor*)),
+***************
+*** 1414,1426 ****
+  
+      m_d->m_saveAction->setEnabled(curEditor != 0 && curEditor->file()->isModified());
+      m_d->m_saveAsAction->setEnabled(curEditor != 0 && curEditor->file()->isSaveAsAllowed());
+      m_d->m_revertToSavedAction->setEnabled(curEditor != 0
+          && !curEditor->file()->fileName().isEmpty() && curEditor->file()->isModified());
+- 
+      m_d->m_saveAsAction->setText(tr("Save %1 As...").arg(fName));
+      m_d->m_saveAction->setText(tr("&Save %1").arg(fName));
+      m_d->m_revertToSavedAction->setText(tr("Revert %1 to Saved").arg(fName));
+- 
+  
+      m_d->m_closeCurrentEditorAction->setEnabled(m_d->m_splitter->currentGroup()->editorCount() > 0);
+      m_d->m_closeCurrentEditorAction->setText(tr("Close %1").arg(fName));
+--- 1421,1435 ----
+  
+      m_d->m_saveAction->setEnabled(curEditor != 0 && curEditor->file()->isModified());
+      m_d->m_saveAsAction->setEnabled(curEditor != 0 && curEditor->file()->isSaveAsAllowed());
++ #if 0
+      m_d->m_revertToSavedAction->setEnabled(curEditor != 0
+          && !curEditor->file()->fileName().isEmpty() && curEditor->file()->isModified());
++ #endif
+      m_d->m_saveAsAction->setText(tr("Save %1 As...").arg(fName));
+      m_d->m_saveAction->setText(tr("&Save %1").arg(fName));
++ #if 0
+      m_d->m_revertToSavedAction->setText(tr("Revert %1 to Saved").arg(fName));
++ #endif
+  
+      m_d->m_closeCurrentEditorAction->setEnabled(m_d->m_splitter->currentGroup()->editorCount() > 0);
+      m_d->m_closeCurrentEditorAction->setText(tr("Close %1").arg(fName));
+***************
+*** 1430,1439 ****
+      m_d->m_gotoPreviousDocHistoryAction->setEnabled(m_d->m_editorHistory.count() > 0);
+      m_d->m_goBackAction->setEnabled(m_d->currentNavigationHistoryPosition > 0);
+      m_d->m_goForwardAction->setEnabled(m_d->currentNavigationHistoryPosition < m_d->m_navigationHistory.size()-1);
+- 
+      m_d->m_duplicateAction->setEnabled(curEditor != 0 && curEditor->duplicateSupported());
+- 
+      m_d->m_openInExternalEditorAction->setEnabled(curEditor != 0);
+  }
+  
+  QList<IEditor*> EditorManager::openedEditors() const
+--- 1439,1448 ----
+      m_d->m_gotoPreviousDocHistoryAction->setEnabled(m_d->m_editorHistory.count() > 0);
+      m_d->m_goBackAction->setEnabled(m_d->currentNavigationHistoryPosition > 0);
+      m_d->m_goForwardAction->setEnabled(m_d->currentNavigationHistoryPosition < m_d->m_navigationHistory.size()-1);
++ #if 0
+      m_d->m_duplicateAction->setEnabled(curEditor != 0 && curEditor->duplicateSupported());
+      m_d->m_openInExternalEditorAction->setEnabled(curEditor != 0);
++ #endif
+  }
+  
+  QList<IEditor*> EditorManager::openedEditors() const

@@ -3,6 +3,7 @@
 ** This file is part of Qt Creator
 **
 ** Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (c) 2009 Andrei Kopats aka hlamer <hlamer@tut.by>
 **
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -202,6 +203,7 @@ ProjectExplorerPlugin::ProjectExplorerPlugin()
     : d(new ProjectExplorerPluginPrivate)
 {
     m_instance = this;
+    Q_INIT_RESOURCE(projectexplorer);
 }
 
 ProjectExplorerPlugin::~ProjectExplorerPlugin()
@@ -405,7 +407,6 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
     // Separators
     //
 
-    Core::Command *cmd;
     QAction *sep;
 
     sep = new QAction(this);
@@ -470,7 +471,7 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
     cmd = am->registerAction(d->m_newAction, Constants::NEWPROJECT, globalcontext);
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+N")));
     msessionContextMenu->addAction(cmd, Constants::G_SESSION_FILES);
-
+#endif
 #if 0
     // open action
     d->m_loadAction = new QAction(tr("Load Project..."), this);
@@ -480,6 +481,7 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
     msessionContextMenu->addAction(cmd, Constants::G_SESSION_FILES);
 #endif
 
+#if 0
     // Default open action
     d->m_openFileAction = new QAction(tr("Open File"), this);
     cmd = am->registerAction(d->m_openFileAction, ProjectExplorer::Constants::OPENFILE,
@@ -1151,7 +1153,7 @@ void ProjectExplorerPlugin::restoreSession()
     } else {
         d->m_session->loadSession(d->m_sessionToRestoreAtStartup);
     }
-
+#if 0
     // update welcome page
     Core::ModeManager *modeManager = Core::ModeManager::instance();
     connect(modeManager, SIGNAL(currentModeChanged(Core::IMode*)), this, SLOT(currentModeChanged(Core::IMode*)));
@@ -1335,6 +1337,7 @@ void ProjectExplorerPlugin::setCurrent(Project *project, QString filePath, Node 
 
 void ProjectExplorerPlugin::updateActions()
 {
+#if 0
     if (debug)
         qDebug() << "ProjectExplorerPlugin::updateActions";
 
@@ -2204,5 +2207,3 @@ void BuildConfigDialog::buttonClicked()
         done(Continue);
     }
 }
-
-Q_EXPORT_PLUGIN(ProjectExplorerPlugin)
