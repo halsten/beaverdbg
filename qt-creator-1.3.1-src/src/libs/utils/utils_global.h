@@ -33,11 +33,11 @@
 #include <QtCore/qglobal.h>
 
 #if defined(QTCREATOR_UTILS_LIB)
-#  define QTCREATOR_UTILS_EXPORT Q_DECL_EXPORT
+#  define QTCREATOR_UTILS_EXPORT
 #elif  defined(QTCREATOR_UTILS_STATIC_LIB) // Abuse single files for manual tests
 #  define QTCREATOR_UTILS_EXPORT
 #else
-#  define QTCREATOR_UTILS_EXPORT Q_DECL_IMPORT
+#  define QTCREATOR_UTILS_EXPORT
 #endif
 
 #endif // UTILS_GLOBAL_H

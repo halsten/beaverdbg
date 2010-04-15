@@ -317,6 +317,7 @@ DebuggerManagerPrivate::DebuggerManagerPrivate(DebuggerManager *manager)
 DebuggerManager::DebuggerManager()
   : d(new DebuggerManagerPrivate(this))
 {
+    Q_INIT_RESOURCE(debugger);
     DebuggerManagerPrivate::instance = this;
     init();
 }

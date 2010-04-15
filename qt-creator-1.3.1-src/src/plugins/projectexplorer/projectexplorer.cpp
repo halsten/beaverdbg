@@ -263,7 +263,9 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
     mode->setPriority(Constants::P_MODE_SESSION);
     mode->setWidget(d->m_proWindow);
     mode->setContext(QList<int>() << pecontext);
+#if 0
     addAutoReleasedObject(mode);
+#endif
     d->m_proWindow->layout()->addWidget(new Core::FindToolBarPlaceHolder(d->m_proWindow));
 
     d->m_buildManager = new BuildManager(this);
@@ -339,24 +341,25 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
 
     // mode manager (for fancy actions)
     Core::ModeManager *modeManager = core->modeManager();
-
+#if 0
     // build menu
     Core::ActionContainer *mbuild =
         am->createMenu(Constants::M_BUILDPROJECT);
     mbuild->menu()->setTitle(tr("&Build"));
     menubar->addMenu(mbuild, Core::Constants::G_VIEW);
+#endif
 
     // debug menu
     Core::ActionContainer *mdebug =
         am->createMenu(Constants::M_DEBUG);
     mdebug->menu()->setTitle(tr("&Debug"));
-    menubar->addMenu(mdebug, Core::Constants::G_VIEW);
+    menubar->addMenu(mdebug, Core::Constants::G_EDIT);
 
     Core::ActionContainer *mstartdebugging =
         am->createMenu(Constants::M_DEBUG_STARTDEBUGGING);
     mstartdebugging->menu()->setTitle(tr("&Start Debugging"));
     mdebug->addMenu(mstartdebugging, Core::Constants::G_DEFAULT_ONE);
-
+#if 0
     //
     // Groups
     //
@@ -402,7 +405,7 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
     connect(mfilec->menu(), SIGNAL(aboutToShow()), this, SLOT(populateOpenWithMenu()));
     connect(d->m_openWithMenu, SIGNAL(triggered(QAction *)),
             this, SLOT(openWithMenuTriggered(QAction *)));
-
+#endif
     //
     // Separators
     //
@@ -1159,7 +1162,7 @@ void ProjectExplorerPlugin::restoreSession()
     connect(modeManager, SIGNAL(currentModeChanged(Core::IMode*)), this, SLOT(currentModeChanged(Core::IMode*)));
     connect(d->m_welcomePage, SIGNAL(requestSession(QString)), this, SLOT(loadSession(QString)));
     connect(d->m_welcomePage, SIGNAL(requestProject(QString)), this, SLOT(loadProject(QString)));
-
+#endif
     Core::ICore::instance()->openFiles(arguments);
     updateActions();
 
@@ -1368,6 +1371,7 @@ void ProjectExplorerPlugin::updateActions()
     d->m_cancelBuildAction->setEnabled(building);
 
     updateRunAction();
+#endif
 }
 
 // NBS TODO check projectOrder()

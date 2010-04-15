@@ -132,6 +132,7 @@ bool TextEditorPlugin::initialize(const QStringList &arguments, QString *errorMe
     command->setDefaultKeySequence(QKeySequence(tr("Meta+Space")));
 #endif
     connect(completionShortcut, SIGNAL(activated()), this, SLOT(invokeCompletion()));
+#endif
 
     // Add shortcut for invoking quick fix options
     QShortcut *quickFixShortcut = new QShortcut(core->mainWindow());
@@ -192,4 +193,3 @@ void TextEditorPlugin::updateSearchResultsFont(const FontSettings &settings)
         m_searchResultWindow->setTextEditorFont(QFont(settings.family(), settings.fontSize()));
 }
 
-Q_EXPORT_PLUGIN(TextEditorPlugin)

@@ -148,8 +148,9 @@ CppPlugin *CppPlugin::instance()
 
 void CppPlugin::initializeEditor(CPPEditor *editor)
 {
+#if 0
     m_actionHandler->setupActions(editor);
-
+#endif
     TextEditor::TextEditorSettings::instance()->initializeEditor(editor);
 
     // auto completion
@@ -211,7 +212,7 @@ bool CppPlugin::initialize(const QStringList & /*arguments*/, QString *errorMess
 
     Core::Command *cmd;
     Core::ActionContainer *cppToolsMenu = am->actionContainer(QLatin1String(CppTools::Constants::M_TOOLS_CPP));
-
+#if 0
     QAction *jumpToDefinition = new QAction(tr("Follow Symbol under Cursor"), this);
     cmd = am->registerAction(jumpToDefinition,
         Constants::JUMP_TO_DEFINITION, context);
@@ -254,7 +255,7 @@ bool CppPlugin::initialize(const QStringList & /*arguments*/, QString *errorMess
     CppTools::CppModelManagerInterface *cppModelManager = CppTools::CppModelManagerInterface::instance();
     connect(m_updateCodeModelAction, SIGNAL(triggered()), cppModelManager, SLOT(updateModifiedSourceFiles()));
     cppToolsMenu->addAction(cmd);
-
+#endif
     m_actionHandler = new TextEditor::TextEditorActionHandler(CppEditor::Constants::C_CPPEDITOR,
         TextEditor::TextEditorActionHandler::Format
         | TextEditor::TextEditorActionHandler::UnCommentSelection

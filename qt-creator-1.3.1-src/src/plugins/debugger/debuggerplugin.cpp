@@ -643,12 +643,12 @@ bool DebuggerPlugin::initialize(const QStringList &arguments, QString *errorMess
 
     // External apps
     m_startExternalAction = new QAction(this);
-    m_startExternalAction->setText(tr("Start and Debug External Application..."));
+    m_startExternalAction->setText(tr("Start Application..."));
     connect(m_startExternalAction, SIGNAL(triggered()),
         this, SLOT(startExternalApplication()));
 
     m_attachExternalAction = new QAction(this);
-    m_attachExternalAction->setText(tr("Attach to Running External Application..."));
+    m_attachExternalAction->setText(tr("Attach to Running Application..."));
     connect(m_attachExternalAction, SIGNAL(triggered()),
         this, SLOT(attachExternalApplication()));
 

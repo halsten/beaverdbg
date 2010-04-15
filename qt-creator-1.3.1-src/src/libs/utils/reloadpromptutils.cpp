@@ -47,7 +47,7 @@ QTCREATOR_UTILS_EXPORT Utils::ReloadPromptAnswer
                                           "The unsaved file %1 has been changed outside Qt Creator. Do you want to reload it and discard your changes?").arg(QDir::toNativeSeparators(fileName));
     else
         msg = QCoreApplication::translate("Utils::reloadPrompt",
-                                          "The file %1 has changed outside Qt Creator. Do you want to reload it?").arg(QDir::toNativeSeparators(fileName));
+                                          "The file %1 has changed outside Beaver. Do you want to reload it?").arg(QDir::toNativeSeparators(fileName));
     return reloadPrompt(title, msg, parent);
 }
 

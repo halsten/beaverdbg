@@ -137,7 +137,7 @@ FindToolBar::FindToolBar(FindPlugin *plugin, CurrentDocumentFind *currentDocumen
     Core::ActionContainer *mfind = am->actionContainer(Constants::M_FIND);
     Core::Command *cmd;
 
-    m_findInDocumentAction = new QAction(tr("Current Document"), this);
+    m_findInDocumentAction = new QAction(tr("Find"), this);
     cmd = am->registerAction(m_findInDocumentAction, Constants::FIND_IN_DOCUMENT, globalcontext);
     cmd->setDefaultKeySequence(QKeySequence::Find);
     mfind->addAction(cmd, Constants::G_FIND_CURRENTDOCUMENT);
@@ -186,7 +186,7 @@ FindToolBar::FindToolBar(FindPlugin *plugin, CurrentDocumentFind *currentDocumen
     mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
     connect(m_replaceAllAction, SIGNAL(triggered()), this, SLOT(invokeReplaceAll()));
     m_ui.replaceAllButton->setDefaultAction(cmd->action());
-
+#endif
     m_caseSensitiveAction = new QAction(tr("Case Sensitive"), this);
     m_caseSensitiveAction->setIcon(QIcon(":/find/images/casesensitively.png"));
     m_caseSensitiveAction->setCheckable(true);
@@ -301,11 +301,11 @@ void FindToolBar::updateToolBar()
     bool replaceEnabled = enabled && m_currentDocumentFind->supportsReplace();
     m_findNextAction->setEnabled(enabled);
     m_findPreviousAction->setEnabled(enabled);
-
+#if 0
     m_replaceNextAction->setEnabled(replaceEnabled);
     m_replacePreviousAction->setEnabled(replaceEnabled);
     m_replaceAllAction->setEnabled(replaceEnabled);
-
+#endif
     m_caseSensitiveAction->setEnabled(enabled);
     m_wholeWordAction->setEnabled(enabled);
     m_regularExpressionAction->setEnabled(enabled);
