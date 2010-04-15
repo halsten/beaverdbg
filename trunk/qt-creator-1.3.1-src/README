@@ -1,33 +1,77 @@
-QtCreator 1.0.0
+Beaver Debugger 1.0.0a1
 ===============
-QtCreator is a crossplatform C++ IDE for development with the Qt framework.
+Beaver Debugger is a crossplatform debugger based on Qt Creator
 
 Supported Platforms
 ===================
-The binary packages support the following platforms:
+Building the sources requires Qt 4.5.0 or later.
 
-Windows XP SP2, Windows Vista
-(K)Ubuntu Linux 5.04, (K)Ubuntu Linux 7.04 32bit and 64bit
-Mac OS 10.4 and later
+Configuration
+===================
+If you want to change default installation path for executable file and link, set qmake variables BEAVER_PREFIX and BEAVER_LINK_PREFIX before build project
+	qmake -set BEAVER_PREFIX /opt
+	qmake -set BEAVER_LINK_PREFIX /usr/local/
 
-Building the sources requires Qt 4.6.0 or later.
+Building
+===================
+Project requires Qt library version 4.5 or highter installed.
+See www.qtsoftware.com for downloads.
+If you are Linux user, you probably have packages libqt4 and libqt4-dev
+
+	cd beaverdbg
+	qmake
+	make
+Now you can run built application
+bin/beaverdbg
+
+Installation
+===================
+After you builded project you can install it by command
+	make install
+This command may require administrator privileges.
+NOTE: qmake from Qt 4.5 has bug, it installs binary with mask 644, so, it becomes not executable.
+      You can fix it manualy by command
+          chmod a+x /usr/bin/beaverdbg
+      where "/usr/bin" is your installation path
 
 Third-party components
 ======================
-QtCreator includes the following third-party components,
-we thank the authors who made this possible:
-
-* Open Source front-end for C++ (license MIT), enhanced for use in Qt Creator
-  Roberto Raggi <roberto.raggi@gmail.com>
-  QtCreator/src/shared/cplusplus
-
-Compiling Qt Creator
-====================
-You need Qt 4.6 to build Qt Creator.
-We recommend that you build Qt Creator not in the source directory, but in a separate directory.
-To do that, use the following commands:
-mkdir $BUILD_DIRECTORY
-cd $BUILD_DIRECTORY
-qmake $SOURCE_DIRECTORY/qtcreator.pro
-make (or mingw32-make or nmake, depending on your platform)
-
+Beaver Debugger is based on Qt Creator sources.
+Next files was modified:
+qt-creator-1.0.0-src/src/app/app.pro
+qt-creator-1.0.0-src/src/app/main.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/beaverversiondialog.h
+qt-creator-1.0.0-src/src/plugins/coreplugin/coreconstants.h
+qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/coreplugin.pro
+qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editormanager.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/editormanager/editorsplitter.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/fancytabwidget.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/mainwindow.h
+qt-creator-1.0.0-src/src/plugins/coreplugin/modemanager.cpp
+qt-creator-1.0.0-src/src/plugins/coreplugin/outputpane.cpp
+qt-creator-1.0.0-src/src/plugins/cppeditor/cppeditor.pro
+qt-creator-1.0.0-src/src/plugins/cppeditor/cppplugin.cpp
+qt-creator-1.0.0-src/src/plugins/cpptools/cpptoolsplugin.cpp
+qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.cpp
+qt-creator-1.0.0-src/src/plugins/debugger/debuggermanager.h
+qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.cpp
+qt-creator-1.0.0-src/src/plugins/debugger/debuggerplugin.h
+qt-creator-1.0.0-src/src/plugins/find/findplugin.cpp
+qt-creator-1.0.0-src/src/plugins/find/findtoolbar.cpp
+qt-creator-1.0.0-src/src/plugins/find/textfindconstants.h
+qt-creator-1.0.0-src/src/plugins/plugins.pri
+qt-creator-1.0.0-src/src/plugins/plugins.pro
+qt-creator-1.0.0-src/src/plugins/projectexplorer/projectexplorer.cpp
+qt-creator-1.0.0-src/src/plugins/projectexplorer/session.cpp
+qt-creator-1.0.0-src/src/plugins/quickopen/quickopenplugin.cpp
+qt-creator-1.0.0-src/src/plugins/texteditor/basetexteditor.cpp
+qt-creator-1.0.0-src/src/plugins/texteditor/texteditoractionhandler.cpp
+qt-creator-1.0.0-src/src/plugins/texteditor/texteditorplugin.cpp
+qt-creator-1.0.0-src/src/qworkbenchlibrary.pri
+qt-creator-1.0.0-src/src/qworkbenchplugin.pri
+qt-creator-1.0.0-src/src/qworkbench.pri
+qt-creator-1.0.0-src/src/shared/cpaster/cgi.cpp
+qt-creator-1.0.0-src/src/src.pro

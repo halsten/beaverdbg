@@ -320,6 +320,7 @@ void TextEditorActionHandler::updateActions()
 
 void TextEditorActionHandler::updateActions(UpdateMode um)
 {
+#if 0
     m_pasteAction->setEnabled(um != ReadOnlyMode);
     m_formatAction->setEnabled((m_optionalActions & Format) && um != ReadOnlyMode);
     m_unCommentSelectionAction->setEnabled((m_optionalActions & UnCommentSelection) && um != ReadOnlyMode);

@@ -195,6 +195,7 @@ public:
 
 public slots:
     void startNewDebugger(const DebuggerStartParametersPtr &sp);
+    bool startNewDebugger(const QString& programm, const QStringList& arguments);
     void exitDebugger();
 
     void setSimpleDockWidgetArrangement();
@@ -304,10 +305,6 @@ private:
     bool isReverseDebugging() const;
     QAbstractItemModel *threadsModel();
 
-    Q_SLOT void loadSessionData();
-    Q_SLOT void saveSessionData();
-    Q_SLOT void dumpLog();
-
 public:
     // stuff in this block should be made private by moving it to
     // one of the interfaces
@@ -345,6 +342,10 @@ private:
         TextEditor::ITextEditor *editor, int cursorPos);
 
     DebuggerManagerPrivate *d;
+private slots:
+    Q_SLOT void loadSessionData();
+    Q_SLOT void saveSessionData();
+    Q_SLOT void dumpLog();
 };
 
 } // namespace Debugger

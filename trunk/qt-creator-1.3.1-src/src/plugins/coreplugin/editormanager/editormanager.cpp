@@ -185,7 +185,9 @@ EditorManagerPrivate::EditorManagerPrivate(ICore *core, QWidget *parent) :
     m_view(0),
     m_splitter(0),
     m_core(core),
+#if 0
     m_revertToSavedAction(new QAction(EditorManager::tr("Revert to Saved"), parent)),
+#endif
     m_saveAction(new QAction(parent)),
     m_saveAsAction(new QAction(parent)),
     m_closeCurrentEditorAction(new QAction(EditorManager::tr("Close"), parent)),
@@ -387,6 +389,7 @@ EditorManager::EditorManager(ICore *core, QWidget *parent) :
     cmd->setDefaultKeySequence(QKeySequence(tr("Alt+V,Alt+I")));
     advancedMenu->addAction(cmd, Constants::G_EDIT_EDITOR);
     connect(m_d->m_openInExternalEditorAction, SIGNAL(triggered()), this, SLOT(openInExternalEditor()));
+#endif
     
     // Connect to VariableManager for CURRENT_DOCUMENT variable setting
     VariableManager *vm = VariableManager::instance();

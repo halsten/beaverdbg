@@ -36,9 +36,9 @@ namespace Constants {
 
 const char * const M_FIND            = "Find.FindMenu";
 const char * const G_FIND_CURRENTDOCUMENT = "Find.FindMenu.CurrentDocument";
-const char * const G_FIND_FILTERS    = "Find.FindMenu.Filters";
-const char * const G_FIND_FLAGS      = "Find.FindMenu.Flags";
-const char * const G_FIND_ACTIONS    = "Find.FindMenu.Actions";
+const char * const G_FIND_FILTERS    = "QtCreator.Group.Edit.Filters";
+const char * const G_FIND_FLAGS      = "QtCreator.Group.Edit.Flags";
+const char * const G_FIND_ACTIONS    = "QtCreator.Group.Edit.Actions";
 
 const char * const FIND              = "Find.FindReplace";
 const char * const FIND_IN_DOCUMENT  = "Find.FindInCurrentDocument";

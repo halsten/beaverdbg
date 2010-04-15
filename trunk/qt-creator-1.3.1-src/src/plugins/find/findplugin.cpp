@@ -149,24 +149,27 @@ void FindPlugin::setupMenu()
 {
     Core::ActionManager *am = Core::ICore::instance()->actionManager();
     Core::ActionContainer *medit = am->actionContainer(Core::Constants::M_EDIT);
+#if 0
     Core::ActionContainer *mfind = am->createMenu(Constants::M_FIND);
     medit->addMenu(mfind, Core::Constants::G_EDIT_FIND);
     mfind->menu()->setTitle(tr("&Find/Replace"));
-    mfind->appendGroup(Constants::G_FIND_CURRENTDOCUMENT);
-    mfind->appendGroup(Constants::G_FIND_FILTERS);
-    mfind->appendGroup(Constants::G_FIND_FLAGS);
-    mfind->appendGroup(Constants::G_FIND_ACTIONS);
+#endif
+    medit->appendGroup(Constants::G_FIND_CURRENTDOCUMENT);
+    medit->appendGroup(Constants::G_FIND_FILTERS);
+    medit->appendGroup(Constants::G_FIND_FLAGS);
+    medit->appendGroup(Constants::G_FIND_ACTIONS);
+    
     QList<int> globalcontext = QList<int>() << Core::Constants::C_GLOBAL_ID;
     Core::Command *cmd;
     QAction *separator;
     separator = new QAction(this);
     separator->setSeparator(true);
     cmd = am->registerAction(separator, QLatin1String("Find.Sep.Flags"), globalcontext);
-    mfind->addAction(cmd, Constants::G_FIND_FLAGS);
+    medit->addAction(cmd, Constants::G_FIND_FLAGS);
     separator = new QAction(this);
     separator->setSeparator(true);
     cmd = am->registerAction(separator, QLatin1String("Find.Sep.Actions"), globalcontext);
-    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
+    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
 
     m_openFindDialog = new QAction(tr("Find..."), this);
     cmd = am->registerAction(m_openFindDialog, QLatin1String("Find.Dialog"), globalcontext);
