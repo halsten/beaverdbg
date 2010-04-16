@@ -1024,6 +1024,8 @@ void DebuggerManager::startFailed()
 
 bool DebuggerManager::startNewDebugger(const QString& programm, const QStringList& arguments)
 {
+    qWarning() << __FUNCTION__ << "Not implemented!!!";
+#if 0
     m_startMode = StartExternal;
     
     m_executable = programm;
@@ -1045,6 +1047,7 @@ bool DebuggerManager::startNewDebugger(const QString& programm, const QStringLis
     }
 
     m_busy = false;
+#endif
     return true;
 }
 

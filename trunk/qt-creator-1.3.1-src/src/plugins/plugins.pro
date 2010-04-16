@@ -4,23 +4,23 @@
 TEMPLATE  = subdirs
 
 SUBDIRS   = plugin_coreplugin \
-            plugin_welcome \
-#            plugin_find \
+#            plugin_welcome \
+            plugin_find \
             plugin_texteditor \
             plugin_cppeditor \
-            plugin_bineditor \
+#            plugin_bineditor \
 #            plugin_bookmarks \
-#            plugin_projectexplorer \
-            plugin_vcsbase \
+            plugin_projectexplorer \
+#            plugin_vcsbase \
 #            plugin_perforce \
 #            plugin_subversion \
 #            plugin_git \
 #            plugin_cvs \
-#            plugin_cpptools \
-            plugin_qt4projectmanager \
+            plugin_cpptools \
+#            plugin_qt4projectmanager \
 #            plugin_snippets \ # buggy and annoying
-#            plugin_locator \
-#            plugin_debugger \
+            plugin_locator \
+            plugin_debugger \
 #            plugin_qtestlib \ # this seems to be dead
 #            plugin_helloworld \ # sample plugin
 #            plugin_help \

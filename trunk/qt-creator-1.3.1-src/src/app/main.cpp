@@ -18,7 +18,6 @@
 #include "projectexplorer/projectexplorer.h"
 #include "coreplugin/coreplugin.h"
 #include "find/findplugin.h"
-#include "quickopen/quickopenplugin.h"
 #include "texteditor/texteditorplugin.h"
 #include "cppeditor/cppplugin.h"
 
@@ -116,7 +115,6 @@ int main(int argc, char **argv)
 	ProjectExplorer::ProjectExplorerPlugin *projectExplorer = new ProjectExplorer::ProjectExplorerPlugin();
 	Debugger::Internal::DebuggerPlugin *debugger = new Debugger::Internal::DebuggerPlugin();
 	Find::Internal::FindPlugin *find = new Find::Internal::FindPlugin();
-	//QuickOpen::Internal::QuickOpenPlugin quickOpen = new QuickOpen::Internal::QuickOpenPlugin();
 	TextEditor::Internal::TextEditorPlugin *textEditor = new TextEditor::Internal::TextEditorPlugin();
 	CppEditor::Internal::CppPlugin *cpp = new CppEditor::Internal::CppPlugin();
 	
@@ -125,7 +123,6 @@ int main(int argc, char **argv)
 	ExtensionSystem::IPlugin* i_debugger_plugin = static_cast<ExtensionSystem::IPlugin*>(debugger);
 	i_debugger_plugin->initialize (QStringList(), &error);	
 	find->initialize (QStringList(), &error);
-	//quickOpen.initialize (QStringList(), &error);
 	textEditor->initialize (QStringList(), &error);
 	cpp->initialize (QStringList(), &error);
 	
@@ -139,7 +136,6 @@ int main(int argc, char **argv)
 	
 	delete cpp;
 	delete textEditor;
-	//delete quickOpen;
 	delete find;
 	i_debugger_plugin->shutdown();
 	delete debugger;

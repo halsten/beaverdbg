@@ -18,7 +18,7 @@ INCLUDEPATH *= ../libs/extensionsystem ../plugins/coreplugin  ../plugins
 
 SOURCES += main.cpp
 
-QT *= core gui script svg
+QT *= core gui script svg xml
 
 #include(../rpath.pri)
 

@@ -405,7 +405,7 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
     connect(mfilec->menu(), SIGNAL(aboutToShow()), this, SLOT(populateOpenWithMenu()));
     connect(d->m_openWithMenu, SIGNAL(triggered(QAction *)),
             this, SLOT(openWithMenuTriggered(QAction *)));
-#endif
+    
     //
     // Separators
     //
@@ -463,7 +463,6 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
     //
     // Actions
     //
-
     // new session action
     d->m_sessionManagerAction = new QAction(tr("Session Manager..."), this);
     cmd = am->registerAction(d->m_sessionManagerAction, Constants::NEWSESSION, globalcontext);
@@ -474,17 +473,12 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
     cmd = am->registerAction(d->m_newAction, Constants::NEWPROJECT, globalcontext);
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+N")));
     msessionContextMenu->addAction(cmd, Constants::G_SESSION_FILES);
-#endif
-#if 0
     // open action
     d->m_loadAction = new QAction(tr("Load Project..."), this);
     cmd = am->registerAction(d->m_loadAction, Constants::LOAD, globalcontext);
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+O")));
     mfile->addAction(cmd, Core::Constants::G_FILE_PROJECT);
     msessionContextMenu->addAction(cmd, Constants::G_SESSION_FILES);
-#endif
-
-#if 0
     // Default open action
     d->m_openFileAction = new QAction(tr("Open File"), this);
     cmd = am->registerAction(d->m_openFileAction, ProjectExplorer::Constants::OPENFILE,
@@ -690,7 +684,7 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
     mfilec->addAction(cmd, Constants::G_FILE_OTHER);
     d->m_renameFileAction->setEnabled(false);
     d->m_renameFileAction->setVisible(false);
-
+#endif
     connect(core, SIGNAL(saveSettingsRequested()),
         this, SLOT(savePersistentSettings()));
 

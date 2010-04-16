@@ -155,14 +155,14 @@ FindToolBar::FindToolBar(FindPlugin *plugin, CurrentDocumentFind *currentDocumen
     m_findNextAction = new QAction(tr("Find Next"), this);
     cmd = am->registerAction(m_findNextAction, Constants::FIND_NEXT, globalcontext);
     cmd->setDefaultKeySequence(QKeySequence::FindNext);
-    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
+    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
     connect(m_findNextAction, SIGNAL(triggered()), this, SLOT(invokeFindNext()));
     m_ui.findNextButton->setDefaultAction(cmd->action());
 
     m_findPreviousAction = new QAction(tr("Find Previous"), this);
     cmd = am->registerAction(m_findPreviousAction, Constants::FIND_PREVIOUS, globalcontext);
     cmd->setDefaultKeySequence(QKeySequence::FindPrevious);
-    medit->addAction(cmd, Constants::G_FIND_ACTIONS);
+    mfind->addAction(cmd, Constants::G_FIND_ACTIONS);
     connect(m_findPreviousAction, SIGNAL(triggered()), this, SLOT(invokeFindPrevious()));
     m_ui.findPreviousButton->setDefaultAction(cmd->action());
 #if 0
