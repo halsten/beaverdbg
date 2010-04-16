@@ -275,6 +275,7 @@ void TextEditorActionHandler::createActions()
     command = am->registerAction(m_copyLineDownAction, Constants::COPY_LINE_DOWN, m_contextId);
     command->setDefaultKeySequence(QKeySequence(tr("Ctrl+Alt+Down")));
     connect(m_copyLineDownAction, SIGNAL(triggered()), this, SLOT(copyLineDown()));
+#endif
 }
 
 bool TextEditorActionHandler::supportsAction(const QString & /*id */) const
