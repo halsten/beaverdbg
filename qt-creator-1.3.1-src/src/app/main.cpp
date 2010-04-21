@@ -130,7 +130,9 @@ int main(int argc, char **argv)
 	
 	if (! targetFileName.isEmpty())
 	{
+#if 0
 		debugger->startNewDebugger(targetFileName, args);
+#endif
 	}
 	int res = app.exec();
 	

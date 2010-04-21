@@ -94,4 +94,4 @@ void CorePlugin::shutdown()
     m_mainWindow->shutdown();
 }
 
-Q_EXPORT_PLUGIN(CorePlugin)
+//Q_EXPORT_PLUGIN(CorePlugin)

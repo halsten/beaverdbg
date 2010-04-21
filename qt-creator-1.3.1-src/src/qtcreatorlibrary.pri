@@ -4,6 +4,9 @@ win32 {
     DLLDESTDIR = $$IDE_APP_PATH
 }
 
+CONFIG -= shared dll dylib
+CONFIG *= staticlib
+
 DESTDIR = $$IDE_LIBRARY_PATH
 
 include(rpath.pri)

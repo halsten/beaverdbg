@@ -34,6 +34,7 @@ SOURCES += mainwindow.cpp \
     vcsmanager.cpp \
     viewmanager.cpp \
     versiondialog.cpp \
+    beaverversiondialog.cpp \
     editormanager/editormanager.cpp \
     editormanager/editorview.cpp \
     editormanager/openeditorsmodel.cpp \
@@ -132,6 +133,7 @@ HEADERS += mainwindow.h \
     ifilewizardextension.h \
     icorelistener.h \
     versiondialog.h \
+    beaverversiondialog.h \
     scriptmanager/metatypedeclarations.h \
     scriptmanager/qworkbench_wrapper.h \
     scriptmanager/scriptmanager.h \
