@@ -8,6 +8,13 @@ include(../libs/qtconcurrent/qtconcurrent.pri)
 include(../libs/utils/utils.pri)
 
 TEMPLATE = app
+
+macx {
+    IDE_APP_TARGET   = Beaver
+} else {
+    IDE_APP_TARGET   = beaverdbg
+}
+
 TARGET = $$IDE_APP_TARGET
 TARGET = $$qtLibraryTarget($$TARGET)
 DESTDIR = $$IDE_APP_PATH
