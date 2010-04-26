@@ -26,7 +26,9 @@ INCLUDEPATH *= ../libs/extensionsystem ../plugins/coreplugin  ../plugins
 SOURCES += main.cpp
 
 QT *= core gui script svg xml sql
-CONFIG += help
+CONFIG *= help
+CONFIG -= release debug_and_release
+CONFIG *= debug
 
 #include(../rpath.pri)
 
