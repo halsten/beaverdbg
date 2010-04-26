@@ -6,6 +6,8 @@ win32 {
 
 CONFIG -= shared dll dylib
 CONFIG *= staticlib
+CONFIG -= release debug_and_release
+CONFIG *= debug
 
 DESTDIR = $$IDE_LIBRARY_PATH
 

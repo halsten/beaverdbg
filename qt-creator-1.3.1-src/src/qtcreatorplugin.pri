@@ -43,6 +43,8 @@ contains(QT_CONFIG, reduce_exports):CONFIG += hide_symbols
 CONFIG -= plugin
 CONFIG -=plugin_with_soname
 CONFIG += static
+CONFIG -= release debug_and_release
+CONFIG *= debug
 
 !macx {
     target.path = /$$IDE_LIBRARY_BASENAME/qtcreator/plugins/$$PROVIDER
