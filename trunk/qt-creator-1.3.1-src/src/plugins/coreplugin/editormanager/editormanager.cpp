@@ -1470,19 +1470,20 @@ void EditorManager::updateActions()
             hideEditorInfoBar(QLatin1String("Core.EditorManager.MakeWritable"));
         }
     }
-
+#if 0
     m_d->m_saveAction->setEnabled(curEditor != 0 && curEditor->file()->isModified());
     m_d->m_saveAsAction->setEnabled(curEditor != 0 && curEditor->file()->isSaveAsAllowed());
     m_d->m_revertToSavedAction->setEnabled(curEditor != 0
         && !curEditor->file()->fileName().isEmpty() && curEditor->file()->isModified());
-
+#endif
     QString quotedName;
     if (!fName.isEmpty())
         quotedName = '"' + fName + '"';
+#if 0
     m_d->m_saveAsAction->setText(tr("Save %1 As...").arg(quotedName));
     m_d->m_saveAction->setText(tr("&Save %1").arg(quotedName));
     m_d->m_revertToSavedAction->setText(tr("Revert %1 to Saved").arg(quotedName));
-
+#endif
 
     m_d->m_closeCurrentEditorAction->setEnabled(curEditor != 0);
     m_d->m_closeCurrentEditorAction->setText(tr("Close %1").arg(quotedName));
