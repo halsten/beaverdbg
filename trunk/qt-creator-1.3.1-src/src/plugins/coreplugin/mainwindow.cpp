@@ -502,12 +502,14 @@ void MainWindow::registerDefaultContainers()
     medit->appendGroup(Constants::G_EDIT_ADVANCED);
     medit->appendGroup(Constants::G_EDIT_FIND);
     medit->appendGroup(Constants::G_EDIT_OTHER);
-
+#if 0
     // Tools Menu
     ActionContainer *ac = am->createMenu(Constants::M_TOOLS);
     menubar->addMenu(ac, Constants::G_TOOLS);
     ac->menu()->setTitle(tr("&Tools"));
-
+#else
+    ActionContainer *ac;
+#endif
     // Window Menu
     ActionContainer *mwindow = am->createMenu(Constants::M_WINDOW);
     menubar->addMenu(mwindow, Constants::G_WINDOW);
@@ -571,11 +573,11 @@ void MainWindow::registerDefaultActions()
 
     cmd = createSeparator(am, this, QLatin1String("QtCreator.Edit.Sep.Advanced"), m_globalContext);
     medit->addAction(cmd, Constants::G_EDIT_ADVANCED);
-
+#if 0
     // Tools menu separators
     cmd = createSeparator(am, this, QLatin1String("QtCreator.Tools.Sep.Options"), m_globalContext);
     mtools->addAction(cmd, Constants::G_DEFAULT_THREE);
-
+#endif
     // Return to editor shortcut: Note this requires Qt to fix up
     // handling of shortcut overrides in menus, item views, combos....
     m_focusToEditor = new QShortcut(this);
@@ -707,7 +709,7 @@ void MainWindow::registerDefaultActions()
     cmd->setDefaultKeySequence(QKeySequence("Ctrl+,"));
     cmd->action()->setMenuRole(QAction::PreferencesRole);
 #endif
-    mtools->addAction(cmd, Constants::G_DEFAULT_THREE);
+    mfile->addAction(cmd, Constants::G_DEFAULT_THREE);
     connect(m_optionsAction, SIGNAL(triggered()), this, SLOT(showOptionsDialog()));
 
 #ifdef Q_WS_MAC
