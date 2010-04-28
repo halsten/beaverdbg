@@ -172,12 +172,13 @@ void FindPlugin::setupMenu()
     separator->setSeparator(true);
     cmd = am->registerAction(separator, QLatin1String("Find.Sep.Actions"), globalcontext);
     medit->addAction(cmd, Constants::G_FIND_ACTIONS);
-
+#if 0
     m_openFindDialog = new QAction(tr("Find..."), this);
     cmd = am->registerAction(m_openFindDialog, QLatin1String("Find.Dialog"), globalcontext);
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Shift+F")));
     medit->addAction(cmd, Constants::G_FIND_FILTERS);
     connect(m_openFindDialog, SIGNAL(triggered()), this, SLOT(openFindFilter()));
+#endif
 }
 
 void FindPlugin::setupFilterMenuItems()
