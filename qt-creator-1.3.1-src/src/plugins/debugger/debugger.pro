@@ -52,7 +52,7 @@ SOURCES += breakhandler.cpp \
     debuggermanager.cpp \
     debuggeroutputwindow.cpp \
     debuggerplugin.cpp \
-    debuggerrunner.cpp \
+#    debuggerrunner.cpp \
     debuggertooltip.cpp \
     watchutils.cpp \
     moduleshandler.cpp \

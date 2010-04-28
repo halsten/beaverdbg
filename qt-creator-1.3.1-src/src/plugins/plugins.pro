@@ -10,7 +10,7 @@ SUBDIRS   = plugin_coreplugin \
             plugin_cppeditor \
 #            plugin_bineditor \
 #            plugin_bookmarks \
-            plugin_projectexplorer \
+#            plugin_projectexplorer \
 #            plugin_vcsbase \
 #            plugin_perforce \
 #            plugin_subversion \
@@ -106,7 +106,7 @@ plugin_locator.subdir = locator
 plugin_locator.depends = plugin_coreplugin
 
 plugin_cpptools.subdir = cpptools
-plugin_cpptools.depends = plugin_projectexplorer
+#plugin_cpptools.depends = plugin_projectexplorer
 plugin_cpptools.depends += plugin_coreplugin
 plugin_cpptools.depends += plugin_texteditor
 
@@ -121,7 +121,7 @@ plugin_snippets.depends += plugin_coreplugin
 plugin_snippets.depends += plugin_texteditor
 
 plugin_debugger.subdir = debugger
-plugin_debugger.depends = plugin_projectexplorer
+#plugin_debugger.depends = plugin_projectexplorer
 plugin_debugger.depends += plugin_coreplugin
 plugin_debugger.depends += plugin_cppeditor
 

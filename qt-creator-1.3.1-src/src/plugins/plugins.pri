@@ -1,5 +1,5 @@
 LIBS *=  -L$$IDE_PLUGIN_PATH/Nokia -l$$qtLibraryTarget(CppEditor) -l$$qtLibraryTarget(CppTools ) \
-	-l$$qtLibraryTarget(Debugger) -l$$qtLibraryTarget(ProjectExplorer) \
+	-l$$qtLibraryTarget(Debugger) \
 	-l$$qtLibraryTarget(TextEditor) -l$$qtLibraryTarget(Find) \
 	-l$$qtLibraryTarget(Locator) -l$$qtLibraryTarget(Core)
 

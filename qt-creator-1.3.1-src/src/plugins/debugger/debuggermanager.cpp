@@ -973,12 +973,18 @@ static IDebuggerEngine *determineDebuggerEngine(int  /* pid */,
 
 void DebuggerManager::startNewDebugger(const DebuggerStartParametersPtr &sp)
 {
+
     if (d->m_state != DebuggerNotReady)
         return;
     d->m_startParameters = sp;
     d->m_inferiorPid = d->m_startParameters->attachPID > 0
         ? d->m_startParameters->attachPID : 0;
+#if 0
     const QString toolChainName = ProjectExplorer::ToolChain::toolChainName(static_cast<ProjectExplorer::ToolChain::ToolChainType>(d->m_startParameters->toolChainType));
+#else
+    const QString toolChainName;
+    Q_ASSERT(0);
+#endif
 
     emit debugModeRequested();
     showDebuggerOutput(LogStatus,
