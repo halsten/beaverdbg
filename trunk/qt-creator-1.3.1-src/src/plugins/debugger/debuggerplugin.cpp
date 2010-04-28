@@ -673,13 +673,24 @@ bool DebuggerPlugin::initialize(const QStringList &arguments, QString *errorMess
     connect(m_detachAction, SIGNAL(triggered()),
         m_manager, SLOT(detachDebugger()));
 
+#if 0
     Core::ActionContainer *mdebug =
         am->actionContainer(ProjectExplorer::Constants::M_DEBUG);
-#if 0
     Core::ActionContainer *mstart =
         am->actionContainer(ProjectExplorer::Constants::M_DEBUG_STARTDEBUGGING);
 #else
-    Core::ActionContainer *mstart = mdebug;
+    Core::ActionContainer *menubar =
+        am->actionContainer(Core::Constants::MENU_BAR);
+    // debug menu. Code from projectexplorer
+    Core::ActionContainer *mdebug =
+        am->createMenu(ProjectExplorer::Constants::M_DEBUG);
+    mdebug->menu()->setTitle(tr("&Debug"));
+    menubar->addMenu(mdebug, Core::Constants::G_EDIT);
+
+    Core::ActionContainer *mstart =
+        am->createMenu(ProjectExplorer::Constants::M_DEBUG_STARTDEBUGGING);
+    mstart->menu()->setTitle(tr("&Start Debugging"));
+    mdebug->addMenu(mstart, Core::Constants::G_DEFAULT_ONE);
 #endif
     Core::Command *cmd = 0;
     const DebuggerManagerActions actions = m_manager->debuggerManagerActions();
@@ -918,7 +929,7 @@ bool DebuggerPlugin::initialize(const QStringList &arguments, QString *errorMess
     //
     //  Connections
     //
-
+#if 0
     // ProjectExplorer
     connect(sessionManager(), SIGNAL(sessionLoaded()),
        m_manager, SLOT(sessionLoaded()));
@@ -926,7 +937,7 @@ bool DebuggerPlugin::initialize(const QStringList &arguments, QString *errorMess
        m_manager, SLOT(aboutToSaveSession()));
     connect(sessionManager(), SIGNAL(aboutToUnloadSession()),
        m_manager, SLOT(aboutToUnloadSession()));
-
+#endif
     // EditorManager
     QObject *editorManager = core->editorManager();
     connect(editorManager, SIGNAL(editorAboutToClose(Core::IEditor*)),
