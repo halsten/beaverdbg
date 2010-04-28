@@ -591,7 +591,7 @@ void MainWindow::registerDefaultActions()
     connect(m_newAction, SIGNAL(triggered()), this, SLOT(newFile()));
 #endif
     // Open Action
-    m_openAction = new QAction(QIcon(Constants::ICON_OPENFILE), tr("&Open File or Project..."), this);
+    m_openAction = new QAction(QIcon(Constants::ICON_OPENFILE), tr("&Open text file..."), this);
     cmd = am->registerAction(m_openAction, Constants::OPEN, m_globalContext);
     cmd->setDefaultKeySequence(QKeySequence::Open);
     mfile->addAction(cmd, Constants::G_FILE_OPEN);
@@ -615,7 +615,7 @@ void MainWindow::registerDefaultActions()
     cmd->setAttribute(Command::CA_UpdateText);
     cmd->setDefaultText(tr("&Save"));
     mfile->addAction(cmd, Constants::G_FILE_SAVE);
-#endif
+
     // Save As Action
     tmpaction = new QAction(tr("Save &As..."), this);
     cmd = am->registerAction(tmpaction, Constants::SAVEAS, m_globalContext);
@@ -634,7 +634,7 @@ void MainWindow::registerDefaultActions()
 #endif
     mfile->addAction(cmd, Constants::G_FILE_SAVE);
     connect(m_saveAllAction, SIGNAL(triggered()), this, SLOT(saveAll()));
-#if 0
+
     // Print Action
     tmpaction = new QAction(tr("&Print..."), this);
     cmd = am->registerAction(tmpaction, Constants::PRINT, m_globalContext);
