@@ -134,7 +134,7 @@ FindToolBar::FindToolBar(FindPlugin *plugin, CurrentDocumentFind *currentDocumen
     globalcontext << Core::Constants::C_GLOBAL_ID;
 
     Core::ActionManager *am = Core::ICore::instance()->actionManager();
-    Core::ActionContainer *mfind = am->actionContainer(Constants::M_FIND);
+    Core::ActionContainer *mfind = am->actionContainer(Core::Constants::M_EDIT);
     Core::Command *cmd;
 
     m_findInDocumentAction = new QAction(tr("Find"), this);

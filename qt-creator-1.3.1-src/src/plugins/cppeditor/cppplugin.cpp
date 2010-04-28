@@ -186,7 +186,7 @@ bool CppPlugin::initialize(const QStringList & /*arguments*/, QString *errorMess
 
     addAutoReleasedObject(new CppEditorFactory(this));
     addAutoReleasedObject(new CppHoverHandler);
-
+#if 0
     CppFileWizard::BaseFileWizardParameters wizardParameters(Core::IWizard::FileWizard);
 
     wizardParameters.setCategory(QLatin1String("C++"));
@@ -208,11 +208,11 @@ bool CppPlugin::initialize(const QStringList & /*arguments*/, QString *errorMess
     context << core->uniqueIDManager()->uniqueIdentifier(CppEditor::Constants::C_CPPEDITOR);
 
     Core::ActionManager *am = core->actionManager();
+
     Core::ActionContainer *contextMenu= am->createMenu(CppEditor::Constants::M_CONTEXT);
 
     Core::Command *cmd;
     Core::ActionContainer *cppToolsMenu = am->actionContainer(QLatin1String(CppTools::Constants::M_TOOLS_CPP));
-#if 0
     QAction *jumpToDefinition = new QAction(tr("Follow Symbol under Cursor"), this);
     cmd = am->registerAction(jumpToDefinition,
         Constants::JUMP_TO_DEFINITION, context);
@@ -255,7 +255,7 @@ bool CppPlugin::initialize(const QStringList & /*arguments*/, QString *errorMess
     CppTools::CppModelManagerInterface *cppModelManager = CppTools::CppModelManagerInterface::instance();
     connect(m_updateCodeModelAction, SIGNAL(triggered()), cppModelManager, SLOT(updateModifiedSourceFiles()));
     cppToolsMenu->addAction(cmd);
-#endif
+
     m_actionHandler = new TextEditor::TextEditorActionHandler(CppEditor::Constants::C_CPPEDITOR,
         TextEditor::TextEditorActionHandler::Format
         | TextEditor::TextEditorActionHandler::UnCommentSelection
@@ -270,7 +270,7 @@ bool CppPlugin::initialize(const QStringList & /*arguments*/, QString *errorMess
 
     cmd = am->command(TextEditor::Constants::UN_COMMENT_SELECTION);
     contextMenu->addAction(cmd);
-
+#endif
     connect(core->progressManager(), SIGNAL(taskStarted(QString)),
             this, SLOT(onTaskStarted(QString)));
     connect(core->progressManager(), SIGNAL(allTasksFinished(QString)),

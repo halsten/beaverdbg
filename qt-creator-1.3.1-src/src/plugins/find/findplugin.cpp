@@ -103,7 +103,9 @@ bool FindPlugin::initialize(const QStringList &, QString *)
 
 void FindPlugin::extensionsInitialized()
 {
+#if 0
     setupFilterMenuItems();
+#endif
     readSettings();
 }
 
