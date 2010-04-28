@@ -640,7 +640,7 @@ CppModelManager::CppModelManager(QObject *parent)
 
     m_core = Core::ICore::instance(); // FIXME
     m_dirty = true;
-
+#if 0
     ProjectExplorer::ProjectExplorerPlugin *pe =
        ProjectExplorer::ProjectExplorerPlugin::instance();
 
@@ -648,13 +648,13 @@ CppModelManager::CppModelManager(QObject *parent)
 
     ProjectExplorer::SessionManager *session = pe->session();
     QTC_ASSERT(session, return);
-
+#endif
     m_updateEditorSelectionsTimer = new QTimer(this);
     m_updateEditorSelectionsTimer->setInterval(500);
     m_updateEditorSelectionsTimer->setSingleShot(true);
     connect(m_updateEditorSelectionsTimer, SIGNAL(timeout()),
             this, SLOT(updateEditorSelections()));
-
+#if 0
     connect(session, SIGNAL(projectAdded(ProjectExplorer::Project*)),
             this, SLOT(onProjectAdded(ProjectExplorer::Project*)));
 
@@ -663,7 +663,7 @@ CppModelManager::CppModelManager(QObject *parent)
 
     connect(session, SIGNAL(aboutToUnloadSession()),
             this, SLOT(onAboutToUnloadSession()));
-
+#endif
     qRegisterMetaType<CPlusPlus::Document::Ptr>("CPlusPlus::Document::Ptr");
 
     // thread connections

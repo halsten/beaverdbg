@@ -100,7 +100,7 @@ EditorManagerPlaceHolder::EditorManagerPlaceHolder(Core::IMode *mode, QWidget *p
     connect(Core::ModeManager::instance(), SIGNAL(currentModeChanged(Core::IMode *)),
             this, SLOT(currentModeChanged(Core::IMode *)));
 
-    currentModeChanged(Core::ModeManager::instance()->currentMode());
+    //currentModeChanged(Core::ModeManager::instance()->currentMode());
 }
 
 EditorManagerPlaceHolder::~EditorManagerPlaceHolder()
